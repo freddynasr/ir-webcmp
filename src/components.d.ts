@@ -18,6 +18,8 @@ export namespace Components {
         "name": string;
         "text": any;
     }
+    interface IrChannelManager {
+    }
     interface IrCheckbox {
         "checked": boolean;
         "disabled": boolean;
@@ -46,6 +48,11 @@ export namespace Components {
         "submited": boolean;
         "text": any;
         "type": string;
+    }
+    interface IrRadioBtn {
+        "data": selectOption[];
+        "disabled": boolean;
+        "selectedValue": any;
     }
     interface IrSelect {
         "LabelAvailable": boolean;
@@ -130,6 +137,10 @@ export interface IrInputTextCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrInputTextElement;
 }
+export interface IrRadioBtnCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrRadioBtnElement;
+}
 export interface IrSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrSelectElement;
@@ -144,6 +155,12 @@ declare global {
     var HTMLIrButtonElement: {
         prototype: HTMLIrButtonElement;
         new (): HTMLIrButtonElement;
+    };
+    interface HTMLIrChannelManagerElement extends Components.IrChannelManager, HTMLStencilElement {
+    }
+    var HTMLIrChannelManagerElement: {
+        prototype: HTMLIrChannelManagerElement;
+        new (): HTMLIrChannelManagerElement;
     };
     interface HTMLIrCheckboxElement extends Components.IrCheckbox, HTMLStencilElement {
     }
@@ -174,6 +191,12 @@ declare global {
     var HTMLIrInputTextElement: {
         prototype: HTMLIrInputTextElement;
         new (): HTMLIrInputTextElement;
+    };
+    interface HTMLIrRadioBtnElement extends Components.IrRadioBtn, HTMLStencilElement {
+    }
+    var HTMLIrRadioBtnElement: {
+        prototype: HTMLIrRadioBtnElement;
+        new (): HTMLIrRadioBtnElement;
     };
     interface HTMLIrSelectElement extends Components.IrSelect, HTMLStencilElement {
     }
@@ -213,11 +236,13 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "ir-button": HTMLIrButtonElement;
+        "ir-channel-manager": HTMLIrChannelManagerElement;
         "ir-checkbox": HTMLIrCheckboxElement;
         "ir-checkboxes": HTMLIrCheckboxesElement;
         "ir-guest-info": HTMLIrGuestInfoElement;
         "ir-icon": HTMLIrIconElement;
         "ir-input-text": HTMLIrInputTextElement;
+        "ir-radio-btn": HTMLIrRadioBtnElement;
         "ir-select": HTMLIrSelectElement;
         "ir-sidebar": HTMLIrSidebarElement;
         "ir-span": HTMLIrSpanElement;
@@ -237,6 +262,8 @@ declare namespace LocalJSX {
         "name"?: string;
         "onClickHanlder"?: (event: IrButtonCustomEvent<any>) => void;
         "text"?: any;
+    }
+    interface IrChannelManager {
     }
     interface IrCheckbox {
         "checked"?: boolean;
@@ -271,6 +298,12 @@ declare namespace LocalJSX {
         "submited"?: boolean;
         "text"?: any;
         "type"?: string;
+    }
+    interface IrRadioBtn {
+        "data"?: selectOption[];
+        "disabled"?: boolean;
+        "onSelectChange"?: (event: IrRadioBtnCustomEvent<any>) => void;
+        "selectedValue"?: any;
     }
     interface IrSelect {
         "LabelAvailable"?: boolean;
@@ -337,11 +370,13 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "ir-button": IrButton;
+        "ir-channel-manager": IrChannelManager;
         "ir-checkbox": IrCheckbox;
         "ir-checkboxes": IrCheckboxes;
         "ir-guest-info": IrGuestInfo;
         "ir-icon": IrIcon;
         "ir-input-text": IrInputText;
+        "ir-radio-btn": IrRadioBtn;
         "ir-select": IrSelect;
         "ir-sidebar": IrSidebar;
         "ir-span": IrSpan;
@@ -355,11 +390,13 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "ir-button": LocalJSX.IrButton & JSXBase.HTMLAttributes<HTMLIrButtonElement>;
+            "ir-channel-manager": LocalJSX.IrChannelManager & JSXBase.HTMLAttributes<HTMLIrChannelManagerElement>;
             "ir-checkbox": LocalJSX.IrCheckbox & JSXBase.HTMLAttributes<HTMLIrCheckboxElement>;
             "ir-checkboxes": LocalJSX.IrCheckboxes & JSXBase.HTMLAttributes<HTMLIrCheckboxesElement>;
             "ir-guest-info": LocalJSX.IrGuestInfo & JSXBase.HTMLAttributes<HTMLIrGuestInfoElement>;
             "ir-icon": LocalJSX.IrIcon & JSXBase.HTMLAttributes<HTMLIrIconElement>;
             "ir-input-text": LocalJSX.IrInputText & JSXBase.HTMLAttributes<HTMLIrInputTextElement>;
+            "ir-radio-btn": LocalJSX.IrRadioBtn & JSXBase.HTMLAttributes<HTMLIrRadioBtnElement>;
             "ir-select": LocalJSX.IrSelect & JSXBase.HTMLAttributes<HTMLIrSelectElement>;
             "ir-sidebar": LocalJSX.IrSidebar & JSXBase.HTMLAttributes<HTMLIrSidebarElement>;
             "ir-span": LocalJSX.IrSpan & JSXBase.HTMLAttributes<HTMLIrSpanElement>;
