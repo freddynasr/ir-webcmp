@@ -15,6 +15,7 @@
 | `name`           | `name`            |             | `string`  | `undefined`       |
 | `placeholder`    | `placeholder`     |             | `string`  | `'<placeholder>'` |
 | `required`       | `required`        |             | `boolean` | `undefined`       |
+| `size`           | `size`            |             | `string`  | `''`              |
 | `submited`       | `submited`        |             | `boolean` | `false`           |
 | `text`           | `text`            |             | `any`     | `undefined`       |
 | `type`           | `type`            |             | `string`  | `'text'`          |

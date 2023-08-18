@@ -17,6 +17,7 @@
 | `required`       | `required`        |             | `boolean`        | `undefined` |
 | `selectStyle`    | `select-style`    |             | `boolean`        | `true`      |
 | `selectedValue`  | `selected-value`  |             | `any`            | `null`      |
+| `size`           | `size`            |             | `string`         | `''`        |
 | `submited`       | `submited`        |             | `boolean`        | `false`     |
 
 

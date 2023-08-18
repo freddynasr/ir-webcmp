@@ -14,6 +14,7 @@ export class IrSelect {
   @Prop() firstOption: string = 'Select';
   @Prop() selectStyle: boolean = true;
   @Prop() submited: boolean = false;
+  @Prop() size: string = '';
 
   @State() initial: boolean = true;
   @State() valid: boolean = false;
@@ -72,7 +73,7 @@ export class IrSelect {
       <div class="form-group">
         <div class="input-group">
           {label}
-          <select class={className} onInput={this.handleSelectChange.bind(this)} required={this.required}>
+          <select class={`${className} ${this.size}`} onInput={this.handleSelectChange.bind(this)} required={this.required}>
             <option value={null}>{this.firstOption}</option>
             {this.data.map(item => {
               if (this.selectedValue === item.value) {

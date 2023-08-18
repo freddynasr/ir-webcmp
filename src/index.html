@@ -5,28 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
     <title>Stencil Component Starter</title>
 
-    <script type="module" src="/build/training.esm.js"></script>
-    <script nomodule src="/build/training.js"></script>
-  </head>
-  <body
-      ><h3>Hello world</h3>
-      <ir-radio-btn id="checkboxes"></ir-radio-btn>
-
     <script type="module" src="/build/ir-webcmp.esm.js"></script>
     <script nomodule src="/build/ir-webcmp.js"></script>
   </head>
-</body>
-
+  <body>
+    <!-- <ir-dropdown></ir-dropdown>
     <script>
-      const checkboxes = document.querySelector('ir-radio-btn');
-      checkboxes.selectedValue = 'orange';
-      checkboxes.data = [
-        { text: 'Apple', value: 'apple'},
-        { text: 'Orange', value: 'orange'},
-        { text: 'Banana', value: 'banana'}
+      const dropdown = document.querySelector('ir-dropdown');
+      dropdown.data = [
+        {
+          name: 'Apple',
+          icon: 'la la-home',
+          children: [
+            {
+              name: 'Apple',
+              icon: 'la la-home',
+            },
+            {
+              name: 'Apple',
+              icon: 'la la-home',
+            },
+          ],
+        },
+        {
+          name: 'Apple',
+          icon: 'la la-home',
+          children: [
+            {
+              name: 'Apple',
+              icon: 'la la-home',
+            },
+            {
+              name: 'Apple',
+              icon: 'la la-home',
+            },
+          ],
+        },
+        {
+          name: 'Apple',
+          icon: 'la la-home',
+          children: [
+            {
+              name: 'Apple',
+              icon: 'la la-home',
+            },
+            {
+              name: 'Apple',
+              icon: 'la la-home',
+            },
+          ],
+        },
+        {
+          name: 'Apple',
+          icon: 'la la-home',
+          children: [
+            {
+              name: 'Apple',
+              icon: 'la la-home',
+            },
+            {
+              name: 'Apple',
+              icon: 'la la-home',
+            },
+          ],
+        },
       ];
 
-      document.addEventListener('selectChange', event => {
+      document.addEventListener('dropdownItemCLicked', event => {
+        console.log(event.detail);
+      });
+    </script> -->
+
+    <ir-modal></ir-modal>
+
+    <script>
+      const modal = document.querySelector('ir-modal');
+      setTimeout(() => {
+        modal.openModal();
+      }, 2000);
+
+      document.addEventListener('modalClosed', event => {
         console.log(event.detail);
       });
     </script>

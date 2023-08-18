@@ -29,6 +29,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
+### Used by
+
+ - [ir-channel-manager](../ir-channel-manager)
+
 ### Depends on
 
 - [ir-icon](../ir-icon)
@@ -37,6 +41,7 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   ir-sidebar --> ir-icon
+  ir-channel-manager --> ir-sidebar
   style ir-sidebar fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

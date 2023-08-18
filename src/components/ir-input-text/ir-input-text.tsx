@@ -13,6 +13,7 @@ export class IrInputText {
   @Prop() type = 'text';
   @Prop() submited: boolean = false;
   @Prop() inputStyle: boolean = true;
+  @Prop() size: string = '';
 
   @State() valid: boolean;
   @State() initial: boolean = true;
@@ -68,7 +69,14 @@ export class IrInputText {
       <div class="form-group">
         <div class="input-group">
           {label}
-          <input type={this.type} class={className} placeholder={this.placeholder} value={this.text} onInput={this.handleInputChange.bind(this)} required={this.required} />
+          <input
+            type={this.type}
+            class={`${className} ${this.size}`}
+            placeholder={this.placeholder}
+            value={this.text}
+            onInput={this.handleInputChange.bind(this)}
+            required={this.required}
+          />
         </div>
       </div>
     );
