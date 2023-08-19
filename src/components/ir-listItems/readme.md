@@ -1,0 +1,44 @@
+# ir-list-item
+
+
+
+<!-- Auto Generated Below -->
+
+
+## Properties
+
+| Property       | Attribute | Description | Type                                                                           | Default                                                                                                                                                                                                                                                                                                                                              |
+| -------------- | --------- | ----------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `dropdownData` | --        |             | `{ name: string; icon: string; children: { name: string; icon: string; }[]; }` | `{         name: 'Action',         icon: '',         children: [           {             name: 'Edit',             icon: 'ft-edit',           },           {             name: 'Delete',             icon: 'ft-trash',           },           {             name: 'Disable',             icon: 'ft-alert-triangle',           },         ],       }` |
+| `listData`     | --        |             | `{ title: string; channel: string; status: string; }[]`                        | `[         {             title: 'Title',             channel: 'Channel',             status: 'Status',             },       ]`                                                                                                                                                                                                                       |
+
+
+## Events
+
+| Event         | Description | Type               |
+| ------------- | ----------- | ------------------ |
+| `openSidebar` |             | `CustomEvent<any>` |
+
+
+## Dependencies
+
+### Used by
+
+ - [ir-channel-manager](../ir-channel-manager)
+
+### Depends on
+
+- [ir-dropdown](../ir-dropdown)
+
+### Graph
+```mermaid
+graph TD;
+  ir-list-item --> ir-dropdown
+  ir-dropdown --> ir-icon
+  ir-channel-manager --> ir-list-item
+  style ir-list-item fill:#f9f,stroke:#333,stroke-width:4px
+```
+
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                                                           | Default |
-| -------- | --------- | ----------- | -------------------------------------------------------------- | ------- |
-| `data`   | --        |             | `{ name: ""; icon: ""; children: { name: ""; icon: ""; }[]; }` | `null`  |
+| Property | Attribute | Description | Type                                                                           | Default |
+| -------- | --------- | ----------- | ------------------------------------------------------------------------------ | ------- |
+| `data`   | --        |             | `{ name: string; icon: string; children: { name: string; icon: string; }[]; }` | `null`  |
 
 
 ## Events
@@ -23,7 +23,7 @@
 
 ### Used by
 
- - [ir-channel-manager](../ir-channel-manager)
+ - [ir-list-item](../ir-listItems)
 
 ### Depends on
 
@@ -33,7 +33,7 @@
 ```mermaid
 graph TD;
   ir-dropdown --> ir-icon
-  ir-channel-manager --> ir-dropdown
+  ir-list-item --> ir-dropdown
   style ir-dropdown fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

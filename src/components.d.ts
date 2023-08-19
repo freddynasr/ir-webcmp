@@ -27,6 +27,11 @@ export namespace Components {
       icon: string;
     }[];
   };
+        "listData": {
+    title: string;
+    channel: string;
+    status: string;
+  }[];
     }
     interface IrCheckbox {
         "checked": boolean;
@@ -48,6 +53,8 @@ export namespace Components {
     }[];
   };
     }
+    interface IrGeneralSettings {
+    }
     interface IrGuestInfo {
         "data": guestInfo;
         "setupDataCountries": selectOption[];
@@ -68,7 +75,24 @@ export namespace Components {
         "text": any;
         "type": string;
     }
+    interface IrListItem {
+        "dropdownData": {
+        name: string;
+        icon: string;
+        children: {
+          name: string;
+          icon: string;
+        }[];
+      };
+        "listData": {
+        title: string;
+        channel: string;
+        status: string;
+      }[];
+    }
     interface IrLoader {
+    }
+    interface IrMapping {
     }
     interface IrModal {
         "closeModal": () => Promise<void>;
@@ -128,6 +152,8 @@ export namespace Components {
         "rows": number;
         "text": string;
     }
+    interface IrTopbar {
+    }
     interface MyComponent {
         /**
           * The first name
@@ -167,6 +193,10 @@ export interface IrInputTextCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrInputTextElement;
 }
+export interface IrListItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrListItemElement;
+}
 export interface IrModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrModalElement;
@@ -182,6 +212,10 @@ export interface IrSelectCustomEvent<T> extends CustomEvent<T> {
 export interface IrSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrSwitchElement;
+}
+export interface IrTopbarCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrTopbarElement;
 }
 declare global {
     interface HTMLIrButtonElement extends Components.IrButton, HTMLStencilElement {
@@ -214,6 +248,12 @@ declare global {
         prototype: HTMLIrDropdownElement;
         new (): HTMLIrDropdownElement;
     };
+    interface HTMLIrGeneralSettingsElement extends Components.IrGeneralSettings, HTMLStencilElement {
+    }
+    var HTMLIrGeneralSettingsElement: {
+        prototype: HTMLIrGeneralSettingsElement;
+        new (): HTMLIrGeneralSettingsElement;
+    };
     interface HTMLIrGuestInfoElement extends Components.IrGuestInfo, HTMLStencilElement {
     }
     var HTMLIrGuestInfoElement: {
@@ -232,11 +272,23 @@ declare global {
         prototype: HTMLIrInputTextElement;
         new (): HTMLIrInputTextElement;
     };
+    interface HTMLIrListItemElement extends Components.IrListItem, HTMLStencilElement {
+    }
+    var HTMLIrListItemElement: {
+        prototype: HTMLIrListItemElement;
+        new (): HTMLIrListItemElement;
+    };
     interface HTMLIrLoaderElement extends Components.IrLoader, HTMLStencilElement {
     }
     var HTMLIrLoaderElement: {
         prototype: HTMLIrLoaderElement;
         new (): HTMLIrLoaderElement;
+    };
+    interface HTMLIrMappingElement extends Components.IrMapping, HTMLStencilElement {
+    }
+    var HTMLIrMappingElement: {
+        prototype: HTMLIrMappingElement;
+        new (): HTMLIrMappingElement;
     };
     interface HTMLIrModalElement extends Components.IrModal, HTMLStencilElement {
     }
@@ -280,6 +332,12 @@ declare global {
         prototype: HTMLIrTextareaElement;
         new (): HTMLIrTextareaElement;
     };
+    interface HTMLIrTopbarElement extends Components.IrTopbar, HTMLStencilElement {
+    }
+    var HTMLIrTopbarElement: {
+        prototype: HTMLIrTopbarElement;
+        new (): HTMLIrTopbarElement;
+    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
@@ -292,10 +350,13 @@ declare global {
         "ir-checkbox": HTMLIrCheckboxElement;
         "ir-checkboxes": HTMLIrCheckboxesElement;
         "ir-dropdown": HTMLIrDropdownElement;
+        "ir-general-settings": HTMLIrGeneralSettingsElement;
         "ir-guest-info": HTMLIrGuestInfoElement;
         "ir-icon": HTMLIrIconElement;
         "ir-input-text": HTMLIrInputTextElement;
+        "ir-list-item": HTMLIrListItemElement;
         "ir-loader": HTMLIrLoaderElement;
+        "ir-mapping": HTMLIrMappingElement;
         "ir-modal": HTMLIrModalElement;
         "ir-radio-btn": HTMLIrRadioBtnElement;
         "ir-select": HTMLIrSelectElement;
@@ -303,6 +364,7 @@ declare global {
         "ir-span": HTMLIrSpanElement;
         "ir-switch": HTMLIrSwitchElement;
         "ir-textarea": HTMLIrTextareaElement;
+        "ir-topbar": HTMLIrTopbarElement;
         "my-component": HTMLMyComponentElement;
     }
 }
@@ -327,6 +389,11 @@ declare namespace LocalJSX {
       icon: string;
     }[];
   };
+        "listData"?: {
+    title: string;
+    channel: string;
+    status: string;
+  }[];
     }
     interface IrCheckbox {
         "checked"?: boolean;
@@ -351,6 +418,8 @@ declare namespace LocalJSX {
   };
         "onDropdownItemCLicked"?: (event: IrDropdownCustomEvent<string>) => void;
     }
+    interface IrGeneralSettings {
+    }
     interface IrGuestInfo {
         "data"?: guestInfo;
         "onGetSetupData"?: (event: IrGuestInfoCustomEvent<any>) => void;
@@ -374,7 +443,25 @@ declare namespace LocalJSX {
         "text"?: any;
         "type"?: string;
     }
+    interface IrListItem {
+        "dropdownData"?: {
+        name: string;
+        icon: string;
+        children: {
+          name: string;
+          icon: string;
+        }[];
+      };
+        "listData"?: {
+        title: string;
+        channel: string;
+        status: string;
+      }[];
+        "onOpenSidebar"?: (event: IrListItemCustomEvent<any>) => void;
+    }
     interface IrLoader {
+    }
+    interface IrMapping {
     }
     interface IrModal {
         "onConfirmModal"?: (event: IrModalCustomEvent<any>) => void;
@@ -435,6 +522,9 @@ declare namespace LocalJSX {
         "rows"?: number;
         "text"?: string;
     }
+    interface IrTopbar {
+        "onOpenSidebar"?: (event: IrTopbarCustomEvent<any>) => void;
+    }
     interface MyComponent {
         /**
           * The first name
@@ -455,10 +545,13 @@ declare namespace LocalJSX {
         "ir-checkbox": IrCheckbox;
         "ir-checkboxes": IrCheckboxes;
         "ir-dropdown": IrDropdown;
+        "ir-general-settings": IrGeneralSettings;
         "ir-guest-info": IrGuestInfo;
         "ir-icon": IrIcon;
         "ir-input-text": IrInputText;
+        "ir-list-item": IrListItem;
         "ir-loader": IrLoader;
+        "ir-mapping": IrMapping;
         "ir-modal": IrModal;
         "ir-radio-btn": IrRadioBtn;
         "ir-select": IrSelect;
@@ -466,6 +559,7 @@ declare namespace LocalJSX {
         "ir-span": IrSpan;
         "ir-switch": IrSwitch;
         "ir-textarea": IrTextarea;
+        "ir-topbar": IrTopbar;
         "my-component": MyComponent;
     }
 }
@@ -478,10 +572,13 @@ declare module "@stencil/core" {
             "ir-checkbox": LocalJSX.IrCheckbox & JSXBase.HTMLAttributes<HTMLIrCheckboxElement>;
             "ir-checkboxes": LocalJSX.IrCheckboxes & JSXBase.HTMLAttributes<HTMLIrCheckboxesElement>;
             "ir-dropdown": LocalJSX.IrDropdown & JSXBase.HTMLAttributes<HTMLIrDropdownElement>;
+            "ir-general-settings": LocalJSX.IrGeneralSettings & JSXBase.HTMLAttributes<HTMLIrGeneralSettingsElement>;
             "ir-guest-info": LocalJSX.IrGuestInfo & JSXBase.HTMLAttributes<HTMLIrGuestInfoElement>;
             "ir-icon": LocalJSX.IrIcon & JSXBase.HTMLAttributes<HTMLIrIconElement>;
             "ir-input-text": LocalJSX.IrInputText & JSXBase.HTMLAttributes<HTMLIrInputTextElement>;
+            "ir-list-item": LocalJSX.IrListItem & JSXBase.HTMLAttributes<HTMLIrListItemElement>;
             "ir-loader": LocalJSX.IrLoader & JSXBase.HTMLAttributes<HTMLIrLoaderElement>;
+            "ir-mapping": LocalJSX.IrMapping & JSXBase.HTMLAttributes<HTMLIrMappingElement>;
             "ir-modal": LocalJSX.IrModal & JSXBase.HTMLAttributes<HTMLIrModalElement>;
             "ir-radio-btn": LocalJSX.IrRadioBtn & JSXBase.HTMLAttributes<HTMLIrRadioBtnElement>;
             "ir-select": LocalJSX.IrSelect & JSXBase.HTMLAttributes<HTMLIrSelectElement>;
@@ -489,6 +586,7 @@ declare module "@stencil/core" {
             "ir-span": LocalJSX.IrSpan & JSXBase.HTMLAttributes<HTMLIrSpanElement>;
             "ir-switch": LocalJSX.IrSwitch & JSXBase.HTMLAttributes<HTMLIrSwitchElement>;
             "ir-textarea": LocalJSX.IrTextarea & JSXBase.HTMLAttributes<HTMLIrTextareaElement>;
+            "ir-topbar": LocalJSX.IrTopbar & JSXBase.HTMLAttributes<HTMLIrTopbarElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
         }
     }
