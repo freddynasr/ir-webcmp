@@ -13,7 +13,8 @@ export class IrInputText {
   @Prop() type = 'text';
   @Prop() submited: boolean = false;
   @Prop() inputStyle: boolean = true;
-  @Prop() size: string = '';
+  @Prop() size: 'sm' | 'md' | 'lg' = 'md';
+  @Prop() textSize: 'sm' | 'md' | 'lg' = 'md';
 
   @State() valid: boolean;
   @State() initial: boolean = true;
@@ -71,7 +72,7 @@ export class IrInputText {
           {label}
           <input
             type={this.type}
-            class={`${className} ${this.size}`}
+            class={`${className} form-control-${this.size} text-${this.textSize}`}
             placeholder={this.placeholder}
             value={this.text}
             onInput={this.handleInputChange.bind(this)}

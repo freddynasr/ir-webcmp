@@ -8,7 +8,8 @@ export class IrButton {
   @Prop() text;
   @Prop() icon = 'ft-save';
   @Prop() btn_color = 'btn-info';
-  @Prop() btn_size = 'btn-md';
+  @Prop() size: 'sm' | 'md' | 'lg' = 'md';
+  @Prop() textSize: 'sm' | 'md' | 'lg' = 'md';
   @Prop() btn_block = true;
   @Prop() btn_disabled = false;
   @Prop() btn_type = 'button';
@@ -27,7 +28,7 @@ export class IrButton {
         onClick={() => {
           this.clickHanlder.emit();
         }}
-        class={`btn ${this.btn_color} ${this.btn_size}  ${block}`}
+        class={`btn ${this.btn_color} btn-${this.size} text-${this.textSize} ${block}`}
         type={this.btn_type}
       >
         <i class={this.icon}></i>&nbsp;{this.text}

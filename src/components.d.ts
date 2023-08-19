@@ -78,18 +78,18 @@ export namespace Components {
     }
     interface IrListItem {
         "dropdownData": {
-        name: string;
-        icon: string;
-        children: {
-          name: string;
-          icon: string;
-        }[];
-      };
+    name: string;
+    icon: string;
+    children: {
+      name: string;
+      icon: string;
+    }[];
+  };
         "listData": {
-        title: string;
-        channel: string;
-        status: string;
-      }[];
+    title: string;
+    channel: string;
+    status: string;
+  }[];
     }
     interface IrLoader {
     }
@@ -447,18 +447,18 @@ declare namespace LocalJSX {
     }
     interface IrListItem {
         "dropdownData"?: {
-        name: string;
-        icon: string;
-        children: {
-          name: string;
-          icon: string;
-        }[];
-      };
+    name: string;
+    icon: string;
+    children: {
+      name: string;
+      icon: string;
+    }[];
+  };
         "listData"?: {
-        title: string;
-        channel: string;
-        status: string;
-      }[];
+    title: string;
+    channel: string;
+    status: string;
+  }[];
         "onOpenSidebar"?: (event: IrListItemCustomEvent<any>) => void;
     }
     interface IrLoader {

@@ -35,12 +35,11 @@ export class IrChannelManager {
     title: string;
     channel: string;
     status: string;
-  }[] = []
+  }[] = [];
 
   @State() mode: string = 'create';
   tabs: string[] = ['General Settings', 'Mapping', 'Channel Settings'];
   @State() activeTab: string = 'General Settings';
-
 
   componentDidLoad() {
     // Add an event listener to the ir-topbar component
@@ -59,16 +58,11 @@ export class IrChannelManager {
         const sidebar = document.querySelector('ir-sidebar');
         sidebar.open = !sidebar.open;
       }
-    }
-    );
+    });
   }
-
-
-
 
   _exitWithoutSave() {
     return (
-     
       <div class="row">
         <div class="col-2 d-flex justify-content-center ">
           <ir-icon icon="ft-alert-circle warning h1"></ir-icon>
@@ -79,7 +73,6 @@ export class IrChannelManager {
           <div class="font-size-small">All unsaved changes will be lost.</div>
         </div>
       </div>
-   
     );
   }
 
@@ -87,9 +80,9 @@ export class IrChannelManager {
     return [
       <div id="container">
         <div class="card">
-         <ir-topbar></ir-topbar>
+          <ir-topbar></ir-topbar>
 
-        <ir-list-item listData={this.listData} dropdownData={this.dropdownData}></ir-list-item>
+          <ir-list-item id="ir-list-item" listData={this.listData} dropdownData={this.dropdownData}></ir-list-item>
         </div>
       </div>,
       <ir-sidebar side="right" class="font-size-small">
@@ -97,22 +90,24 @@ export class IrChannelManager {
           <h5 class="font-weight-bold">{this.mode === 'create' ? 'Create' : 'Edit'} Channel</h5>
         </div>
         <ul class="list-group list-group-horizontal mb-2">
-  {this.tabs.map((tab) => (
-    <li class={this.activeTab === tab ? 'active' : ''}>
-      <a class="" data-mdb-ripple-color="dark"
-         onClick={() => {
-           console.log(tab);
-           this.activeTab = tab;
-           console.log(this.activeTab);
-         }}
-      >
-        {tab}
-      </a>
-    </li>
-  ))}
-</ul>
-       { this.activeTab == 'General Settings' && <ir-general-settings mode={this.mode}></ir-general-settings>}
-       { this.activeTab == 'Mapping' && <ir-mapping></ir-mapping>}
+          {this.tabs.map(tab => (
+            <li class={this.activeTab === tab ? 'active' : ''}>
+              <a
+                class=""
+                data-mdb-ripple-color="dark"
+                onClick={() => {
+                  console.log(tab);
+                  this.activeTab = tab;
+                  console.log(this.activeTab);
+                }}
+              >
+                {tab}
+              </a>
+            </li>
+          ))}
+        </ul>
+        {this.activeTab == 'General Settings' && <ir-general-settings mode={this.mode}></ir-general-settings>}
+        {this.activeTab == 'Mapping' && <ir-mapping></ir-mapping>}
         <div class="btn-position">
           <button type="button" class="btn btn-primary btn-sm btn-block">
             Save
@@ -120,10 +115,7 @@ export class IrChannelManager {
         </div>
       </ir-sidebar>,
 
-      <ir-modal>
-        {this._exitWithoutSave()}
-      </ir-modal>,
-    
+      <ir-modal>{this._exitWithoutSave()}</ir-modal>,
     ];
   }
 }

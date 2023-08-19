@@ -8,6 +8,10 @@
 .card {
   height: 100%;
 }
+
+#ir-list-item {
+  height: 100%;
+}
 .cardBody {
   display: flex;
   justify-content: center;
@@ -17,6 +21,11 @@
 .emptyBody {
   text-align: center;
 }
+.emptyBody img {
+  height: auto;
+  width: 100px;
+}
+
 .card-head {
   background: #f8f8f8;
 
