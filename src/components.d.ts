@@ -19,6 +19,14 @@ export namespace Components {
         "text": any;
     }
     interface IrChannelManager {
+        "dropdownData": {
+    name: string;
+    icon: string;
+    children: {
+      name: string;
+      icon: string;
+    }[];
+  };
     }
     interface IrCheckbox {
         "checked": boolean;
@@ -32,11 +40,11 @@ export namespace Components {
     }
     interface IrDropdown {
         "data": {
-    name: '';
-    icon: '';
+    name: string;
+    icon: string;
     children: {
-      name: '';
-      icon: '';
+      name: string;
+      icon: string;
     }[];
   };
     }
@@ -311,6 +319,14 @@ declare namespace LocalJSX {
         "text"?: any;
     }
     interface IrChannelManager {
+        "dropdownData"?: {
+    name: string;
+    icon: string;
+    children: {
+      name: string;
+      icon: string;
+    }[];
+  };
     }
     interface IrCheckbox {
         "checked"?: boolean;
@@ -326,11 +342,11 @@ declare namespace LocalJSX {
     }
     interface IrDropdown {
         "data"?: {
-    name: '';
-    icon: '';
+    name: string;
+    icon: string;
     children: {
-      name: '';
-      icon: '';
+      name: string;
+      icon: string;
     }[];
   };
         "onDropdownItemCLicked"?: (event: IrDropdownCustomEvent<string>) => void;

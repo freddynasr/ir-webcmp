@@ -6,11 +6,11 @@ import { Component, Prop, State, h, Event, EventEmitter } from '@stencil/core';
 })
 export class IrDropdown {
   @Prop({ reflect: true }) data: {
-    name: '';
-    icon: '';
+    name: string;
+    icon: string;
     children: {
-      name: '';
-      icon: '';
+      name: string;
+      icon: string;
     }[];
   } = null;
   @State() show: boolean = false;
