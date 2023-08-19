@@ -111,7 +111,7 @@ export class IrChannelManager {
     </li>
   ))}
 </ul>
-       { this.activeTab == 'General Settings' && <ir-general-settings></ir-general-settings>}
+       { this.activeTab == 'General Settings' && <ir-general-settings mode={this.mode}></ir-general-settings>}
        { this.activeTab == 'Mapping' && <ir-mapping></ir-mapping>}
         <div class="btn-position">
           <button type="button" class="btn btn-primary btn-sm btn-block">

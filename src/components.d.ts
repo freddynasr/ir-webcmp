@@ -54,6 +54,7 @@ export namespace Components {
   };
     }
     interface IrGeneralSettings {
+        "mode": string;
     }
     interface IrGuestInfo {
         "data": guestInfo;
@@ -419,6 +420,7 @@ declare namespace LocalJSX {
         "onDropdownItemCLicked"?: (event: IrDropdownCustomEvent<string>) => void;
     }
     interface IrGeneralSettings {
+        "mode"?: string;
     }
     interface IrGuestInfo {
         "data"?: guestInfo;

@@ -1,9 +1,11 @@
-import { Component, h,  } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'ir-general-settings',
 })
 export class IrGeneralSettings {
+
+  @Prop() mode: string;
 
 
    
@@ -14,6 +16,7 @@ export class IrGeneralSettings {
 
          <div class="General Settings">
     <div class="container-fluid">
+      { this.mode == 'edit' && <span class="text-light border-bottom-light mb-2">ID: 12345293434</span>}
       <div class="row">
         <div class="col-12 pb-1">
           <div class="row">
