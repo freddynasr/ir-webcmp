@@ -12,11 +12,12 @@ export namespace Components {
         "btn_block": boolean;
         "btn_color": string;
         "btn_disabled": boolean;
-        "btn_size": string;
         "btn_type": string;
         "icon": string;
         "name": string;
+        "size": 'sm' | 'md' | 'lg';
         "text": any;
+        "textSize": 'sm' | 'md' | 'lg';
     }
     interface IrChannelManager {
         "dropdownData": {
@@ -31,7 +32,17 @@ export namespace Components {
     title: string;
     channel: string;
     status: string;
+    id: string;
+    group: string;
+    property: string;
+    hotelId: string;
   }[];
+    }
+    interface IrChannelSelect {
+        "data": any[];
+        "icon": boolean;
+        "label": string;
+        "placeholder": string;
     }
     interface IrCheckbox {
         "checked": boolean;
@@ -52,8 +63,11 @@ export namespace Components {
       icon: string;
     }[];
   };
+        "object": any;
     }
     interface IrGeneralSettings {
+        "connectionStatus": string;
+        "data": any;
         "mode": string;
     }
     interface IrGuestInfo {
@@ -64,6 +78,11 @@ export namespace Components {
     interface IrIcon {
         "icon": string;
     }
+    interface IrInputChannel {
+        "label": string;
+        "placeholder": string;
+        "value": string;
+    }
     interface IrInputText {
         "LabelAvailable": boolean;
         "inputStyle": boolean;
@@ -71,9 +90,10 @@ export namespace Components {
         "name": string;
         "placeholder": string;
         "required": boolean;
-        "size": string;
+        "size": 'sm' | 'md' | 'lg';
         "submited": boolean;
         "text": any;
+        "textSize": 'sm' | 'md' | 'lg';
         "type": string;
     }
     interface IrListItem {
@@ -85,10 +105,22 @@ export namespace Components {
       icon: string;
     }[];
   };
+        "dropdownDataDisable": {
+    name: string;
+    icon: string;
+    children: {
+      name: string;
+      icon: string;
+    }[];
+  };
         "listData": {
     title: string;
     channel: string;
     status: string;
+    id: string;
+    group: string;
+    property: string;
+    hotelId: string;
   }[];
     }
     interface IrLoader {
@@ -113,8 +145,9 @@ export namespace Components {
         "required": boolean;
         "selectStyle": boolean;
         "selectedValue": any;
-        "size": string;
+        "size": 'sm' | 'md' | 'lg';
         "submited": boolean;
+        "textSize": 'sm' | 'md' | 'lg';
     }
     interface IrSidebar {
         "name": string;
@@ -231,6 +264,12 @@ declare global {
         prototype: HTMLIrChannelManagerElement;
         new (): HTMLIrChannelManagerElement;
     };
+    interface HTMLIrChannelSelectElement extends Components.IrChannelSelect, HTMLStencilElement {
+    }
+    var HTMLIrChannelSelectElement: {
+        prototype: HTMLIrChannelSelectElement;
+        new (): HTMLIrChannelSelectElement;
+    };
     interface HTMLIrCheckboxElement extends Components.IrCheckbox, HTMLStencilElement {
     }
     var HTMLIrCheckboxElement: {
@@ -266,6 +305,12 @@ declare global {
     var HTMLIrIconElement: {
         prototype: HTMLIrIconElement;
         new (): HTMLIrIconElement;
+    };
+    interface HTMLIrInputChannelElement extends Components.IrInputChannel, HTMLStencilElement {
+    }
+    var HTMLIrInputChannelElement: {
+        prototype: HTMLIrInputChannelElement;
+        new (): HTMLIrInputChannelElement;
     };
     interface HTMLIrInputTextElement extends Components.IrInputText, HTMLStencilElement {
     }
@@ -348,12 +393,14 @@ declare global {
     interface HTMLElementTagNameMap {
         "ir-button": HTMLIrButtonElement;
         "ir-channel-manager": HTMLIrChannelManagerElement;
+        "ir-channel-select": HTMLIrChannelSelectElement;
         "ir-checkbox": HTMLIrCheckboxElement;
         "ir-checkboxes": HTMLIrCheckboxesElement;
         "ir-dropdown": HTMLIrDropdownElement;
         "ir-general-settings": HTMLIrGeneralSettingsElement;
         "ir-guest-info": HTMLIrGuestInfoElement;
         "ir-icon": HTMLIrIconElement;
+        "ir-input-channel": HTMLIrInputChannelElement;
         "ir-input-text": HTMLIrInputTextElement;
         "ir-list-item": HTMLIrListItemElement;
         "ir-loader": HTMLIrLoaderElement;
@@ -374,12 +421,13 @@ declare namespace LocalJSX {
         "btn_block"?: boolean;
         "btn_color"?: string;
         "btn_disabled"?: boolean;
-        "btn_size"?: string;
         "btn_type"?: string;
         "icon"?: string;
         "name"?: string;
         "onClickHanlder"?: (event: IrButtonCustomEvent<any>) => void;
+        "size"?: 'sm' | 'md' | 'lg';
         "text"?: any;
+        "textSize"?: 'sm' | 'md' | 'lg';
     }
     interface IrChannelManager {
         "dropdownData"?: {
@@ -394,7 +442,17 @@ declare namespace LocalJSX {
     title: string;
     channel: string;
     status: string;
+    id: string;
+    group: string;
+    property: string;
+    hotelId: string;
   }[];
+    }
+    interface IrChannelSelect {
+        "data"?: any[];
+        "icon"?: boolean;
+        "label"?: string;
+        "placeholder"?: string;
     }
     interface IrCheckbox {
         "checked"?: boolean;
@@ -417,9 +475,12 @@ declare namespace LocalJSX {
       icon: string;
     }[];
   };
-        "onDropdownItemCLicked"?: (event: IrDropdownCustomEvent<string>) => void;
+        "object"?: any;
+        "onDropdownItemCLicked"?: (event: IrDropdownCustomEvent<{ name: string; object: any }>) => void;
     }
     interface IrGeneralSettings {
+        "connectionStatus"?: string;
+        "data"?: any;
         "mode"?: string;
     }
     interface IrGuestInfo {
@@ -432,6 +493,11 @@ declare namespace LocalJSX {
     interface IrIcon {
         "icon"?: string;
     }
+    interface IrInputChannel {
+        "label"?: string;
+        "placeholder"?: string;
+        "value"?: string;
+    }
     interface IrInputText {
         "LabelAvailable"?: boolean;
         "inputStyle"?: boolean;
@@ -440,9 +506,10 @@ declare namespace LocalJSX {
         "onTextChange"?: (event: IrInputTextCustomEvent<any>) => void;
         "placeholder"?: string;
         "required"?: boolean;
-        "size"?: string;
+        "size"?: 'sm' | 'md' | 'lg';
         "submited"?: boolean;
         "text"?: any;
+        "textSize"?: 'sm' | 'md' | 'lg';
         "type"?: string;
     }
     interface IrListItem {
@@ -454,10 +521,22 @@ declare namespace LocalJSX {
       icon: string;
     }[];
   };
+        "dropdownDataDisable"?: {
+    name: string;
+    icon: string;
+    children: {
+      name: string;
+      icon: string;
+    }[];
+  };
         "listData"?: {
     title: string;
     channel: string;
     status: string;
+    id: string;
+    group: string;
+    property: string;
+    hotelId: string;
   }[];
         "onOpenSidebar"?: (event: IrListItemCustomEvent<any>) => void;
     }
@@ -484,8 +563,9 @@ declare namespace LocalJSX {
         "required"?: boolean;
         "selectStyle"?: boolean;
         "selectedValue"?: any;
-        "size"?: string;
+        "size"?: 'sm' | 'md' | 'lg';
         "submited"?: boolean;
+        "textSize"?: 'sm' | 'md' | 'lg';
     }
     interface IrSidebar {
         "name"?: string;
@@ -544,12 +624,14 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "ir-button": IrButton;
         "ir-channel-manager": IrChannelManager;
+        "ir-channel-select": IrChannelSelect;
         "ir-checkbox": IrCheckbox;
         "ir-checkboxes": IrCheckboxes;
         "ir-dropdown": IrDropdown;
         "ir-general-settings": IrGeneralSettings;
         "ir-guest-info": IrGuestInfo;
         "ir-icon": IrIcon;
+        "ir-input-channel": IrInputChannel;
         "ir-input-text": IrInputText;
         "ir-list-item": IrListItem;
         "ir-loader": IrLoader;
@@ -571,12 +653,14 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "ir-button": LocalJSX.IrButton & JSXBase.HTMLAttributes<HTMLIrButtonElement>;
             "ir-channel-manager": LocalJSX.IrChannelManager & JSXBase.HTMLAttributes<HTMLIrChannelManagerElement>;
+            "ir-channel-select": LocalJSX.IrChannelSelect & JSXBase.HTMLAttributes<HTMLIrChannelSelectElement>;
             "ir-checkbox": LocalJSX.IrCheckbox & JSXBase.HTMLAttributes<HTMLIrCheckboxElement>;
             "ir-checkboxes": LocalJSX.IrCheckboxes & JSXBase.HTMLAttributes<HTMLIrCheckboxesElement>;
             "ir-dropdown": LocalJSX.IrDropdown & JSXBase.HTMLAttributes<HTMLIrDropdownElement>;
             "ir-general-settings": LocalJSX.IrGeneralSettings & JSXBase.HTMLAttributes<HTMLIrGeneralSettingsElement>;
             "ir-guest-info": LocalJSX.IrGuestInfo & JSXBase.HTMLAttributes<HTMLIrGuestInfoElement>;
             "ir-icon": LocalJSX.IrIcon & JSXBase.HTMLAttributes<HTMLIrIconElement>;
+            "ir-input-channel": LocalJSX.IrInputChannel & JSXBase.HTMLAttributes<HTMLIrInputChannelElement>;
             "ir-input-text": LocalJSX.IrInputText & JSXBase.HTMLAttributes<HTMLIrInputTextElement>;
             "ir-list-item": LocalJSX.IrListItem & JSXBase.HTMLAttributes<HTMLIrListItemElement>;
             "ir-loader": LocalJSX.IrLoader & JSXBase.HTMLAttributes<HTMLIrLoaderElement>;

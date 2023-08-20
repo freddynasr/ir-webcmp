@@ -7,18 +7,19 @@
 
 ## Properties
 
-| Property         | Attribute         | Description | Type             | Default     |
-| ---------------- | ----------------- | ----------- | ---------------- | ----------- |
-| `LabelAvailable` | `label-available` |             | `boolean`        | `true`      |
-| `data`           | --                |             | `selectOption[]` | `undefined` |
-| `firstOption`    | `first-option`    |             | `string`         | `'Select'`  |
-| `label`          | `label`           |             | `string`         | `'<label>'` |
-| `name`           | `name`            |             | `string`         | `undefined` |
-| `required`       | `required`        |             | `boolean`        | `undefined` |
-| `selectStyle`    | `select-style`    |             | `boolean`        | `true`      |
-| `selectedValue`  | `selected-value`  |             | `any`            | `null`      |
-| `size`           | `size`            |             | `string`         | `''`        |
-| `submited`       | `submited`        |             | `boolean`        | `false`     |
+| Property         | Attribute         | Description | Type                   | Default     |
+| ---------------- | ----------------- | ----------- | ---------------------- | ----------- |
+| `LabelAvailable` | `label-available` |             | `boolean`              | `true`      |
+| `data`           | --                |             | `selectOption[]`       | `undefined` |
+| `firstOption`    | `first-option`    |             | `string`               | `'Select'`  |
+| `label`          | `label`           |             | `string`               | `'<label>'` |
+| `name`           | `name`            |             | `string`               | `undefined` |
+| `required`       | `required`        |             | `boolean`              | `undefined` |
+| `selectStyle`    | `select-style`    |             | `boolean`              | `true`      |
+| `selectedValue`  | `selected-value`  |             | `any`                  | `null`      |
+| `size`           | `size`            |             | `"lg" \| "md" \| "sm"` | `'md'`      |
+| `submited`       | `submited`        |             | `boolean`              | `false`     |
+| `textSize`       | `text-size`       |             | `"lg" \| "md" \| "sm"` | `'md'`      |
 
 
 ## Events

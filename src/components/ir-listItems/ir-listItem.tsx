@@ -29,34 +29,116 @@ export class IrListItem {
     ],
   };
 
+  @Prop({ reflect: true }) dropdownDataDisable: {
+    name: string;
+    icon: string;
+    children: {
+      name: string;
+      icon: string;
+    }[];
+  } = {
+    name: 'Action',
+    icon: '',
+    children: [
+      {
+        name: 'Edit',
+        icon: 'ft-edit',
+      },
+      {
+        name: 'Delete',
+        icon: 'ft-trash',
+      },
+      {
+        name: 'Enable',
+        icon: 'ft-check',
+      },
+    ],
+  };
+
   @Prop({ reflect: true }) listData: {
     title: string;
     channel: string;
     status: string;
+    id: string;
+    group: string;
+    property: string;
+    hotelId: string;
   }[] = [
     {
       title: 'Title',
       channel: 'Channel',
       status: 'Status',
+      id: '1',
+      group: 'All',
+      property: 'Twins',
+      hotelId: '123',
     },
   ];
 
   @Event() openSidebar: EventEmitter;
 
-  handleCreate(mode: string) {
-    this.openSidebar.emit(mode);
+  handleCreate(mode: string, item: any) {
+    this.openSidebar.emit({ mode: mode, item: item });
   }
 
+  onPressDelete(item: any) {
+    console.log("item", item);
+   const dropdown = document.querySelector(`ir-dropdown.dropdown-action-${item.id}`);
+  if (dropdown) {
+    dropdown.removeEventListener('dropdownItemCLicked', this.dropdownEventHandler);
+  }
+    this.listData = this.listData.filter((data) => data.id !== item.id);
+    // Remove the event listener
+  }
+
+  onPressDisable(item: any) {
+    console.log("item", item);
+    // Change the status of the item
+    this.listData = this.listData.map((data) => {
+      if (data.id === item.id) {
+        data.status = 'Disabled';
+      }
+      return data;
+    }
+    );
+  }
+
+  onPressEnable(item: any) {
+    console.log("item", item);
+    // Change the status of the item
+    this.listData = this.listData.map((data) => {
+      if (data.id === item.id) {
+        data.status = 'Enabled';
+      }
+      return data;
+    }
+    );
+  }
+
+
   componentDidLoad() {
-    // Add an event listener to the dropdown component
-    const item = document.querySelector('ir-dropdown');
-    item.addEventListener('dropdownItemCLicked', (e: CustomEvent) => {
-      if (e.detail === 'Edit') {
-        console.log(e.detail);
-        this.handleCreate('edit');
+    this.listData.forEach(item => {
+      const dropdown = document.querySelector(`ir-dropdown.dropdown-action-${item.id}`);
+      if (dropdown) {
+        const eventHandler = (e: CustomEvent) => {
+          if (e.detail.name === 'Edit') {
+            this.handleCreate('edit', item);
+          } else if (e.detail.name === 'Delete') {
+            this.onPressDelete(item);
+          } else if (e.detail.name === 'Disable') {
+            this.onPressDisable(item);
+          } else if (e.detail.name === 'Enable') {
+            this.onPressEnable(item);
+          }
+        };
+        
+        dropdown.addEventListener('dropdownItemCLicked', eventHandler);
       }
     });
   }
+
+ 
+  
 
   _renderEmptyState() {
     return (
@@ -74,11 +156,15 @@ export class IrListItem {
     );
   }
 
+
+
   _renderItem() {
     return (
       <div>
         <div class="container-fluid">
-          {this.listData.map(item => (
+          {this.listData.map(item => {
+            
+             return (
             <div class="row">
               <div class="col-12 item-info">
                 <div class="row">
@@ -86,12 +172,14 @@ export class IrListItem {
                   <div class="col-3 p-1">{item.channel}</div>
                   <div class="col-3 p-1">{item.status}</div>
                   <div class="col-3 ">
-                    <ir-dropdown id="action" data={this.dropdownData}></ir-dropdown>
+                  <ir-dropdown class={`dropdown-action-${item.id}`} 
+                  data={item.status === 'Enabled' ? this.dropdownData : this.dropdownDataDisable}
+                  object={item}></ir-dropdown>
                   </div>
                 </div>
               </div>
             </div>
-          ))}
+          )})}
         </div>
       </div>
     );

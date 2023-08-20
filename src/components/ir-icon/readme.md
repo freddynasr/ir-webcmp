@@ -17,6 +17,7 @@
 ### Used by
 
  - [ir-channel-manager](../ir-channel-manager)
+ - [ir-channel-select](../ir-channel-select)
  - [ir-dropdown](../ir-dropdown)
  - [ir-general-settings](../ir-general-settings)
  - [ir-mapping](../ir-mapping)
@@ -27,6 +28,7 @@
 ```mermaid
 graph TD;
   ir-channel-manager --> ir-icon
+  ir-channel-select --> ir-icon
   ir-dropdown --> ir-icon
   ir-general-settings --> ir-icon
   ir-mapping --> ir-icon

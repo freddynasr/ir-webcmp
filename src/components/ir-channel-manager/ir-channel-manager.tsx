@@ -35,11 +35,16 @@ export class IrChannelManager {
     title: string;
     channel: string;
     status: string;
+    id: string;
+    group: string;
+    property: string;
+    hotelId: string;
   }[] = [];
 
   @State() mode: string = 'create';
   tabs: string[] = ['General Settings', 'Mapping', 'Channel Settings'];
   @State() activeTab: string = 'General Settings';
+  @State() selectedItem: any = {};
 
   componentDidLoad() {
     // Add an event listener to the ir-topbar component
@@ -52,9 +57,12 @@ export class IrChannelManager {
 
     const dropdown = document.querySelector('ir-list-item');
     dropdown.addEventListener('openSidebar', (e: CustomEvent) => {
-      console.log(e.detail);
-      if (e.detail === 'edit') {
+      if (e.detail.mode === 'edit') {
+       
         this.mode = 'edit';
+        this.selectedItem = e.detail.item;
+        
+        console.log(this.selectedItem);
         const sidebar = document.querySelector('ir-sidebar');
         sidebar.open = !sidebar.open;
       }
@@ -106,7 +114,7 @@ export class IrChannelManager {
             </li>
           ))}
         </ul>
-        {this.activeTab == 'General Settings' && <ir-general-settings mode={this.mode}></ir-general-settings>}
+        {this.activeTab == 'General Settings' && <ir-general-settings data={this.selectedItem} mode={this.mode}></ir-general-settings>}
         {this.activeTab == 'Mapping' && <ir-mapping></ir-mapping>}
         <div class="btn-position">
           <button type="button" class="btn btn-primary btn-sm btn-block">

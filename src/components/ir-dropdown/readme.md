@@ -10,13 +10,14 @@
 | Property | Attribute | Description | Type                                                                           | Default |
 | -------- | --------- | ----------- | ------------------------------------------------------------------------------ | ------- |
 | `data`   | --        |             | `{ name: string; icon: string; children: { name: string; icon: string; }[]; }` | `null`  |
+| `object` | `object`  |             | `any`                                                                          | `null`  |
 
 
 ## Events
 
-| Event                 | Description | Type                  |
-| --------------------- | ----------- | --------------------- |
-| `dropdownItemCLicked` |             | `CustomEvent<string>` |
+| Event                 | Description | Type                                          |
+| --------------------- | ----------- | --------------------------------------------- |
+| `dropdownItemCLicked` |             | `CustomEvent<{ name: string; object: any; }>` |
 
 
 ## Dependencies

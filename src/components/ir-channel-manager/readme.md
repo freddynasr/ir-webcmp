@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property       | Attribute | Description | Type                                                                           | Default                                                                                                                                                                                                                                                                          |
-| -------------- | --------- | ----------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `dropdownData` | --        |             | `{ name: string; icon: string; children: { name: string; icon: string; }[]; }` | `{     name: 'Action',     icon: '',     children: [       {         name: 'Edit',         icon: 'ft-edit',       },       {         name: 'Delete',         icon: 'ft-trash',       },       {         name: 'Disable',         icon: 'ft-alert-triangle',       },     ],   }` |
-| `listData`     | --        |             | `{ title: string; channel: string; status: string; }[]`                        | `[]`                                                                                                                                                                                                                                                                             |
+| Property       | Attribute | Description | Type                                                                                                                  | Default                                                                                                                                                                                                                                                                          |
+| -------------- | --------- | ----------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `dropdownData` | --        |             | `{ name: string; icon: string; children: { name: string; icon: string; }[]; }`                                        | `{     name: 'Action',     icon: '',     children: [       {         name: 'Edit',         icon: 'ft-edit',       },       {         name: 'Delete',         icon: 'ft-trash',       },       {         name: 'Disable',         icon: 'ft-alert-triangle',       },     ],   }` |
+| `listData`     | --        |             | `{ title: string; channel: string; status: string; id: string; group: string; property: string; hotelId: string; }[]` | `[]`                                                                                                                                                                                                                                                                             |
 
 
 ## Dependencies
@@ -39,7 +39,10 @@ graph TD;
   ir-list-item --> ir-dropdown
   ir-dropdown --> ir-icon
   ir-sidebar --> ir-icon
+  ir-general-settings --> ir-input-channel
+  ir-general-settings --> ir-channel-select
   ir-general-settings --> ir-icon
+  ir-channel-select --> ir-icon
   ir-mapping --> ir-icon
   style ir-channel-manager fill:#f9f,stroke:#333,stroke-width:4px
 ```

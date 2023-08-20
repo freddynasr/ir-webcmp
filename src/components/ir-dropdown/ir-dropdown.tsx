@@ -13,9 +13,10 @@ export class IrDropdown {
       icon: string;
     }[];
   } = null;
+  @Prop({ reflect: true }) object: any = null;
   @State() show: boolean = false;
 
-  @Event() dropdownItemCLicked: EventEmitter<string>;
+  @Event() dropdownItemCLicked: EventEmitter<{ name: string; object: any }>;
   render() {
     let content = null;
     if (this.data !== null) {
@@ -41,7 +42,7 @@ export class IrDropdown {
                     class="dropdown-item"
                     data-toggle=""
                     onClick={() => {
-                      this.dropdownItemCLicked.emit(child.name);
+                      this.dropdownItemCLicked.emit({ name: child.name, object: this.object });
                       this.show = false;
                     }}
                   >
