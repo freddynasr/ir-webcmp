@@ -1,4 +1,4 @@
-import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 @Component({
   tag: 'ir-list-item',
 })
@@ -75,6 +75,12 @@ export class IrListItem {
     },
   ];
 
+  @Watch('listData')
+  watchHandler(newValue: any, oldValue: any) {
+    console.log('The new value of listData is: ', newValue);
+    console.log('The old value of listData is: ', oldValue);
+  }
+
   @Event() openSidebar: EventEmitter;
 
   handleCreate(mode: string, item: any) {
@@ -85,7 +91,7 @@ export class IrListItem {
     console.log("item", item);
    const dropdown = document.querySelector(`ir-dropdown.dropdown-action-${item.id}`);
   if (dropdown) {
-    dropdown.removeEventListener('dropdownItemCLicked', this.dropdownEventHandler);
+    //dropdown.removeEventListener('dropdownItemCLicked', this.handleCreate);
   }
     this.listData = this.listData.filter((data) => data.id !== item.id);
     // Remove the event listener

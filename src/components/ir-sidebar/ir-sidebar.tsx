@@ -1,4 +1,4 @@
-import { Component, Prop, h, Method } from '@stencil/core';
+import { Component, Prop, h, Method, Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'ir-sidebar',
@@ -10,9 +10,12 @@ export class IrSidebar {
 
   @Prop({ mutable: true, reflect: true }) open: boolean = false;
 
+  @Event() irSidebarToggle: EventEmitter;
+
+
   @Method()
   async toggleSidebar() {
-    this.open = !this.open;
+    this.irSidebarToggle.emit(this.open);
   }
 
   render() {

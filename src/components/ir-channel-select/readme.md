@@ -11,8 +11,15 @@
 | ------------- | ------------- | ----------- | --------- | ------- |
 | `data`        | --            |             | `any[]`   | `[]`    |
 | `icon`        | `icon`        |             | `boolean` | `false` |
-| `label`       | `label`       |             | `string`  | `' '`   |
-| `placeholder` | `placeholder` |             | `string`  | `' '`   |
+| `label`       | `label`       |             | `string`  | `''`    |
+| `placeholder` | `placeholder` |             | `string`  | `''`    |
+
+
+## Events
+
+| Event      | Description | Type               |
+| ---------- | ----------- | ------------------ |
+| `irSelect` |             | `CustomEvent<any>` |
 
 
 ## Dependencies

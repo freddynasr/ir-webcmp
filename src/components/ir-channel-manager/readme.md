@@ -39,8 +39,8 @@ graph TD;
   ir-list-item --> ir-dropdown
   ir-dropdown --> ir-icon
   ir-sidebar --> ir-icon
-  ir-general-settings --> ir-input-channel
   ir-general-settings --> ir-channel-select
+  ir-general-settings --> ir-input-channel
   ir-general-settings --> ir-icon
   ir-channel-select --> ir-icon
   ir-mapping --> ir-icon

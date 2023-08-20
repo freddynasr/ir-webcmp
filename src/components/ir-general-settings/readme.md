@@ -7,11 +7,18 @@
 
 ## Properties
 
-| Property           | Attribute           | Description | Type     | Default                                                                                                                                           |
-| ------------------ | ------------------- | ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `connectionStatus` | `connection-status` |             | `string` | `'Connected'`                                                                                                                                     |
-| `data`             | `data`              |             | `any`    | `{     id: '123456',     channel: 'Channel Name',     group: 'Group',     title: 'Title',     property: 'Property',     hotelId: 'Hotel ID',   }` |
-| `mode`             | `mode`              |             | `string` | `undefined`                                                                                                                                       |
+| Property           | Attribute           | Description | Type     | Default                                                                                                                                          |
+| ------------------ | ------------------- | ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `connectionStatus` | `connection-status` |             | `string` | `'Not connected'`                                                                                                                                |
+| `data`             | `data`              |             | `any`    | `{     id: '123456',     channel: 'Channel Name',     group: 'Group',     title: 'Title',     property: 'Property',     hotelId: "hotelId",   }` |
+| `mode`             | `mode`              |             | `string` | `undefined`                                                                                                                                      |
+
+
+## Events
+
+| Event          | Description | Type               |
+| -------------- | ----------- | ------------------ |
+| `sendToParent` |             | `CustomEvent<any>` |
 
 
 ## Dependencies
@@ -22,15 +29,15 @@
 
 ### Depends on
 
-- [ir-input-channel](../ir-input-channel)
 - [ir-channel-select](../ir-channel-select)
+- [ir-input-channel](../ir-input-channel)
 - [ir-icon](../ir-icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  ir-general-settings --> ir-input-channel
   ir-general-settings --> ir-channel-select
+  ir-general-settings --> ir-input-channel
   ir-general-settings --> ir-icon
   ir-channel-select --> ir-icon
   ir-channel-manager --> ir-general-settings

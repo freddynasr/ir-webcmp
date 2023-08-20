@@ -9,9 +9,16 @@
 
 | Property      | Attribute     | Description | Type     | Default |
 | ------------- | ------------- | ----------- | -------- | ------- |
-| `label`       | `label`       |             | `string` | `' '`   |
-| `placeholder` | `placeholder` |             | `string` | `' '`   |
-| `value`       | `value`       |             | `string` | `' '`   |
+| `label`       | `label`       |             | `string` | `''`    |
+| `placeholder` | `placeholder` |             | `string` | `''`    |
+| `value`       | `value`       |             | `string` | `''`    |
+
+
+## Events
+
+| Event       | Description | Type               |
+| ----------- | ----------- | ------------------ |
+| `sendValue` |             | `CustomEvent<any>` |
 
 
 ## Dependencies

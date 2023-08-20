@@ -31,7 +31,7 @@ export class IrChannelManager {
     ],
   };
 
-  @Prop({ reflect: true }) listData: {
+  @Prop({ reflect: true, mutable: true }) listData: {
     title: string;
     channel: string;
     status: string;
@@ -53,6 +53,8 @@ export class IrChannelManager {
       const sidebar = document.querySelector('ir-sidebar');
       sidebar.open = !sidebar.open;
       this.mode = 'create';
+      this.activeTab = 'General Settings';
+
     });
 
     const dropdown = document.querySelector('ir-list-item');
@@ -67,6 +69,31 @@ export class IrChannelManager {
         sidebar.open = !sidebar.open;
       }
     });
+
+    const modal = document.querySelector('ir-modal');
+   
+    modal.addEventListener('confirmModal', (event: CustomEvent) => {
+      console.log(event.detail);
+        sidebar.open = !sidebar.open;
+        modal.closeModal();
+      
+    });
+
+    const sidebar = document.querySelector('ir-sidebar');
+    sidebar.addEventListener('irSidebarToggle', (event: CustomEvent) => {
+      if (event.detail == true) {
+        if (this.listData){
+        modal.openModal()
+      }}
+    })
+
+    const generalSettings = document.querySelector('ir-general-settings');
+    generalSettings.addEventListener('sendToParent', (event: CustomEvent) => {
+      console.log(event.detail);
+     this.listData = [...this.listData, {...event.detail, id: this.listData.length + 1, status: 'Active'}];
+      console.log(this.listData);
+    }
+    )
   }
 
   _exitWithoutSave() {
@@ -104,9 +131,7 @@ export class IrChannelManager {
                 class=""
                 data-mdb-ripple-color="dark"
                 onClick={() => {
-                  console.log(tab);
                   this.activeTab = tab;
-                  console.log(this.activeTab);
                 }}
               >
                 {tab}
@@ -117,8 +142,14 @@ export class IrChannelManager {
         {this.activeTab == 'General Settings' && <ir-general-settings data={this.selectedItem} mode={this.mode}></ir-general-settings>}
         {this.activeTab == 'Mapping' && <ir-mapping></ir-mapping>}
         <div class="btn-position">
-          <button type="button" class="btn btn-primary btn-sm btn-block">
-            Save
+          <button type="button" class="btn btn-primary btn-sm btn-block"
+          onClick={() => {
+            if (this.activeTab == 'General Settings') {
+              this.activeTab = 'Mapping';
+            }
+          }}
+          >
+            {this.activeTab == 'General Settings' ? 'Next' : 'Save'}
           </button>
         </div>
       </ir-sidebar>,

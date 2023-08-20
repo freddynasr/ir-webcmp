@@ -14,6 +14,13 @@
 | `side`   | `side`    |             | `"left" \| "right"` | `'right'`   |
 
 
+## Events
+
+| Event             | Description | Type               |
+| ----------------- | ----------- | ------------------ |
+| `irSidebarToggle` |             | `CustomEvent<any>` |
+
+
 ## Methods
 
 ### `toggleSidebar() => Promise<void>`

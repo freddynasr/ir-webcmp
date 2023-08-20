@@ -207,6 +207,10 @@ export interface IrButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrButtonElement;
 }
+export interface IrChannelSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrChannelSelectElement;
+}
 export interface IrCheckboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrCheckboxElement;
@@ -219,9 +223,17 @@ export interface IrDropdownCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrDropdownElement;
 }
+export interface IrGeneralSettingsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrGeneralSettingsElement;
+}
 export interface IrGuestInfoCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrGuestInfoElement;
+}
+export interface IrInputChannelCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrInputChannelElement;
 }
 export interface IrInputTextCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -242,6 +254,10 @@ export interface IrRadioBtnCustomEvent<T> extends CustomEvent<T> {
 export interface IrSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrSelectElement;
+}
+export interface IrSidebarCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrSidebarElement;
 }
 export interface IrSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -452,6 +468,7 @@ declare namespace LocalJSX {
         "data"?: any[];
         "icon"?: boolean;
         "label"?: string;
+        "onIrSelect"?: (event: IrChannelSelectCustomEvent<any>) => void;
         "placeholder"?: string;
     }
     interface IrCheckbox {
@@ -482,6 +499,7 @@ declare namespace LocalJSX {
         "connectionStatus"?: string;
         "data"?: any;
         "mode"?: string;
+        "onSendToParent"?: (event: IrGeneralSettingsCustomEvent<any>) => void;
     }
     interface IrGuestInfo {
         "data"?: guestInfo;
@@ -495,6 +513,7 @@ declare namespace LocalJSX {
     }
     interface IrInputChannel {
         "label"?: string;
+        "onSendValue"?: (event: IrInputChannelCustomEvent<any>) => void;
         "placeholder"?: string;
         "value"?: string;
     }
@@ -569,6 +588,7 @@ declare namespace LocalJSX {
     }
     interface IrSidebar {
         "name"?: string;
+        "onIrSidebarToggle"?: (event: IrSidebarCustomEvent<any>) => void;
         "open"?: boolean;
         "side"?: 'right' | 'left';
     }

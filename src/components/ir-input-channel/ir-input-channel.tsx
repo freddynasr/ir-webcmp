@@ -1,13 +1,22 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'ir-input-channel',
 })
 export class IrInputChannel {
 
-  @Prop() label = ' '
-  @Prop() placeholder = ' '
-    @Prop() value = ' '
+  @Prop() label = ''
+  @Prop() placeholder = ''
+    @Prop() value = ''
+
+    @Event() sendValue: EventEmitter;
+
+    handleSelectChange(event: Event) {
+        const selectedValue = (event.target as HTMLSelectElement).value;
+        this.sendValue.emit(selectedValue);
+    }
+
+
     
 
 
@@ -25,9 +34,10 @@ export class IrInputChannel {
               <label class="m-0 pr-1">{this.label}</label>
             </div>
             <div class="col-8 p-0">
-              <input type="text" class="form-control form-control-sm" placeholder={this.placeholder} 
+              <input type="text" class="form-control form-control-sm" 
+              placeholder={this.placeholder} 
               value={this.value}
-                onInput={(e: any) => this.value = e.target.value}   
+                onInput={(e: any) => this.sendValue.emit(e.target.value)}  
                 />
             </div>
           </div>

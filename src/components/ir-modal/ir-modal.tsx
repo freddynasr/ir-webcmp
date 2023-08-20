@@ -17,6 +17,12 @@ export class IrModal {
   }
   @Event() confirmModal: EventEmitter<any>;
 
+  confirmClose() {
+    console.log('confirmClose');
+    this.confirmModal.emit()
+  }
+
+
   render() {
     return [
       <div
@@ -35,7 +41,7 @@ export class IrModal {
               <button
                 class="btn btn-light"
                 onClick={() => {
-                  this.confirmModal.emit();
+                  this.confirmClose();
                 }}
               >
                 Confirm
