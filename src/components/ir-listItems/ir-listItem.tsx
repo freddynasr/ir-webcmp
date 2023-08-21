@@ -1,4 +1,4 @@
-import { Component, h, Prop, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
 @Component({
   tag: 'ir-list-item',
 })
@@ -75,15 +75,33 @@ export class IrListItem {
     },
   ];
 
-  @Watch('listData')
-  watchHandler(newValue: any, oldValue: any) {
-    console.log('The new value of listData is: ', newValue);
-    console.log('The old value of listData is: ', oldValue);
+  
+
+  addEventListenerToDropdown(item: any) {
+    const dropdown = document.querySelector(`ir-dropdown.dropdown-action-${item.id}`);
+    console.log("dropdown", dropdown)
+    if (dropdown) {
+      const eventHandler = (e: CustomEvent) => {
+        if (e.detail.name === 'Edit') {
+          this.handleCreate('edit', item);
+        } else if (e.detail.name === 'Delete') {
+          this.onPressDelete(item);
+        } else if (e.detail.name === 'Disable') {
+          this.onPressDisable(item);
+        } else if (e.detail.name === 'Enable') {
+          this.onPressEnable(item);
+        }
+      };
+
+      dropdown.addEventListener('dropdownItemCLicked', eventHandler);
+    }
   }
 
   @Event() openSidebar: EventEmitter;
+  @Event() createNew: EventEmitter;
 
   handleCreate(mode: string, item: any) {
+    
     this.openSidebar.emit({ mode: mode, item: item });
   }
 
@@ -124,25 +142,26 @@ export class IrListItem {
 
   componentDidLoad() {
     this.listData.forEach(item => {
-      const dropdown = document.querySelector(`ir-dropdown.dropdown-action-${item.id}`);
-      if (dropdown) {
-        const eventHandler = (e: CustomEvent) => {
-          if (e.detail.name === 'Edit') {
-            this.handleCreate('edit', item);
-          } else if (e.detail.name === 'Delete') {
-            this.onPressDelete(item);
-          } else if (e.detail.name === 'Disable') {
-            this.onPressDisable(item);
-          } else if (e.detail.name === 'Enable') {
-            this.onPressEnable(item);
-          }
-        };
-        
-        dropdown.addEventListener('dropdownItemCLicked', eventHandler);
-      }
+      this.addEventListenerToDropdown(item);
     });
   }
 
+  componentDidUpdate() {
+    console.log("componentDidUpdate");
+    this.listData.forEach(item => {
+      this.addEventListenerToDropdown(item);
+    });
+  }
+
+
+  // disconnectedCallback() {
+  //   this.listData.forEach(item => {
+  //     const dropdown = document.querySelector(`ir-dropdown.dropdown-action-${item.id}`);
+  //     if (dropdown) {
+  //       dropdown.removeEventListener('dropdownItemCLicked', this.handleCreate);
+  //     }
+  //   });
+  // }
  
   
 
@@ -155,7 +174,9 @@ export class IrListItem {
             You don't have any channels yet.
             <br />
             It's a good time to create
-            <a class="text-primary openSidebar"> new</a>
+            <a class="text-primary openSidebar"
+              onClick={() => this.createNew.emit({ mode: 'create', item: null })}
+              > new</a>
           </p>
         </div>
       </div>

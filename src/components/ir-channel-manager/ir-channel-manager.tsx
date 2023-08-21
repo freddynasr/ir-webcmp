@@ -1,4 +1,5 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, h, Listen, Prop, State } from '@stencil/core';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   tag: 'ir-channel-manager',
@@ -39,6 +40,7 @@ export class IrChannelManager {
     group: string;
     property: string;
     hotelId: string;
+    mapping: any;
   }[] = [];
 
   @State() loader: boolean = false;
@@ -46,11 +48,74 @@ export class IrChannelManager {
   tabs: string[] = ['General Settings', 'Mapping', 'Channel Settings'];
   @State() activeTab: string = 'General Settings';
   @State() selectedItem: any = {};
+  @State() item: any = {};
+  @State() anyChanges: boolean = false;
+
+ 
+
+  @Listen('sendToParent')
+  sendToParentHandler(event: CustomEvent) {
+    this.anyChanges = true;
+    this.item = event.detail;
+    //this.listData = [...this.listData, { ...event.detail, id: this.listData.length + 1, status: 'Active' }];
+  }
+
+  @Listen('sendMappingToParent')
+  sendMappingToParentHandler(event: CustomEvent) {
+    this.anyChanges = true;
+    const mapping = event.detail
+    if (this.mode === 'edit') {
+      this.listData = this.listData.map((item) => {
+        if (item.id === this.selectedItem.id) {
+          return { ...this.item, mapping: mapping };
+        }
+        return item;
+      });
+      this.mode = 'create';
+      this.activeTab = 'General Settings';
+      const sidebar = document.querySelector('ir-sidebar');
+      sidebar.open = !sidebar.open;
+      this._reset();
+      return;
+    }
+    this.listData = [...this.listData, {...this.item, mapping: mapping, status: 'Active', id: uuidv4() }];
+    console.log(this.listData);
+    const sidebar = document.querySelector('ir-sidebar');
+    sidebar.open = !sidebar.open;
+    this._reset();
+  }
+
+  
+  _reset() {
+    this.item = {};
+    this.mode = 'create';
+    this.activeTab = 'General Settings';
+    this.selectedItem = {};
+    this.anyChanges = false;
+  }
+
+ 
+
+@Listen('createNew')
+openSidebarHandler(event: CustomEvent) {
+  console.log(event);
+  const sidebar = document.querySelector('ir-sidebar');
+  sidebar.open = !sidebar.open;
+  this.loader = true;
+  this.mode = 'create';
+  this.activeTab = 'General Settings';
+  setTimeout(() => {
+    this.loader = false;
+  }, 2000);
+}
+
 
   componentDidLoad() {
+   
     // Add an event listener to the ir-topbar component
     const openSidebar = document.querySelector('ir-topbar');
     openSidebar.addEventListener('openSidebar', () => {
+      console.log('openSidebar');
       const sidebar = document.querySelector('ir-sidebar');
       sidebar.open = !sidebar.open;
       this.loader = true;
@@ -79,23 +144,37 @@ export class IrChannelManager {
       console.log(event.detail);
       sidebar.open = !sidebar.open;
       modal.closeModal();
+      this._reset();
     });
 
     const sidebar = document.querySelector('ir-sidebar');
     sidebar.addEventListener('irSidebarToggle', (event: CustomEvent) => {
-      if (event.detail == true) {
+      if (event.detail == true && this.anyChanges) {
         if (this.listData) {
           modal.openModal();
         }
+      } else {
+        sidebar.open = !sidebar.open;
+        this._reset();
       }
     });
+  }
 
-    const generalSettings = document.querySelector('ir-general-settings');
-    generalSettings.addEventListener('sendToParent', (event: CustomEvent) => {
-      console.log(event.detail);
-      this.listData = [...this.listData, { ...event.detail, id: this.listData.length + 1, status: 'Active' }];
-      console.log(this.listData);
-    });
+  goNext() {
+    if (this.activeTab == 'General Settings' ) {
+      if (!this.item.title || !this.item.channel || !this.item.group || !this.item.property || !this.item.hotelId) {
+        alert('Please fill all the fields');
+      } else {
+        this.activeTab = 'Mapping';
+        this.loader = true;
+        setTimeout(() => {
+          this.loader = false;
+        }, 2000);
+      }
+    } else if (this.activeTab == 'Mapping') {
+      const IrMapping = document.querySelector('ir-mapping');
+      IrMapping._onSaveMapping();
+  }
   }
 
   _exitWithoutSave() {
@@ -152,7 +231,7 @@ export class IrChannelManager {
         ) : (
           <span>
             {this.activeTab == 'General Settings' && <ir-general-settings data={this.selectedItem} mode={this.mode}></ir-general-settings>}
-            {this.activeTab == 'Mapping' && <ir-mapping></ir-mapping>}
+            {this.activeTab == 'Mapping' && <ir-mapping map={this.selectedItem}></ir-mapping>}
           </span>
         )}
 
@@ -160,11 +239,7 @@ export class IrChannelManager {
           <button
             type="button"
             class="btn btn-primary btn-sm btn-block"
-            onClick={() => {
-              if (this.activeTab == 'General Settings') {
-                this.activeTab = 'Mapping';
-              }
-            }}
+            onClick={() => this.goNext()}
           >
             {this.activeTab == 'General Settings' ? 'Next' : 'Save'}
           </button>

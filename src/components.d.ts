@@ -36,6 +36,7 @@ export namespace Components {
     group: string;
     property: string;
     hotelId: string;
+    mapping: any;
   }[];
     }
     interface IrChannelSelect {
@@ -133,6 +134,8 @@ export namespace Components {
         "size": string;
     }
     interface IrMapping {
+        "_onSaveMapping": () => Promise<void>;
+        "map": any;
     }
     interface IrModal {
         "closeModal": () => Promise<void>;
@@ -254,6 +257,10 @@ export interface IrInputTextCustomEvent<T> extends CustomEvent<T> {
 export interface IrListItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrListItemElement;
+}
+export interface IrMappingCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrMappingElement;
 }
 export interface IrModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -474,6 +481,7 @@ declare namespace LocalJSX {
     group: string;
     property: string;
     hotelId: string;
+    mapping: any;
   }[];
     }
     interface IrChannelSelect {
@@ -575,12 +583,15 @@ declare namespace LocalJSX {
     property: string;
     hotelId: string;
   }[];
+        "onCreateNew"?: (event: IrListItemCustomEvent<any>) => void;
         "onOpenSidebar"?: (event: IrListItemCustomEvent<any>) => void;
     }
     interface IrLoader {
         "size"?: string;
     }
     interface IrMapping {
+        "map"?: any;
+        "onSendMappingToParent"?: (event: IrMappingCustomEvent<any>) => void;
     }
     interface IrModal {
         "onConfirmModal"?: (event: IrModalCustomEvent<any>) => void;

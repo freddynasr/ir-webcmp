@@ -4,7 +4,6 @@ import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
   tag: 'ir-general-settings',
 })
 export class IrGeneralSettings {
-  @State() selectedChannel: string = '';
   @State() testLoader: boolean = false;
   @Prop() mode: string;
   @Prop({ reflect: true, mutable: true }) connectionStatus: string = 'Not connected';
@@ -16,6 +15,9 @@ export class IrGeneralSettings {
     property: 'Property',
     hotelId: 'hotelId',
   };
+  @State() selectedChannel: string = ''
+ 
+
 
   @State() connected: boolean = false;
 
@@ -33,7 +35,7 @@ export class IrGeneralSettings {
     });
 
     const groupSelect = document.querySelector('ir-select#group-select');
-    groupSelect.addEventListener('irSelect', (event: CustomEvent) => {
+    groupSelect.addEventListener('selectChange', (event: CustomEvent) => {
       this.data = { ...this.data, group: event.detail };
     });
 
@@ -43,9 +45,11 @@ export class IrGeneralSettings {
     });
 
     const propertySelect = document.querySelector('ir-select#property-select');
-    propertySelect.addEventListener('irSelect', (event: CustomEvent) => {
+    propertySelect.addEventListener('selectChange', (event: CustomEvent) => {
       this.data = { ...this.data, property: event.detail };
     });
+
+    
   }
 
   componentDidUpdate() {
@@ -59,7 +63,7 @@ export class IrGeneralSettings {
     });
 
     const minimumStay = document.querySelector('ir-select#minimum-stay-select');
-    minimumStay.addEventListener('irSelect', (event: CustomEvent) => {
+    minimumStay.addEventListener('selectChange', (event: CustomEvent) => {
       console.log('minimumStay', event.detail);
       this.data = {
         ...this.data,
@@ -69,6 +73,11 @@ export class IrGeneralSettings {
   }
 
   testConnection() {
+    // check if all data is filled
+    if (!this.data.hotelId) {
+      alert('Please add hotel ID');
+      return;
+    }
     this.testLoader = true;
     setTimeout(() => {
       this.testLoader = false;
@@ -77,6 +86,7 @@ export class IrGeneralSettings {
         this.connected = true;
         this.connectionStatus = ' Connected';
         this.sendToParent.emit(this.data);
+        console.log('this.data', this.data);
       } else {
         this.connected = false;
       }
@@ -93,7 +103,6 @@ export class IrGeneralSettings {
               id="channel-select"
               label="Channel"
               data={[
-                { value: '', text: 'Channel Name' },
                 { value: 'expedia', text: 'Expedia' },
               ]}
               label-background="white"
@@ -102,13 +111,13 @@ export class IrGeneralSettings {
               size="sm"
               textSize="sm"
               labelWidth={4}
+              selectedValue={this.data.channel}
             />
             <ir-select
               id="group-select"
               label="Group"
               // placeholder="Group"
               data={[
-                { value: '', text: '' },
                 { value: 'all', text: 'All' },
               ]}
               label-background="white"
@@ -117,6 +126,7 @@ export class IrGeneralSettings {
               size="sm"
               textSize="sm"
               labelWidth={4}
+              selectedValue={this.data.group}
             />
             <ir-input-text
               id="title-input"
@@ -128,13 +138,13 @@ export class IrGeneralSettings {
               label-border="none"
               size="sm"
               labelWidth={4}
+              
             />
             <ir-select
               id="property-select"
               label="Propery"
               // placeholder="Propery"
               data={[
-                { value: '', text: '' },
                 { value: 'Mist', text: 'Mist' },
               ]}
               label-background="white"
@@ -143,6 +153,7 @@ export class IrGeneralSettings {
               size="sm"
               textSize="sm"
               labelWidth={4}
+              selectedValue={this.data.property}
             />
           </div>
         </div>
@@ -161,12 +172,12 @@ export class IrGeneralSettings {
                 size="sm"
                 labelWidth={4}
                 class="col-12"
+
               />
               <ir-select
                 id="minimum-stay-select"
                 label="Minimum Stay Type"
                 data={[
-                  { value: '', text: '' },
                   { value: 'arrival', text: 'Arrival' },
                 ]}
                 label-background="white"
@@ -176,6 +187,7 @@ export class IrGeneralSettings {
                 textSize="sm"
                 class="col-12"
                 labelWidth={4}
+                selectedValue={this.data.minimumStay}
               />
               <div class="col-12 pb-1 ">
                 <div class="row">

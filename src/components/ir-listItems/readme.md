@@ -18,6 +18,7 @@
 
 | Event         | Description | Type               |
 | ------------- | ----------- | ------------------ |
+| `createNew`   |             | `CustomEvent<any>` |
 | `openSidebar` |             | `CustomEvent<any>` |
 
 
