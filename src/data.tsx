@@ -2,51 +2,78 @@ export const hostRoom = [
   {
     id: '1',
     title: 'Room Type 1',
-    description: 'Room Type 1',
+    description: 'Service 1',
     number_of_people: 2,
   },
   {
     id: '2',
     title: 'Room Type 2',
-    description: 'Room Type 2',
+    description: 'Service 2',
     number_of_people: 4,
   },
   {
     id: '3',
     title: 'Room Type 3',
-    description: 'Room Type 3',
+    description: 'Service 3',
     number_of_people: 5,
-    services: [
-      {
-        id: '1',
-        title: 'Service Type 1',
-      },
-    ],
   },
 ];
 
 export const mapRoom = [
   {
-    id: '0',
-    name: '',
-    value: '',
-  },
-  {
     id: '1',
     name: 'Room Type 1',
     value: 'RT1',
+    services: [
+      {
+        id: '1',
+        name: 'Service Room Type 1 Type 1',
+        value: 'ST1',
+      },
+      {
+        id: '2',
+        name: 'Service Room Type 1 Type 2',
+        value: 'ST2',
+      }
+    ]
   },
   {
     id: '2',
     name: 'Room Type 2',
     value: 'RT2',
+    services: [
+      {
+        id: '1',
+        name: 'Service Room Type 2 Type 1',
+        value: 'ST1',
+      },
+      {
+        id: '2',
+        name: 'Service Room Type 2 Type 2',
+        value: 'ST2',
+      }
+    ]
   },
   {
     id: '3',
     name: 'Room Type 3',
     value: 'RT3',
+    services: [
+      {
+        id: '1',
+        name: 'Service Room Type 3 Type 1',
+        value: 'ST1',
+      },
+      {
+        id: '2',
+        name: 'Service Room Type 3 Type 2',
+        value: 'ST2',
+      }
+    ]
   },
 ];
+
+
 
 // OLD
 // {/* <div class="col-12 mb-1">

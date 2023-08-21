@@ -5,6 +5,33 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property | Attribute | Description | Type  | Default |
+| -------- | --------- | ----------- | ----- | ------- |
+| `map`    | `map`     |             | `any` | `{}`    |
+
+
+## Events
+
+| Event                 | Description | Type               |
+| --------------------- | ----------- | ------------------ |
+| `sendMappingToParent` |             | `CustomEvent<any>` |
+
+
+## Methods
+
+### `_onSaveMapping() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ## Dependencies
 
 ### Used by
