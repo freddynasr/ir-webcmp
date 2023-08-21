@@ -20,7 +20,6 @@ export class IrGeneralSettings {
 
 
   @State() connected: boolean = false;
-
   @Event() sendToParent: EventEmitter;
 
   componentDidLoad() {
@@ -55,8 +54,9 @@ export class IrGeneralSettings {
   componentDidUpdate() {
     const hotelID = document.querySelector('ir-input-text#hotel-id');
     hotelID.addEventListener('textChange', (event: CustomEvent) => {
-      console.log('hotelID', event.detail);
-      this.data = {
+      this.connected = false;
+      this.connectionStatus = ' Not connected';
+        this.data = {
         ...this.data,
         hotelId: event.detail.trim(),
       };
@@ -85,6 +85,7 @@ export class IrGeneralSettings {
         console.log('testConnection', this.data.hotelId);
         this.connected = true;
         this.connectionStatus = ' Connected';
+      
         this.sendToParent.emit(this.data);
         console.log('this.data', this.data);
       } else {
@@ -204,9 +205,9 @@ export class IrGeneralSettings {
                         </span>
                       )}
                     </div>
-                    <button onClick={() => this.testConnection()} class="btn btn-white border-light btn-sm text-dark">
+                    { !this.connected && <button onClick={() => this.testConnection()} class="btn btn-white border-light btn-sm text-dark">
                       Test Connection
-                    </button>
+                    </button>}
                   </div>
                 </div>
               </div>
