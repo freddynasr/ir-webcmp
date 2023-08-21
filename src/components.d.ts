@@ -48,6 +48,7 @@ export namespace Components {
         "checked": boolean;
         "disabled": boolean;
         "label": string;
+        "labelPosition": 'before' | 'after';
         "name": string;
         "value": string;
     }
@@ -486,6 +487,7 @@ declare namespace LocalJSX {
         "checked"?: boolean;
         "disabled"?: boolean;
         "label"?: string;
+        "labelPosition"?: 'before' | 'after';
         "name"?: string;
         "onCheckboxChange"?: (event: IrCheckboxCustomEvent<{ name: string; value: string; checked: boolean }>) => void;
         "value"?: string;
