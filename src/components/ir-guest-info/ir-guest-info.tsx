@@ -116,16 +116,16 @@ export class GuestInfo {
         </div>
         <div class="card-content collapse show">
           <div class="card-body pt-0">
-            <ir-input-text placeholder="" label="First Name" name="firstName" submited={this.submit} text={this.Model.firstName} required></ir-input-text>
-            <ir-input-text placeholder="" label="Last Name" name="lastName" submited={this.submit} text={this.Model.lastName} required></ir-input-text>
-            <ir-input-text placeholder="" label="Email" name="email" submited={this.submit} text={this.Model.email} required></ir-input-text>
-            <ir-input-text placeholder="" label="Alternative email" name="altEmail" text={this.Model.altEmail}></ir-input-text>
-            <ir-input-text label="Password" placeholder="" name="password" submited={this.submit} type="password" text={this.Model.password} required></ir-input-text>
+            <ir-input-text placeholder="" label="First Name" name="firstName" submited={this.submit} value={this.Model.firstName} required></ir-input-text>
+            <ir-input-text placeholder="" label="Last Name" name="lastName" submited={this.submit} value={this.Model.lastName} required></ir-input-text>
+            <ir-input-text placeholder="" label="Email" name="email" submited={this.submit} value={this.Model.email} required></ir-input-text>
+            <ir-input-text placeholder="" label="Alternative email" name="altEmail" value={this.Model.altEmail}></ir-input-text>
+            <ir-input-text label="Password" placeholder="" name="password" submited={this.submit} type="password" value={this.Model.password} required></ir-input-text>
             {countries}
-            <ir-input-text placeholder="" label="City" name="city" text={this.Model.city}></ir-input-text>
-            <ir-input-text placeholder="" label="Address" name="address" text={this.Model.address}></ir-input-text>
+            <ir-input-text placeholder="" label="City" name="city" value={this.Model.city}></ir-input-text>
+            <ir-input-text placeholder="" label="Address" name="address" value={this.Model.address}></ir-input-text>
             {countryPrefix}
-            <ir-input-text put-text LabelAvailable={false} name="mobile" placeholder="" submited={this.submit} text={this.Model.mobile} required></ir-input-text>
+            <ir-input-text put-text LabelAvailable={false} name="mobile" placeholder="" submited={this.submit} value={this.Model.mobile} required></ir-input-text>
             <ir-checkbox label="NewsLetter" name="newsletter" checked={this.Model.newsletter}></ir-checkbox>
             <p>
               <strong>Last used:</strong> Language:

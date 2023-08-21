@@ -21,6 +21,7 @@
 - [ir-topbar](../ir-topBar)
 - [ir-list-item](../ir-listItems)
 - [ir-sidebar](../ir-sidebar)
+- [ir-loader](../ir-loader)
 - [ir-general-settings](../ir-general-settings)
 - [ir-mapping](../ir-mapping)
 - [ir-modal](../ir-modal)
@@ -32,6 +33,7 @@ graph TD;
   ir-channel-manager --> ir-topbar
   ir-channel-manager --> ir-list-item
   ir-channel-manager --> ir-sidebar
+  ir-channel-manager --> ir-loader
   ir-channel-manager --> ir-general-settings
   ir-channel-manager --> ir-mapping
   ir-channel-manager --> ir-modal
@@ -39,10 +41,10 @@ graph TD;
   ir-list-item --> ir-dropdown
   ir-dropdown --> ir-icon
   ir-sidebar --> ir-icon
-  ir-general-settings --> ir-channel-select
-  ir-general-settings --> ir-input-channel
+  ir-general-settings --> ir-select
+  ir-general-settings --> ir-input-text
+  ir-general-settings --> ir-loader
   ir-general-settings --> ir-icon
-  ir-channel-select --> ir-icon
   ir-mapping --> ir-icon
   style ir-channel-manager fill:#f9f,stroke:#333,stroke-width:4px
 ```

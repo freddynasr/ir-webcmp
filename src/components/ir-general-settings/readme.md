@@ -10,7 +10,7 @@
 | Property           | Attribute           | Description | Type     | Default                                                                                                                                          |
 | ------------------ | ------------------- | ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `connectionStatus` | `connection-status` |             | `string` | `'Not connected'`                                                                                                                                |
-| `data`             | `data`              |             | `any`    | `{     id: '123456',     channel: 'Channel Name',     group: 'Group',     title: 'Title',     property: 'Property',     hotelId: "hotelId",   }` |
+| `data`             | `data`              |             | `any`    | `{     id: '123456',     channel: 'Channel Name',     group: 'Group',     title: 'Title',     property: 'Property',     hotelId: 'hotelId',   }` |
 | `mode`             | `mode`              |             | `string` | `undefined`                                                                                                                                      |
 
 
@@ -29,17 +29,18 @@
 
 ### Depends on
 
-- [ir-channel-select](../ir-channel-select)
-- [ir-input-channel](../ir-input-channel)
+- [ir-select](../ir-select)
+- [ir-input-text](../ir-input-text)
+- [ir-loader](../ir-loader)
 - [ir-icon](../ir-icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  ir-general-settings --> ir-channel-select
-  ir-general-settings --> ir-input-channel
+  ir-general-settings --> ir-select
+  ir-general-settings --> ir-input-text
+  ir-general-settings --> ir-loader
   ir-general-settings --> ir-icon
-  ir-channel-select --> ir-icon
   ir-channel-manager --> ir-general-settings
   style ir-general-settings fill:#f9f,stroke:#333,stroke-width:4px
 ```

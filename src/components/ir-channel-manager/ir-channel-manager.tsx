@@ -41,6 +41,7 @@ export class IrChannelManager {
     hotelId: string;
   }[] = [];
 
+  @State() loader: boolean = false;
   @State() mode: string = 'create';
   tabs: string[] = ['General Settings', 'Mapping', 'Channel Settings'];
   @State() activeTab: string = 'General Settings';
@@ -52,18 +53,20 @@ export class IrChannelManager {
     openSidebar.addEventListener('openSidebar', () => {
       const sidebar = document.querySelector('ir-sidebar');
       sidebar.open = !sidebar.open;
+      this.loader = true;
       this.mode = 'create';
       this.activeTab = 'General Settings';
-
+      setTimeout(() => {
+        this.loader = false;
+      }, 2000);
     });
 
     const dropdown = document.querySelector('ir-list-item');
     dropdown.addEventListener('openSidebar', (e: CustomEvent) => {
       if (e.detail.mode === 'edit') {
-       
         this.mode = 'edit';
         this.selectedItem = e.detail.item;
-        
+
         console.log(this.selectedItem);
         const sidebar = document.querySelector('ir-sidebar');
         sidebar.open = !sidebar.open;
@@ -71,29 +74,28 @@ export class IrChannelManager {
     });
 
     const modal = document.querySelector('ir-modal');
-   
+
     modal.addEventListener('confirmModal', (event: CustomEvent) => {
       console.log(event.detail);
-        sidebar.open = !sidebar.open;
-        modal.closeModal();
-      
+      sidebar.open = !sidebar.open;
+      modal.closeModal();
     });
 
     const sidebar = document.querySelector('ir-sidebar');
     sidebar.addEventListener('irSidebarToggle', (event: CustomEvent) => {
       if (event.detail == true) {
-        if (this.listData){
-        modal.openModal()
-      }}
-    })
+        if (this.listData) {
+          modal.openModal();
+        }
+      }
+    });
 
     const generalSettings = document.querySelector('ir-general-settings');
     generalSettings.addEventListener('sendToParent', (event: CustomEvent) => {
       console.log(event.detail);
-     this.listData = [...this.listData, {...event.detail, id: this.listData.length + 1, status: 'Active'}];
+      this.listData = [...this.listData, { ...event.detail, id: this.listData.length + 1, status: 'Active' }];
       console.log(this.listData);
-    }
-    )
+    });
   }
 
   _exitWithoutSave() {
@@ -132,6 +134,10 @@ export class IrChannelManager {
                 data-mdb-ripple-color="dark"
                 onClick={() => {
                   this.activeTab = tab;
+                  this.loader = true;
+                  setTimeout(() => {
+                    this.loader = false;
+                  }, 2000);
                 }}
               >
                 {tab}
@@ -139,15 +145,26 @@ export class IrChannelManager {
             </li>
           ))}
         </ul>
-        {this.activeTab == 'General Settings' && <ir-general-settings data={this.selectedItem} mode={this.mode}></ir-general-settings>}
-        {this.activeTab == 'Mapping' && <ir-mapping></ir-mapping>}
+        {this.loader ? (
+          <div class="loader-position">
+            <ir-loader></ir-loader>
+          </div>
+        ) : (
+          <span>
+            {this.activeTab == 'General Settings' && <ir-general-settings data={this.selectedItem} mode={this.mode}></ir-general-settings>}
+            {this.activeTab == 'Mapping' && <ir-mapping></ir-mapping>}
+          </span>
+        )}
+
         <div class="btn-position">
-          <button type="button" class="btn btn-primary btn-sm btn-block"
-          onClick={() => {
-            if (this.activeTab == 'General Settings') {
-              this.activeTab = 'Mapping';
-            }
-          }}
+          <button
+            type="button"
+            class="btn btn-primary btn-sm btn-block"
+            onClick={() => {
+              if (this.activeTab == 'General Settings') {
+                this.activeTab = 'Mapping';
+              }
+            }}
           >
             {this.activeTab == 'General Settings' ? 'Next' : 'Save'}
           </button>

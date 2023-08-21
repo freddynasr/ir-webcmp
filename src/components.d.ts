@@ -10,7 +10,7 @@ export { checkboxes, guestInfo, selectOption } from "./common/models";
 export namespace Components {
     interface IrButton {
         "btn_block": boolean;
-        "btn_color": string;
+        "btn_color": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
         "btn_disabled": boolean;
         "btn_type": string;
         "icon": string;
@@ -87,14 +87,19 @@ export namespace Components {
         "LabelAvailable": boolean;
         "inputStyle": boolean;
         "label": string;
+        "labelBackground": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+        "labelBorder": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'none';
+        "labelColor": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+        "labelPosition": 'left' | 'right' | 'center';
+        "labelWidth": 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
         "name": string;
         "placeholder": string;
         "required": boolean;
         "size": 'sm' | 'md' | 'lg';
         "submited": boolean;
-        "text": any;
         "textSize": 'sm' | 'md' | 'lg';
         "type": string;
+        "value": any;
     }
     interface IrListItem {
         "dropdownData": {
@@ -124,6 +129,7 @@ export namespace Components {
   }[];
     }
     interface IrLoader {
+        "size": string;
     }
     interface IrMapping {
     }
@@ -141,6 +147,11 @@ export namespace Components {
         "data": selectOption[];
         "firstOption": string;
         "label": string;
+        "labelBackground": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+        "labelBorder": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'none';
+        "labelColor": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+        "labelPosition": 'left' | 'right' | 'center';
+        "labelWidth": 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
         "name": string;
         "required": boolean;
         "selectStyle": boolean;
@@ -435,7 +446,7 @@ declare global {
 declare namespace LocalJSX {
     interface IrButton {
         "btn_block"?: boolean;
-        "btn_color"?: string;
+        "btn_color"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
         "btn_disabled"?: boolean;
         "btn_type"?: string;
         "icon"?: string;
@@ -521,15 +532,20 @@ declare namespace LocalJSX {
         "LabelAvailable"?: boolean;
         "inputStyle"?: boolean;
         "label"?: string;
+        "labelBackground"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+        "labelBorder"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'none';
+        "labelColor"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+        "labelPosition"?: 'left' | 'right' | 'center';
+        "labelWidth"?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
         "name"?: string;
         "onTextChange"?: (event: IrInputTextCustomEvent<any>) => void;
         "placeholder"?: string;
         "required"?: boolean;
         "size"?: 'sm' | 'md' | 'lg';
         "submited"?: boolean;
-        "text"?: any;
         "textSize"?: 'sm' | 'md' | 'lg';
         "type"?: string;
+        "value"?: any;
     }
     interface IrListItem {
         "dropdownData"?: {
@@ -560,6 +576,7 @@ declare namespace LocalJSX {
         "onOpenSidebar"?: (event: IrListItemCustomEvent<any>) => void;
     }
     interface IrLoader {
+        "size"?: string;
     }
     interface IrMapping {
     }
@@ -577,6 +594,11 @@ declare namespace LocalJSX {
         "data"?: selectOption[];
         "firstOption"?: string;
         "label"?: string;
+        "labelBackground"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+        "labelBorder"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'none';
+        "labelColor"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+        "labelPosition"?: 'left' | 'right' | 'center';
+        "labelWidth"?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
         "name"?: string;
         "onSelectChange"?: (event: IrSelectCustomEvent<any>) => void;
         "required"?: boolean;

@@ -21,19 +21,6 @@
 | `sendValue` |             | `CustomEvent<any>` |
 
 
-## Dependencies
-
-### Used by
-
- - [ir-general-settings](../ir-general-settings)
-
-### Graph
-```mermaid
-graph TD;
-  ir-general-settings --> ir-input-channel
-  style ir-input-channel fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
