@@ -32,11 +32,13 @@
 ### Used by
 
  - [ir-guest-info](../ir-guest-info)
+ - [ir-modal](../ir-modal)
 
 ### Graph
 ```mermaid
 graph TD;
   ir-guest-info --> ir-button
+  ir-modal --> ir-button
   style ir-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

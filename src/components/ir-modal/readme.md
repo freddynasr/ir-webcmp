@@ -5,10 +5,23 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property         | Attribute          | Description | Type                                                                                            | Default       |
+| ---------------- | ------------------ | ----------- | ----------------------------------------------------------------------------------------------- | ------------- |
+| `leftBtnActive`  | `left-btn-active`  |             | `boolean`                                                                                       | `true`        |
+| `leftBtnColor`   | `left-btn-color`   |             | `"danger" \| "dark" \| "info" \| "light" \| "primary" \| "secondary" \| "success" \| "warning"` | `'secondary'` |
+| `leftBtnText`    | `left-btn-text`    |             | `string`                                                                                        | `'Close'`     |
+| `rightBtnActive` | `right-btn-active` |             | `boolean`                                                                                       | `true`        |
+| `rightBtnColor`  | `right-btn-color`  |             | `"danger" \| "dark" \| "info" \| "light" \| "primary" \| "secondary" \| "success" \| "warning"` | `'primary'`   |
+| `rightBtnText`   | `right-btn-text`   |             | `string`                                                                                        | `'Confirm'`   |
+
+
 ## Events
 
 | Event          | Description | Type               |
 | -------------- | ----------- | ------------------ |
+| `cancelModal`  |             | `CustomEvent<any>` |
 | `confirmModal` |             | `CustomEvent<any>` |
 
 
@@ -41,9 +54,14 @@ Type: `Promise<void>`
 
  - [ir-channel-manager](../ir-channel-manager)
 
+### Depends on
+
+- [ir-button](../ir-button)
+
 ### Graph
 ```mermaid
 graph TD;
+  ir-modal --> ir-button
   ir-channel-manager --> ir-modal
   style ir-modal fill:#f9f,stroke:#333,stroke-width:4px
 ```
