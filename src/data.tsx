@@ -60,12 +60,12 @@ export const mapRoom = [
     number_of_people: 2,
     services: [
       {
-        id: '1',
+        id: 'MAPROOOMTYPE1_1',
         name: 'Service Room Type 1 Type 1',
         value: 'ST1',
       },
       {
-        id: '2',
+        id: 'MAPROOMTYPE1_2',
         name: 'Service Room Type 1 Type 2',
         value: 'ST2',
       }
@@ -78,12 +78,12 @@ export const mapRoom = [
     number_of_people: 4,
     services: [
       {
-        id: '1',
+        id: 'MAPROOMTYPE2_1',
         name: 'Service Room Type 2 Type 1',
         value: 'ST1',
       },
       {
-        id: '2',
+        id: 'MAPROOMTYPE2_2',
         name: 'Service Room Type 2 Type 2',
         value: 'ST2',
       }
@@ -96,12 +96,12 @@ export const mapRoom = [
     number_of_people: 5,
     services: [
       {
-        id: '1',
+        id: 'MAPROOMTYPE3_1',
         name: 'Service Room Type 3 Type 1',
         value: 'ST1',
       },
       {
-        id: '2',
+        id: 'MAPROOMTYPE3_2',
         name: 'Service Room Type 3 Type 2',
         value: 'ST2',
       }
