@@ -60,11 +60,17 @@ export class IrMapping {
   }
 
   componentWillLoad() {
-    console.log('this.map.mapping', this.map.mapping);
+    this.mapState = new Array(hostRoom.length).fill('notMapped');
     if (this.map.mapping !== undefined) {
       this.selected = this.map.mapping;
+      this.mapState = this.map.mapping.map(map => {
+        const index = this.mapRoom.findIndex(room => room.id === map.mappedId);
+        if (index !== -1) {
+          return 'mapped';
+        }
+      });
     }
-    this.mapState = new Array(hostRoom.length).fill('notMapped');
+   
   }
 
   _deleteMapping(item) {
@@ -78,9 +84,15 @@ export class IrMapping {
 
 
   _getMapNameFromId(itemId) {
-    
+    console.log(itemId)
+    if (this.selected.length === 0) {
+      return;
+    }
     // Get object from this.mapped that has itemId === itemId then return the name
     const mapped = this.selected.find(map => map.itemId === itemId)
+    if (!mapped || mapped == undefined) {
+      return
+    }
     const toBeCompared = mapped.mappedId;
     const map = this.mapRoom.find(map => map.id === toBeCompared);
     return [map.name, map.number_of_people]
@@ -101,6 +113,13 @@ export class IrMapping {
         return map;
       }
     });
+
+    // this.selected contains a property called selectedService which is a string of service id. 
+    // the mapped should be than an array of services with no service that is in the selectedService
+    const mappedServices = mapped ? mapped.services : [];
+
+    
+    
    
   
     return (
@@ -161,8 +180,8 @@ export class IrMapping {
             ) : (
               <div class="d-flex flex-grow-1 justify-content-between">
                 <div class="text-primary">
-                  {this._getMapNameFromId(item.id)[0]}
-                   <ir-icon icon="ft-user"></ir-icon> {this._getMapNameFromId(item.id)[1]}
+                  {/* {this._getMapNameFromId(item.id)[0]} */}
+                   {/* <ir-icon icon="ft-user"></ir-icon> {this._getMapNameFromId(item.id)[1]} */}
                 </div>
                 <ir-icon
                   icon="text-primary ft-trash"
@@ -196,11 +215,20 @@ export class IrMapping {
               >
 
                 {/* Display only the values that are not in the mapped array by comparing the values / ids */}
-                <option value="">Select Service</option>
+                <option value="">Select Plan</option>
                 {mappedServices && mappedServices.map(service => {
-                    console.log('service', service);
-                    return <option value={JSON.stringify(service)}>{service.name}</option>;
-                })}
+                    console.log('service', service)
+                    console.log('mappedServices', mapped)
+                    if (service.id == mapped.selectedService.id) {
+                      console.log('Equal')
+                      return <option value={JSON.stringify(service)}
+                        >{service.name}</option> 
+                    } else {
+                      console.log('not equal')
+                      return <option value={JSON.stringify(service)}
+                        >{service.name}</option> 
+                    }
+                  })}
               </select>
             </div>
           </div>

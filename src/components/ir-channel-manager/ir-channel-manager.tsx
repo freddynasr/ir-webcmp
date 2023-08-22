@@ -63,6 +63,7 @@ export class IrChannelManager {
   @Listen('sendMappingToParent')
   sendMappingToParentHandler(event: CustomEvent) {
     this.anyChanges = true;
+    console.log(event.detail);
     const mapping = event.detail
     if (this.mode === 'edit') {
       this.listData = this.listData.map((item) => {
