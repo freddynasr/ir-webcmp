@@ -24,6 +24,8 @@
 .emptyBody img {
   height: auto;
   width: 100px;
+  transform: translate(7%, 0);
+  margin: 1rem;
 }
 
 .loader-position {
@@ -77,4 +79,11 @@
   padding: 0.5rem;
   background: #f8f8f8;
   border-top: 1px solid #e7e7e7;
+}
+
+.test-icon {
+  margin-right: 0.2rem !important;
+}
+.text-dark:hover {
+  color: #444 !important;
 }

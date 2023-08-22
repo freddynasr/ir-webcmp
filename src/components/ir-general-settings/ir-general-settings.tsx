@@ -15,9 +15,7 @@ export class IrGeneralSettings {
     property: 'Property',
     hotelId: 'hotelId',
   };
-  @State() selectedChannel: string = ''
- 
-
+  @State() selectedChannel: string = '';
 
   @State() connected: boolean = false;
   @Event() sendToParent: EventEmitter;
@@ -47,16 +45,14 @@ export class IrGeneralSettings {
     propertySelect.addEventListener('selectChange', (event: CustomEvent) => {
       this.data = { ...this.data, property: event.detail };
     });
-
-    
   }
 
   componentDidUpdate() {
     const hotelID = document.querySelector('ir-input-text#hotel-id');
     hotelID.addEventListener('textChange', (event: CustomEvent) => {
       this.connected = false;
-      this.connectionStatus = ' Not connected';
-        this.data = {
+      this.connectionStatus = 'Not connected';
+      this.data = {
         ...this.data,
         hotelId: event.detail.trim(),
       };
@@ -85,7 +81,7 @@ export class IrGeneralSettings {
         console.log('testConnection', this.data.hotelId);
         this.connected = true;
         this.connectionStatus = ' Connected';
-      
+
         this.sendToParent.emit(this.data);
         console.log('this.data', this.data);
       } else {
@@ -103,9 +99,7 @@ export class IrGeneralSettings {
             <ir-select
               id="channel-select"
               label="Channel"
-              data={[
-                { value: 'expedia', text: 'Expedia' },
-              ]}
+              data={[{ value: 'expedia', text: 'Expedia' }]}
               label-background="white"
               label-position="right"
               label-border="none"
@@ -118,9 +112,7 @@ export class IrGeneralSettings {
               id="group-select"
               label="Group"
               // placeholder="Group"
-              data={[
-                { value: 'all', text: 'All' },
-              ]}
+              data={[{ value: 'all', text: 'All' }]}
               label-background="white"
               label-position="right"
               label-border="none"
@@ -139,15 +131,12 @@ export class IrGeneralSettings {
               label-border="none"
               size="sm"
               labelWidth={4}
-              
             />
             <ir-select
               id="property-select"
               label="Propery"
               // placeholder="Propery"
-              data={[
-                { value: 'Mist', text: 'Mist' },
-              ]}
+              data={[{ value: 'Mist', text: 'Mist' }]}
               label-background="white"
               label-position="right"
               label-border="none"
@@ -173,14 +162,11 @@ export class IrGeneralSettings {
                 size="sm"
                 labelWidth={4}
                 class="col-12"
-
               />
               <ir-select
                 id="minimum-stay-select"
                 label="Minimum Stay Type"
-                data={[
-                  { value: 'arrival', text: 'Arrival' },
-                ]}
+                data={[{ value: 'arrival', text: 'Arrival' }]}
                 label-background="white"
                 label-position="right"
                 label-border="none"
@@ -199,15 +185,17 @@ export class IrGeneralSettings {
                         <ir-loader size="xs"></ir-loader>
                       ) : (
                         <span>
-                          <ir-icon icon={this.connected ? 'ft-check-circle success' : 'ft-alert-triangle warning'}></ir-icon>
+                          <ir-icon class="test-icon" icon={this.connected ? 'ft-check-circle success' : 'ft-alert-triangle warning'}></ir-icon>
                           {this.connected && this.connectionStatus}
                           {!this.connected && this.connectionStatus}
                         </span>
                       )}
                     </div>
-                    { !this.connected && <button onClick={() => this.testConnection()} class="btn btn-white border-light btn-sm text-dark">
-                      Test Connection
-                    </button>}
+                    {!this.connected && (
+                      <button onClick={() => this.testConnection()} class="btn btn-white border-light btn-sm text-dark ">
+                        Test Connection
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
