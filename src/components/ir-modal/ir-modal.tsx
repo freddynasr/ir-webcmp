@@ -8,11 +8,13 @@ export class IrModal {
   @Prop() rightBtnActive: boolean = true;
   @Prop() leftBtnActive: boolean = true;
 
-  @Prop() rightBtnText: string = 'Confirm';
-  @Prop() leftBtnText: string = 'Close';
+  @Prop() rightBtnText: string = 'Close';
+  @Prop() leftBtnText: string = 'Confirm';
 
   @Prop() rightBtnColor: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' = 'primary';
   @Prop() leftBtnColor: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' = 'secondary';
+
+  @Prop() btnPosition: 'left' | 'right' | 'center' = 'right';
 
   @State() isOpen: boolean = false;
 
@@ -63,17 +65,9 @@ export class IrModal {
             <div class="modal-body">
               <slot></slot>
             </div>
-            <div class="modal-footer">
-              {this.leftBtnActive && (
-                <ir-button btn_color={this.leftBtnColor} btn_block name={this.leftBtnText}>
-                  {this.leftBtnText}
-                </ir-button>
-              )}
-              {this.rightBtnActive && (
-                <ir-button btn_color={this.rightBtnColor} btn_block name={this.rightBtnText}>
-                  {this.rightBtnText}
-                </ir-button>
-              )}
+            <div class={`modal-footer d-flex justify-content-${this.btnPosition === 'center' ? 'center' : this.btnPosition === 'left' ? 'start' : 'end'}`}>
+              {this.leftBtnActive && <ir-button icon={''} btn_color={this.leftBtnColor} btn_block text={this.leftBtnText} name={this.leftBtnText}></ir-button>}
+              {this.rightBtnActive && <ir-button icon={''} btn_color={this.rightBtnColor} btn_block text={this.rightBtnText} name={this.rightBtnText}></ir-button>}
             </div>
           </div>
         </div>
