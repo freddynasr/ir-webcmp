@@ -99,7 +99,7 @@ export class IrGeneralSettings {
             <ir-select
               id="channel-select"
               label="Channel"
-              data={[{ value: 'expedia', text: 'Expedia' }]}
+              data={[{ value: 'expedia', text: 'Expedia' }, {value: 'zourouna', text: 'Zourouna'}]}
               label-background="white"
               label-position="right"
               label-border="none"

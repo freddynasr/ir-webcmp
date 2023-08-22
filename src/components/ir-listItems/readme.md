@@ -31,11 +31,15 @@
 ### Depends on
 
 - [ir-dropdown](../ir-dropdown)
+- [ir-icon](../ir-icon)
+- [ir-modal](../ir-modal)
 
 ### Graph
 ```mermaid
 graph TD;
   ir-list-item --> ir-dropdown
+  ir-list-item --> ir-icon
+  ir-list-item --> ir-modal
   ir-dropdown --> ir-icon
   ir-channel-manager --> ir-list-item
   style ir-list-item fill:#f9f,stroke:#333,stroke-width:4px

@@ -20,7 +20,7 @@
 - [ir-icon](../ir-icon)
 - [ir-topbar](../ir-topBar)
 - [ir-list-item](../ir-listItems)
-- [ir-sidebar](../ir-sidebar)
+- [ir-sidebar](../ir-switch/ir-sidebar)
 - [ir-loader](../ir-loader)
 - [ir-general-settings](../ir-general-settings)
 - [ir-mapping](../ir-mapping)
@@ -39,6 +39,8 @@ graph TD;
   ir-channel-manager --> ir-modal
   ir-topbar --> ir-icon
   ir-list-item --> ir-dropdown
+  ir-list-item --> ir-icon
+  ir-list-item --> ir-modal
   ir-dropdown --> ir-icon
   ir-sidebar --> ir-icon
   ir-general-settings --> ir-select

@@ -2,28 +2,62 @@ export const hostRoom = [
   {
     id: '1',
     title: 'Room Type 1',
-    description: 'Service 1',
     number_of_people: 2,
+    ratePlans: [
+      {
+        id: '1',
+        name: 'Rate Plan 1',
+        price: 100,
+      },
+      {
+        id: '2',
+        name: 'Rate Plan 2',
+        price: 200,
+      }
+    ]
   },
   {
     id: '2',
     title: 'Room Type 2',
-    description: 'Service 2',
     number_of_people: 4,
+    ratePlans: [
+      {
+        id: '1',
+        name: 'Rate Plan 1',
+        price: 100,
+      },
+      {
+        id: '2',
+        name: 'Rate Plan 2',
+        price: 200,
+      }
+    ]
   },
   {
     id: '3',
     title: 'Room Type 3',
-    description: 'Service 3',
     number_of_people: 5,
+    ratePlans: [
+      {
+        id: '1',
+        name: 'Rate Plan 1',
+        price: 100,
+      },
+      {
+        id: '2',
+        name: 'Rate Plan 2',
+        price: 200,
+      }
+    ]
   },
 ];
 
 export const mapRoom = [
   {
     id: '1',
-    name: 'Room Type 1',
+    name: 'Map Room Type 1',
     value: 'RT1',
+    number_of_people: 2,
     services: [
       {
         id: '1',
@@ -39,8 +73,9 @@ export const mapRoom = [
   },
   {
     id: '2',
-    name: 'Room Type 2',
+    name: 'Map Room Type 2',
     value: 'RT2',
+    number_of_people: 4,
     services: [
       {
         id: '1',
@@ -56,8 +91,9 @@ export const mapRoom = [
   },
   {
     id: '3',
-    name: 'Room Type 3',
+    name: 'Map Room Type 3',
     value: 'RT3',
+    number_of_people: 5,
     services: [
       {
         id: '1',

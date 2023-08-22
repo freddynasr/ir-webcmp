@@ -41,9 +41,12 @@ export class IrModal {
     }
   }
 
+  @Prop({ reflect: true }) item: any = {};
+
   confirmClose() {
     console.log('confirmClose');
     this.confirmModal.emit();
+    this.confirmModal.emit(this.item);
   }
 
   render() {

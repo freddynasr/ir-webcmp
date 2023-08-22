@@ -1,8 +1,9 @@
-import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, State, Listen } from '@stencil/core';
 @Component({
   tag: 'ir-list-item',
 })
 export class IrListItem {
+  @State() type: string = '';
   @Prop({ reflect: true }) dropdownData: {
     name: string;
     icon: string;
@@ -79,7 +80,7 @@ export class IrListItem {
 
   addEventListenerToDropdown(item: any) {
     const dropdown = document.querySelector(`ir-dropdown.dropdown-action-${item.id}`);
-    console.log("dropdown", dropdown)
+    // console.log("dropdown", dropdown)
     if (dropdown) {
       const eventHandler = (e: CustomEvent) => {
         if (e.detail.name === 'Edit') {
@@ -89,7 +90,7 @@ export class IrListItem {
         } else if (e.detail.name === 'Disable') {
           this.onPressDisable(item);
         } else if (e.detail.name === 'Enable') {
-          this.onPressEnable(item);
+           this.onPressDisable(item);
         }
       };
 
@@ -101,43 +102,61 @@ export class IrListItem {
   @Event() createNew: EventEmitter;
 
   handleCreate(mode: string, item: any) {
-    
     this.openSidebar.emit({ mode: mode, item: item });
   }
+  
+
+
+
 
   onPressDelete(item: any) {
-    console.log("item", item);
-   const dropdown = document.querySelector(`ir-dropdown.dropdown-action-${item.id}`);
-  if (dropdown) {
-    //dropdown.removeEventListener('dropdownItemCLicked', this.handleCreate);
+    this.type = 'delete';
+    const modal = document.querySelector(`ir-modal`);
+    console.log("modal", modal)
+    if (modal) {
+      modal.item = item;
+      modal.openModal();
+    }
   }
-    this.listData = this.listData.filter((data) => data.id !== item.id);
-    // Remove the event listener
+
+  @Listen('confirmModal')
+  doAction(event: CustomEvent) {
+    const item = event.detail;
+    if (this.type === 'delete') {
+      this.listData = this.listData.filter((data) => data.id !== item.id);
+    } else if (this.type === 'disable') {
+      this.listData = this.listData.map((data) => {
+        if (data.id === item.id) {
+          data.status = 'Disabled';
+        }
+        return data;
+      }
+      );
+    }
+
+    else if (this.type === 'enable') {
+      this.listData = this.listData.map((data) => {
+        if (data.id === item.id) {
+          data.status = 'Active';
+        }
+        return data;
+      }
+      );
+    }
+
+
   }
+
 
   onPressDisable(item: any) {
-    console.log("item", item);
-    // Change the status of the item
-    this.listData = this.listData.map((data) => {
-      if (data.id === item.id) {
-        data.status = 'Disabled';
-      }
-      return data;
+    this.type = item.status === 'Active' ? 'disable' : 'enable';
+    const modal = document.querySelector(`ir-modal`);
+    if (modal) {
+      modal.openModal();
+      modal.item = item;
     }
-    );
   }
 
-  onPressEnable(item: any) {
-    console.log("item", item);
-    // Change the status of the item
-    this.listData = this.listData.map((data) => {
-      if (data.id === item.id) {
-        data.status = 'Enabled';
-      }
-      return data;
-    }
-    );
-  }
 
 
   componentDidLoad() {
@@ -200,7 +219,7 @@ export class IrListItem {
                   <div class="col-3 p-1">{item.status}</div>
                   <div class="col-3 ">
                   <ir-dropdown class={`dropdown-action-${item.id}`} 
-                  data={item.status === 'Enabled' ? this.dropdownData : this.dropdownDataDisable}
+                  data={item.status === 'Active' ? this.dropdownData : this.dropdownDataDisable}
                   object={item}></ir-dropdown>
                   </div>
                 </div>
@@ -212,7 +231,42 @@ export class IrListItem {
     );
   }
 
+  _confirmDelete() {
+    return (
+      <div class="row">
+        <div class="col-2 d-flex justify-content-center ">
+          <ir-icon icon="ft-alert-circle warning h1"></ir-icon>
+        </div>
+        <div class="col-10">
+          <div class="font-weight-bold">Are you sure you want to delete?</div>
+          <br />
+          <div class="font-size-small">What you delete here will be permanently deleted.</div>
+        </div>
+      </div>
+    );
+  }
+
+  _enable_disable() {
+    return (
+      <div class="row">
+        <div class="col-2 d-flex justify-content-center ">
+          <ir-icon icon="ft-alert-circle warning h1"></ir-icon>
+        </div>
+        <div class="col-10">
+          <div class="font-weight-bold">Would you like to {this.type} this channel?</div>
+          <br />
+        </div>
+      </div>
+    );
+  }
+
+
   render() {
-    return this.listData.length > 0 ? this._renderItem() : this._renderEmptyState();
+    return [
+      this.listData.length > 0 ? this._renderItem() : this._renderEmptyState()
+      ,
+      <ir-modal
+      >{this.type === 'delete' ? this._confirmDelete() : this._enable_disable()}</ir-modal>
+    ];
   }
 }

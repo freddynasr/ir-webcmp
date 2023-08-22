@@ -142,7 +142,7 @@ openSidebarHandler(event: CustomEvent) {
 
     modal.addEventListener('confirmModal', (event: CustomEvent) => {
       console.log(event.detail);
-      sidebar.open = !sidebar.open;
+      sidebar.open = false
       modal.closeModal();
       this._reset();
     });
@@ -154,7 +154,7 @@ openSidebarHandler(event: CustomEvent) {
           modal.openModal();
         }
       } else {
-        sidebar.open = !sidebar.open;
+        sidebar.open = false
         this._reset();
       }
     });
