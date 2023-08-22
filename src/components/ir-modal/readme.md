@@ -5,6 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property | Attribute | Description | Type  | Default |
+| -------- | --------- | ----------- | ----- | ------- |
+| `item`   | `item`    |             | `any` | `{}`    |
+
+
 ## Events
 
 | Event          | Description | Type               |
@@ -40,11 +47,13 @@ Type: `Promise<void>`
 ### Used by
 
  - [ir-channel-manager](../ir-channel-manager)
+ - [ir-list-item](../ir-listItems)
 
 ### Graph
 ```mermaid
 graph TD;
   ir-channel-manager --> ir-modal
+  ir-list-item --> ir-modal
   style ir-modal fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

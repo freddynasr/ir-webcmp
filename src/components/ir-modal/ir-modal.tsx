@@ -1,4 +1,4 @@
-import { Component, h, State, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, h, State, Method, Event, EventEmitter, Prop } from '@stencil/core';
 
 @Component({
   tag: 'ir-modal',
@@ -17,9 +17,11 @@ export class IrModal {
   }
   @Event() confirmModal: EventEmitter<any>;
 
+  @Prop({ reflect: true }) item: any = {};
+
   confirmClose() {
     console.log('confirmClose');
-    this.confirmModal.emit()
+    this.confirmModal.emit(this.item);
   }
 
 

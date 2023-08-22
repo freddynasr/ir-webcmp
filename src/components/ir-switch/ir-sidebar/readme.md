@@ -38,11 +38,11 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ir-channel-manager](../ir-channel-manager)
+ - [ir-channel-manager](../../ir-channel-manager)
 
 ### Depends on
 
-- [ir-icon](../ir-icon)
+- [ir-icon](../../ir-icon)
 
 ### Graph
 ```mermaid

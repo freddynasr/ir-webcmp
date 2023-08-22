@@ -139,6 +139,7 @@ export namespace Components {
     }
     interface IrModal {
         "closeModal": () => Promise<void>;
+        "item": any;
         "openModal": () => Promise<void>;
     }
     interface IrRadioBtn {
@@ -594,6 +595,7 @@ declare namespace LocalJSX {
         "onSendMappingToParent"?: (event: IrMappingCustomEvent<any>) => void;
     }
     interface IrModal {
+        "item"?: any;
         "onConfirmModal"?: (event: IrModalCustomEvent<any>) => void;
     }
     interface IrRadioBtn {
