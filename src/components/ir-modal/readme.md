@@ -55,6 +55,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [ir-channel-manager](../ir-channel-manager)
+ - [ir-general-settings](../ir-general-settings)
  - [ir-list-item](../ir-listItems)
 
 ### Depends on
@@ -66,6 +67,7 @@ Type: `Promise<void>`
 graph TD;
   ir-modal --> ir-button
   ir-channel-manager --> ir-modal
+  ir-general-settings --> ir-modal
   ir-list-item --> ir-modal
   style ir-modal fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -71,8 +71,8 @@ export class IrGeneralSettings {
   testConnection() {
     // check if all data is filled
     if (!this.data.hotelId) {
-      alert('Please add hotel ID');
-      return;
+      const alertModal: any = document.querySelector('ir-modal.alertFields');
+      alertModal.openModal();
     }
     this.testLoader = true;
     setTimeout(() => {
@@ -90,6 +90,19 @@ export class IrGeneralSettings {
     }, 2000);
   }
 
+  _alert(message: string) {
+    return (
+      <div class="row">
+        <div class="col-2 d-flex justify-content-center ">
+          <ir-icon icon="ft-alert-triangle warning h1"></ir-icon>
+        </div>
+        <div class="col-10">
+          <div class="font-weight-bold h3">{message}</div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return [
       <div class="General Settings">
@@ -99,7 +112,10 @@ export class IrGeneralSettings {
             <ir-select
               id="channel-select"
               label="Channel"
-              data={[{ value: 'expedia', text: 'Expedia' }, {value: 'zourouna', text: 'Zourouna'}]}
+              data={[
+                { value: 'expedia', text: 'Expedia' },
+                { value: 'zourouna', text: 'Zourouna' },
+              ]}
               label-background="white"
               label-position="right"
               label-border="none"
@@ -202,6 +218,9 @@ export class IrGeneralSettings {
             </div>
           </div>
         )}
+        <ir-modal class="alertFields" leftBtnActive={false} btnPosition="center" rightBtnText="Close" rightBtnColor="primary">
+          {this._alert('Please fill in all the fields')}
+        </ir-modal>
       </div>,
     ];
   }

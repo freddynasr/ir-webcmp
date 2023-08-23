@@ -61,12 +61,12 @@ export const mapRoom = [
     services: [
       {
         id: 'MAPROOOMTYPE1_1',
-        name: 'Service Room Type 1 Type 1',
+        name: 'Rate Plan Type 1 Type 1',
         value: 'ST1',
       },
       {
         id: 'MAPROOMTYPE1_2',
-        name: 'Service Room Type 1 Type 2',
+        name: 'Rate Plan Type 1 Type 2',
         value: 'ST2',
       }
     ]
@@ -79,12 +79,12 @@ export const mapRoom = [
     services: [
       {
         id: 'MAPROOMTYPE2_1',
-        name: 'Service Room Type 2 Type 1',
+        name: 'Rate Plan Type 2 Type 1',
         value: 'ST1',
       },
       {
         id: 'MAPROOMTYPE2_2',
-        name: 'Service Room Type 2 Type 2',
+        name: 'Rate Plan Type 2 Type 2',
         value: 'ST2',
       }
     ]
@@ -97,12 +97,12 @@ export const mapRoom = [
     services: [
       {
         id: 'MAPROOMTYPE3_1',
-        name: 'Service Room Type 3 Type 1',
+        name: 'Rate Plan Type 3 Type 1',
         value: 'ST1',
       },
       {
         id: 'MAPROOMTYPE3_2',
-        name: 'Service Room Type 3 Type 2',
+        name: 'Rate Plan Type 3 Type 2',
         value: 'ST2',
       }
     ]
