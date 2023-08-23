@@ -76,8 +76,6 @@ export class IrListItem {
     },
   ];
 
-  
-
   addEventListenerToDropdown(item: any) {
     const dropdown = document.querySelector(`ir-dropdown.dropdown-action-${item.id}`);
     // console.log("dropdown", dropdown)
@@ -90,7 +88,7 @@ export class IrListItem {
         } else if (e.detail.name === 'Disable') {
           this.onPressDisable(item);
         } else if (e.detail.name === 'Enable') {
-           this.onPressDisable(item);
+          this.onPressDisable(item);
         }
       };
 
@@ -104,15 +102,11 @@ export class IrListItem {
   handleCreate(mode: string, item: any) {
     this.openSidebar.emit({ mode: mode, item: item });
   }
-  
-
-
-
 
   onPressDelete(item: any) {
     this.type = 'delete';
     const modal = document.querySelector(`ir-modal`);
-    console.log("modal", modal)
+    console.log('modal', modal);
     if (modal) {
       modal.item = item;
       modal.openModal();
@@ -123,30 +117,23 @@ export class IrListItem {
   doAction(event: CustomEvent) {
     const item = event.detail;
     if (this.type === 'delete') {
-      this.listData = this.listData.filter((data) => data.id !== item.id);
+      this.listData = this.listData.filter(data => data.id !== item.id);
     } else if (this.type === 'disable') {
-      this.listData = this.listData.map((data) => {
+      this.listData = this.listData.map(data => {
         if (data.id === item.id) {
           data.status = 'Disabled';
         }
         return data;
-      }
-      );
-    }
-
-    else if (this.type === 'enable') {
-      this.listData = this.listData.map((data) => {
+      });
+    } else if (this.type === 'enable') {
+      this.listData = this.listData.map(data => {
         if (data.id === item.id) {
           data.status = 'Active';
         }
         return data;
-      }
-      );
+      });
     }
-
-
   }
-
 
   onPressDisable(item: any) {
     this.type = item.status === 'Active' ? 'disable' : 'enable';
@@ -157,8 +144,6 @@ export class IrListItem {
     }
   }
 
-
-
   componentDidLoad() {
     this.listData.forEach(item => {
       this.addEventListenerToDropdown(item);
@@ -166,12 +151,11 @@ export class IrListItem {
   }
 
   componentDidUpdate() {
-    console.log("componentDidUpdate");
+    console.log('componentDidUpdate');
     this.listData.forEach(item => {
       this.addEventListenerToDropdown(item);
     });
   }
-
 
   // disconnectedCallback() {
   //   this.listData.forEach(item => {
@@ -181,8 +165,6 @@ export class IrListItem {
   //     }
   //   });
   // }
- 
-  
 
   _renderEmptyState() {
     return (
@@ -193,39 +175,36 @@ export class IrListItem {
             You don't have any channels yet.
             <br />
             It's a good time to create
-            <a class="text-primary openSidebar"
-              onClick={() => this.createNew.emit({ mode: 'create', item: null })}
-              > new</a>
+            <a class="text-primary openSidebar" onClick={() => this.createNew.emit({ mode: 'create', item: null })}>
+              {' '}
+              new
+            </a>
           </p>
         </div>
       </div>
     );
   }
 
-
-
   _renderItem() {
     return (
       <div>
         <div class="container-fluid">
           {this.listData.map(item => {
-            
-             return (
-            <div class="row">
-              <div class="col-12 item-info">
-                <div class="row">
-                  <div class="col-3 p-1">{item.title}</div>
-                  <div class="col-3 p-1">{item.channel}</div>
-                  <div class="col-3 p-1">{item.status}</div>
-                  <div class="col-3 ">
-                  <ir-dropdown class={`dropdown-action-${item.id}`} 
-                  data={item.status === 'Active' ? this.dropdownData : this.dropdownDataDisable}
-                  object={item}></ir-dropdown>
+            return (
+              <div class="row">
+                <div class="col-12 item-info">
+                  <div class="row">
+                    <div class="col-3 p-1">{item.title}</div>
+                    <div class="col-3 p-1">{item.channel}</div>
+                    <div class="col-3 p-1">{item.status}</div>
+                    <div class="col-3 ">
+                      <ir-dropdown class={`dropdown-action-${item.id}`} data={item.status === 'Active' ? this.dropdownData : this.dropdownDataDisable} object={item}></ir-dropdown>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )})}
+            );
+          })}
         </div>
       </div>
     );
@@ -235,7 +214,7 @@ export class IrListItem {
     return (
       <div class="row">
         <div class="col-2 d-flex justify-content-center ">
-          <ir-icon icon="ft-alert-circle warning h1"></ir-icon>
+          <ir-icon icon="ft-trash danger h1"></ir-icon>
         </div>
         <div class="col-10">
           <div class="font-weight-bold">Are you sure you want to delete?</div>
@@ -260,13 +239,10 @@ export class IrListItem {
     );
   }
 
-
   render() {
     return [
-      this.listData.length > 0 ? this._renderItem() : this._renderEmptyState()
-      ,
-      <ir-modal
-      >{this.type === 'delete' ? this._confirmDelete() : this._enable_disable()}</ir-modal>
+      this.listData.length > 0 ? this._renderItem() : this._renderEmptyState(),
+      <ir-modal>{this.type === 'delete' ? this._confirmDelete() : this._enable_disable()}</ir-modal>,
     ];
   }
 }

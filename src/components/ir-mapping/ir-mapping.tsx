@@ -70,7 +70,6 @@ export class IrMapping {
         }
       });
     }
-   
   }
 
   _deleteMapping(item) {
@@ -82,31 +81,25 @@ export class IrMapping {
     }
   }
 
-
   _getMapNameFromId(itemId) {
-    console.log(itemId)
+    console.log(itemId);
     if (this.selected.length === 0) {
       return;
     }
     // Get object from this.mapped that has itemId === itemId then return the name
-    const mapped = this.selected.find(map => map.itemId === itemId)
+    const mapped = this.selected.find(map => map.itemId === itemId);
     if (!mapped || mapped == undefined) {
-      return
+      return;
     }
     const toBeCompared = mapped.mappedId;
     const map = this.mapRoom.find(map => map.id === toBeCompared);
-    return [map.name, map.number_of_people]
+    return [map.name, map.number_of_people];
   }
-
-
-
-
-
 
   _renderMapping(item, mapState, index) {
     // Get the services from the selected and compare with the item.id
     // If the item.id is in the selected, then show the mapped services
-    const mapped = this.selected.find(selected => selected.itemId === item.id)
+    const mapped = this.selected.find(selected => selected.itemId === item.id);
     const remainingRoom = this.mapRoom.filter(map => {
       const index = this.selected.findIndex(selected => selected.mappedId === map.id);
       if (index === -1) {
@@ -114,14 +107,10 @@ export class IrMapping {
       }
     });
 
-    // this.selected contains a property called selectedService which is a string of service id. 
+    // this.selected contains a property called selectedService which is a string of service id.
     // the mapped should be than an array of services with no service that is in the selectedService
     // const mappedServices = mapped ? mapped.services : [];
 
-    
-    
-   
-  
     return (
       <div class="col-12 mb-1">
         <div class="row mb-1">
@@ -136,7 +125,7 @@ export class IrMapping {
                 onClick={() => {
                   const select = document.querySelector(`select[id="${index}"]`) as HTMLSelectElement;
                   this.mapState = [...this.mapState.slice(0, index), 'mapping', ...this.mapState.slice(index + 1)];
-                 // console.log('this.mapState', this.mapState);
+                  // console.log('this.mapState', this.mapState);
                   setTimeout(() => {
                     select.click();
                   }, 100);
@@ -180,8 +169,8 @@ export class IrMapping {
             ) : (
               <div class="d-flex flex-grow-1 justify-content-between">
                 <div class="text-primary">
-                  {this._getMapNameFromId(item.id)[0]} 
-                    <ir-icon icon="ft-user"></ir-icon> {this._getMapNameFromId(item.id)[1]}
+                  {this._getMapNameFromId(item.id)[0]}
+                  <ir-icon icon="ft-user"></ir-icon> {this._getMapNameFromId(item.id)[1]}
                 </div>
                 <ir-icon
                   icon="text-primary ft-trash"
@@ -195,61 +184,62 @@ export class IrMapping {
           </div>
         </div>
         <div class="col-12 mb-1">
-          {item.ratePlans && item.ratePlans.length && item.ratePlans.map(ratePlan => (
-          <div class="row mb-1">
-            <div class="col-6 d-flex justify-content-between align-items-center">
-              <div>
-                {ratePlan.name}
-                <ir-icon icon="ft-user"></ir-icon> {item.number_of_people}
+          {item.ratePlans &&
+            item.ratePlans.length &&
+            item.ratePlans.map(ratePlan => (
+              <div class="row mb-1">
+                <div class="col-6 d-flex justify-content-between align-items-center">
+                  <div>
+                    {ratePlan.name}
+                    <ir-icon icon="ft-user"></ir-icon> {item.number_of_people}
+                  </div>
+                  {mapState === 'mapped' && <ir-icon icon="la la-long-arrow-right"></ir-icon>}
+                </div>
+                {}
+                <div class="col-6 pr-0">
+                  {mapState === 'mapped' && (
+                    <select
+                      class="form-control form-control-sm"
+                      onChange={(event: any) => {
+                        mapped.selectedService = event.target.value;
+                        this._onSelectService(mapped);
+                      }}
+                    >
+                      {/* Display only the values that are not in the mapped array by comparing the values / ids */}
+                      <option value="">Select Plan</option>
+                      {mapped &&
+                        mapped.services.map(service => {
+                          if (this.map.mapping !== undefined) {
+                            const index = this.map.mapping.findIndex(mapping => mapping.itemId === item.id);
+                            if (index !== -1) {
+                              // if the itemId is in the map.mapping, then show the mapped services
+                              console.log(service, this.map.mapping[index]);
+                              return (
+                                <option value={service} selected={service.id === this.map.mapping[index].selectedService}>
+                                  {service.name}
+                                </option>
+                              );
+                            } else {
+                              console.log('index is -1');
+                              // if the itemId is not in the map.mapping, then show the mapped services
+                              return <option value={service}>{service.name}</option>;
+                            }
+                          } else {
+                            console.log(service);
+                            // if the map.mapping is undefined, then show the mapped services
+                            return <option value={service.id}>{service.name}</option>;
+                          }
+                        })}
+                    </select>
+                  )}
+                </div>
               </div>
-              <ir-icon icon="la la-long-arrow-right"></ir-icon>
-            </div>
-            {}
-            <div class="col-6 pr-0">
-              <select
-                class="form-control form-control-sm"
-                onChange={(event: any) => {
-                  mapped.selectedService = event.target.value;
-                  this._onSelectService(mapped);
-                }}
-              >
-
-                {/* Display only the values that are not in the mapped array by comparing the values / ids */}
-                <option value="">Select Plan</option>
-                {mapped && mapped.services.map(service => {
-                   if (this.map.mapping !== undefined) {
-                    const index = this.map.mapping.findIndex(mapping => mapping.itemId === item.id);
-                    if (index !== -1) {
-                      // if the itemId is in the map.mapping, then show the mapped services
-                      console.log(service, this.map.mapping[index])
-                      return (
-                        <option value={service} selected={service.id === this.map.mapping[index].selectedService}>{service.name}</option>
-                      )
-                    } else {
-                      console.log("index is -1")
-                      // if the itemId is not in the map.mapping, then show the mapped services
-                      return (
-                        <option value={service}>{service.name}</option>
-                      )
-                    }
-                  } else {
-                    console.log(service)
-                    // if the map.mapping is undefined, then show the mapped services
-                    return (
-                      <option value={service.id}>{service.name}</option>
-                    )
-                  }
-                })}
-              </select>
-            </div>
-          </div>
-          ))}
+            ))}
         </div>
       </div>
     );
   }
   render() {
-    
     // console.log('this.selected', this.selected);
 
     return (
