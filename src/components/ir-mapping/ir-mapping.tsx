@@ -16,7 +16,6 @@ export class IrMapping {
   @State() mapState: ('notMapped' | 'mapping' | 'mapped')[];
 
   @State() selectedMap: any = [];
-  @State() selectedServicesIDs = []
 
   @Watch('map')
   mapChangedHandler(newValue: any) {
@@ -43,9 +42,8 @@ export class IrMapping {
     // console.log('this.selected', this.selected);
   }
 
-  _onSelectService(item, indexx) {
-    console.log(indexx)
-    item.selectedService = JSON.parse(item.selectedService)
+  _onSelectService(item) {
+    console.log('item', item);
     if (this.mapped.length >= 0) {
       const index = this.mapped.findIndex(mapped => mapped.itemId === item.itemId);
       if (index !== -1) {
@@ -53,14 +51,7 @@ export class IrMapping {
       } else {
         this.mapped = [...this.mapped, item];
       }
-     const object = {
-      id: item.selectedService.id,
-      index: indexx
-     }
-     this.selectedServicesIDs = [...this.selectedServicesIDs, object]
     }
-   
-    console.log(this.selectedServicesIDs)
   }
 
   @Method()
@@ -125,7 +116,7 @@ export class IrMapping {
 
     // this.selected contains a property called selectedService which is a string of service id. 
     // the mapped should be than an array of services with no service that is in the selectedService
-    const mappedServices = mapped ? mapped.services : [];
+    // const mappedServices = mapped ? mapped.services : [];
 
     
     
@@ -189,8 +180,8 @@ export class IrMapping {
             ) : (
               <div class="d-flex flex-grow-1 justify-content-between">
                 <div class="text-primary">
-                  {/* {this._getMapNameFromId(item.id)[0]} */}
-                   {/* <ir-icon icon="ft-user"></ir-icon> {this._getMapNameFromId(item.id)[1]} */}
+                  {this._getMapNameFromId(item.id)[0]} 
+                    <ir-icon icon="ft-user"></ir-icon> {this._getMapNameFromId(item.id)[1]}
                 </div>
                 <ir-icon
                   icon="text-primary ft-trash"
@@ -204,7 +195,7 @@ export class IrMapping {
           </div>
         </div>
         <div class="col-12 mb-1">
-          {item.ratePlans && item.ratePlans.length && item.ratePlans.map((ratePlan, index) => (
+          {item.ratePlans && item.ratePlans.length && item.ratePlans.map(ratePlan => (
           <div class="row mb-1">
             <div class="col-6 d-flex justify-content-between align-items-center">
               <div>
@@ -219,19 +210,36 @@ export class IrMapping {
                 class="form-control form-control-sm"
                 onChange={(event: any) => {
                   mapped.selectedService = event.target.value;
-                  this._onSelectService(mapped, index)
+                  this._onSelectService(mapped);
                 }}
               >
 
                 {/* Display only the values that are not in the mapped array by comparing the values / ids */}
                 <option value="">Select Plan</option>
-                {mappedServices && mappedServices.map((service, index) => {
-                  console.log('service', service);
-                     return <option value={JSON.stringify(service)}
-                    >
-                      {service.name}</option>;
-                   }
-                )}
+                {mapped && mapped.services.map(service => {
+                   if (this.map.mapping !== undefined) {
+                    const index = this.map.mapping.findIndex(mapping => mapping.itemId === item.id);
+                    if (index !== -1) {
+                      // if the itemId is in the map.mapping, then show the mapped services
+                      console.log(service, this.map.mapping[index])
+                      return (
+                        <option value={service} selected={service.id === this.map.mapping[index].selectedService}>{service.name}</option>
+                      )
+                    } else {
+                      console.log("index is -1")
+                      // if the itemId is not in the map.mapping, then show the mapped services
+                      return (
+                        <option value={service}>{service.name}</option>
+                      )
+                    }
+                  } else {
+                    console.log(service)
+                    // if the map.mapping is undefined, then show the mapped services
+                    return (
+                      <option value={service.id}>{service.name}</option>
+                    )
+                  }
+                })}
               </select>
             </div>
           </div>

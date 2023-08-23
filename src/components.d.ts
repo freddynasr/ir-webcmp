@@ -223,6 +223,10 @@ export interface IrButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrButtonElement;
 }
+export interface IrChannelManagerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrChannelManagerElement;
+}
 export interface IrChannelSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrChannelSelectElement;
@@ -484,6 +488,7 @@ declare namespace LocalJSX {
     hotelId: string;
     mapping: any;
   }[];
+        "onFetchApi"?: (event: IrChannelManagerCustomEvent<any>) => void;
     }
     interface IrChannelSelect {
         "data"?: any[];

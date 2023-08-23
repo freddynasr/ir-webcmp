@@ -13,6 +13,13 @@
 | `listData`     | --        |             | `{ title: string; channel: string; status: string; id: string; group: string; property: string; hotelId: string; mapping: any; }[]` | `[]`                                                                                                                                                                                                                                                                             |
 
 
+## Events
+
+| Event      | Description | Type               |
+| ---------- | ----------- | ------------------ |
+| `fetchApi` |             | `CustomEvent<any>` |
+
+
 ## Dependencies
 
 ### Depends on

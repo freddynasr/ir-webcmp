@@ -1,4 +1,4 @@
-import { Component, h, Listen, Prop, State } from '@stencil/core';
+import { Component, h, Listen, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
@@ -51,6 +51,8 @@ export class IrChannelManager {
   @State() item: any = {};
   @State() anyChanges: boolean = false;
 
+  @Event() fetchApi: EventEmitter;
+
  
 
   @Listen('sendToParent')
@@ -81,6 +83,7 @@ export class IrChannelManager {
     }
     this.listData = [...this.listData, {...this.item, mapping: mapping, status: 'Active', id: uuidv4() }];
     console.log(this.listData);
+    this.fetchApi.emit({...this.item, mapping: mapping, status: 'Active', id: uuidv4() });
     const sidebar = document.querySelector('ir-sidebar');
     sidebar.open = !sidebar.open;
     this._reset();
