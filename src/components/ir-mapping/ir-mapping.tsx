@@ -73,13 +73,13 @@ export class IrMapping {
   }
 
   _deleteMapping(item) {
-    // console.log('item', item);
-    const index = this.selected.findIndex(selected => selected.itemId === item.itemId);
-    // console.log('index', index);
+   // Find the itemId in this.selected that has item.id and remove it
+    const index = this.selected.findIndex(selected => selected.itemId === item.id);
     if (index !== -1) {
-      this.selected = [...this.selected.slice(0, index), ...this.selected.slice(index + 1)];
+      this.selected.splice(index, 1);
     }
-  }
+    
+}
 
   _getMapNameFromId(itemId) {
     console.log(itemId);
@@ -106,6 +106,7 @@ export class IrMapping {
         return map;
       }
     });
+    
 
     // this.selected contains a property called selectedService which is a string of service id.
     // the mapped should be than an array of services with no service that is in the selectedService

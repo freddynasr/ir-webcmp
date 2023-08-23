@@ -81,7 +81,11 @@ export class IrChannelManager {
       this._reset();
       return;
     }
+    if (this.listData && this.listData.length > 0) {
     this.listData = [...this.listData, {...this.item, mapping: mapping, status: 'Active', id: uuidv4() }];
+    } else {
+      this.listData = [{...this.item, mapping: mapping, status: 'Active', id: uuidv4() }];
+    }
     console.log(this.listData);
     this.fetchApi.emit({...this.item, mapping: mapping, status: 'Active', id: uuidv4() });
     const sidebar = document.querySelector('ir-sidebar');
