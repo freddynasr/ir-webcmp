@@ -1,10 +1,21 @@
-import { Component, h, State, Method, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, h, State, Method, Event, EventEmitter, Prop, Listen } from '@stencil/core';
 
 @Component({
   tag: 'ir-modal',
   styleUrl: 'ir-modal.css',
 })
 export class IrModal {
+  @Prop() rightBtnActive: boolean = true;
+  @Prop() leftBtnActive: boolean = true;
+
+  @Prop() rightBtnText: string = 'Close';
+  @Prop() leftBtnText: string = 'Confirm';
+
+  @Prop() rightBtnColor: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' = 'primary';
+  @Prop() leftBtnColor: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' = 'secondary';
+
+  @Prop() btnPosition: 'left' | 'right' | 'center' = 'right';
+
   @State() isOpen: boolean = false;
 
   @Method()
@@ -16,14 +27,29 @@ export class IrModal {
     this.isOpen = true;
   }
   @Event() confirmModal: EventEmitter<any>;
+  @Event() cancelModal: EventEmitter<any>;
+
+  @Listen('clickHanlder')
+  btnClickHandler(event: CustomEvent) {
+    let target = event.target as HTMLInputElement;
+    let name = target.name;
+
+    if (name === this.leftBtnText) {
+      this.confirmModal.emit();
+      this.closeModal();
+    } else if (name === this.rightBtnText) {
+      this.cancelModal.emit();
+      this.closeModal();
+    }
+  }
 
   @Prop({ reflect: true }) item: any = {};
 
   confirmClose() {
     console.log('confirmClose');
+    this.confirmModal.emit();
     this.confirmModal.emit(this.item);
   }
-
 
   render() {
     return [
@@ -39,18 +65,9 @@ export class IrModal {
             <div class="modal-body">
               <slot></slot>
             </div>
-            <div class="modal-footer">
-              <button
-                class="btn btn-light"
-                onClick={() => {
-                  this.confirmClose();
-                }}
-              >
-                Confirm
-              </button>
-              <button type="button" class="btn btn-primary" onClick={() => this.closeModal()}>
-                Close
-              </button>
+            <div class={`modal-footer d-flex justify-content-${this.btnPosition === 'center' ? 'center' : this.btnPosition === 'left' ? 'start' : 'end'}`}>
+              {this.leftBtnActive && <ir-button icon={''} btn_color={this.leftBtnColor} btn_block text={this.leftBtnText} name={this.leftBtnText}></ir-button>}
+              {this.rightBtnActive && <ir-button icon={''} btn_color={this.rightBtnColor} btn_block text={this.rightBtnText} name={this.rightBtnText}></ir-button>}
             </div>
           </div>
         </div>

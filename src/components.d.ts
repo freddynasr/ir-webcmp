@@ -138,9 +138,16 @@ export namespace Components {
         "map": any;
     }
     interface IrModal {
+        "btnPosition": 'left' | 'right' | 'center';
         "closeModal": () => Promise<void>;
         "item": any;
+        "leftBtnActive": boolean;
+        "leftBtnColor": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+        "leftBtnText": string;
         "openModal": () => Promise<void>;
+        "rightBtnActive": boolean;
+        "rightBtnColor": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+        "rightBtnText": string;
     }
     interface IrRadioBtn {
         "data": selectOption[];
@@ -600,8 +607,16 @@ declare namespace LocalJSX {
         "onSendMappingToParent"?: (event: IrMappingCustomEvent<any>) => void;
     }
     interface IrModal {
+        "btnPosition"?: 'left' | 'right' | 'center';
         "item"?: any;
+        "leftBtnActive"?: boolean;
+        "leftBtnColor"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+        "leftBtnText"?: string;
+        "onCancelModal"?: (event: IrModalCustomEvent<any>) => void;
         "onConfirmModal"?: (event: IrModalCustomEvent<any>) => void;
+        "rightBtnActive"?: boolean;
+        "rightBtnColor"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+        "rightBtnText"?: string;
     }
     interface IrRadioBtn {
         "data"?: selectOption[];
