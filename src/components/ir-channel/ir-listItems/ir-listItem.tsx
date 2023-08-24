@@ -99,6 +99,10 @@ export class IrListItem {
   @Event() openSidebar: EventEmitter;
   @Event() createNew: EventEmitter;
 
+  @Event() DeleteItem: EventEmitter<any>;
+  @Event() DisableItem: EventEmitter<any>;
+  @Event() EnableItem: EventEmitter<any>;
+
   handleCreate(mode: string, item: any) {
     this.openSidebar.emit({ mode: mode, item: item });
   }
