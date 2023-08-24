@@ -15,9 +15,10 @@
 
 ## Events
 
-| Event      | Description | Type               |
-| ---------- | ----------- | ------------------ |
-| `fetchApi` |             | `CustomEvent<any>` |
+| Event              | Description | Type               |
+| ------------------ | ----------- | ------------------ |
+| `fetchApi`         |             | `CustomEvent<any>` |
+| `requestApiDelete` |             | `CustomEvent<any>` |
 
 
 ## Dependencies
