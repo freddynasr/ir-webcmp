@@ -16,7 +16,7 @@ export class IrButton {
 
   connectedCallback() {}
   disconnectedCallback() {}
-  @Event() clickHanlder: EventEmitter<any>;
+  @Event({ bubbles: true, composed: true }) clickHanlder: EventEmitter<any>;
 
   render() {
     let block = '';

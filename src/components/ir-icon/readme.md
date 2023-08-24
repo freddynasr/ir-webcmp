@@ -16,20 +16,18 @@
 
 ### Used by
 
- - [ir-channel-manager](../ir-channel-manager)
- - [ir-channel-select](../ir-channel-select)
+ - [ir-channel-manager](../ir-channel/ir-channel-manager)
  - [ir-dropdown](../ir-dropdown)
- - [ir-general-settings](../ir-general-settings)
- - [ir-list-item](../ir-listItems)
- - [ir-mapping](../ir-mapping)
- - [ir-sidebar](../ir-switch/ir-sidebar)
- - [ir-topbar](../ir-topBar)
+ - [ir-general-settings](../ir-channel/ir-general-settings)
+ - [ir-list-item](../ir-channel/ir-listItems)
+ - [ir-mapping](../ir-channel/ir-mapping)
+ - [ir-sidebar](../ir-sidebar)
+ - [ir-topbar](../ir-channel/ir-topBar)
 
 ### Graph
 ```mermaid
 graph TD;
   ir-channel-manager --> ir-icon
-  ir-channel-select --> ir-icon
   ir-dropdown --> ir-icon
   ir-general-settings --> ir-icon
   ir-list-item --> ir-icon

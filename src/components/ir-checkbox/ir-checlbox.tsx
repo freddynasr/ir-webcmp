@@ -12,7 +12,7 @@ export class IrCheckBox {
   @Prop() value: string; // Added value property
   @Prop() labelPosition: 'before' | 'after' = 'after'; // Added labelPosition property
 
-  @Event() checkboxChange: EventEmitter<{ name: string; value: string; checked: boolean }>;
+  @Event({ bubbles: true, composed: true }) checkboxChange: EventEmitter<{ name: string; value: string; checked: boolean }>;
 
   handleInputChange = () => {
     if (!this.disabled) {

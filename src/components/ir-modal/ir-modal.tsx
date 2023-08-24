@@ -26,8 +26,8 @@ export class IrModal {
   async openModal() {
     this.isOpen = true;
   }
-  @Event() confirmModal: EventEmitter<any>;
-  @Event() cancelModal: EventEmitter<any>;
+  @Event({ bubbles: true, composed: true }) confirmModal: EventEmitter<any>;
+  @Event({ bubbles: true, composed: true }) cancelModal: EventEmitter<any>;
 
   @Listen('clickHanlder')
   btnClickHandler(event: CustomEvent) {

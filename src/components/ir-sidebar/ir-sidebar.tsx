@@ -6,12 +6,11 @@ import { Component, Prop, h, Method, Event, EventEmitter } from '@stencil/core';
 })
 export class IrSidebar {
   @Prop() name: string;
-  @Prop() side: 'right' | 'left' = 'right'
+  @Prop() side: 'right' | 'left' = 'right';
 
   @Prop({ mutable: true, reflect: true }) open: boolean = false;
 
-  @Event() irSidebarToggle: EventEmitter;
-
+  @Event({ bubbles: true, composed: true }) irSidebarToggle: EventEmitter;
 
   @Method()
   async toggleSidebar() {
@@ -25,9 +24,6 @@ export class IrSidebar {
     } else {
       className = '';
     }
-    console.log(this.open);
-    console.log(className);
-    console.log(this.side);
 
     return [
       <div

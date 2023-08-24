@@ -24,7 +24,7 @@ export class IrInputText {
   @State() valid: boolean;
   @State() initial: boolean = true;
 
-  @Event() textChange: EventEmitter<any>;
+  @Event({ bubbles: true, composed: true }) textChange: EventEmitter<any>;
   connectedCallback() {}
   disconnectedCallback() {}
 

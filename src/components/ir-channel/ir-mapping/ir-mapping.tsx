@@ -1,5 +1,5 @@
 import { Component, h, State, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
-import { mapRoom, hostRoom } from '../../data';
+import { mapRoom, hostRoom } from '../../../sample/channel/data';
 
 @Component({
   tag: 'ir-mapping',
@@ -25,8 +25,14 @@ export class IrMapping {
 
   @Method()
   async _onSaveMapping() {
-    console.log(this.mapState);
-    this.sendMappingToParent.emit(this.mapped);
+    this.mapped.forEach(map => {
+      if (map.selectedPlans !== undefined) {
+        console.log(this.mapState);
+        this.sendMappingToParent.emit(this.mapped);
+      } else {
+        alert('Please select all the rate plans');
+      }
+    });
   }
 
   componentWillLoad() {
@@ -42,37 +48,28 @@ export class IrMapping {
         console.log(map, map.mappedRoomID);
         const index = this.hostRoom.findIndex(room => room.id === map.mappedRoomID);
         if (index !== -1) {
-          temp[index] = {
-            room: 'mapped',
-            plans: map.selectedPlans.map(plan => {
-              console.log(plan);
-              const _index = this.mapRoom[index].services.findIndex(ratePlan => {
-                return ratePlan.id === plan.id;
-              });
-              if (_index !== -1) {
-                return {
-                  plan: 'mapped',
-                  selectedPlan: plan.id,
-                };
-              } else {
-                return {
-                  plan: 'notMapped',
-                  selectedPlan: '',
-                };
-              }
-            }),
-          };
+          map.selectedPlans.forEach(plan => {
+            const _index = this.mapRoom[index].services.findIndex(ratePlan => {
+              return ratePlan.id === plan.id;
+            });
+            if (_index !== -1) {
+              temp[index] = {
+                room: 'mapped',
+                plans: [...temp[index].plans.slice(0, _index), { plan: 'mapped', selectedPlan: plan.id }, ...temp[index].plans.slice(_index + 1)],
+              };
+            } else {
+              temp[index] = {
+                room: 'mapped',
+                plans: [...temp[index].plans.slice(0, _index), { plan: 'notMapped', selectedPlan: '' }, ...temp[index].plans.slice(_index + 1)],
+              };
+            }
+          });
         } else {
           return {
             room: 'notMapped',
-            plans: this.hostRoom.map(room => new Array(room.ratePlans.length).fill('notMapped')),
+            plans: this.hostRoom.map(room => new Array(room.ratePlans.length).fill({ plan: 'notMapped', selectedPlan: '' })),
           };
         }
-      });
-    } else {
-      temp = new Array(this.hostRoom.length).fill({
-        room: 'notMapped',
-        plans: this.hostRoom.map(room => new Array(room.ratePlans.length).fill({ plan: 'notMapped', selectedPlan: '' })),
       });
     }
 
@@ -323,10 +320,10 @@ export class IrMapping {
                   </div>
                   {mapState.room === 'mapped' && <ir-icon icon="la la-long-arrow-right"></ir-icon>}
                 </div>
-                {}
+
                 <div class="col-6 pr-0">
                   {mapState.room === 'mapped' &&
-                    (mapState.plans[_index].plan === 'notMapped' ? (
+                    (mapState.plans[_index].plan === 'notMapped' || mapState.plans[_index].selectedPlan === '' ? (
                       <div
                         class="text-danger"
                         onClick={() => {
@@ -369,7 +366,7 @@ export class IrMapping {
                             return <option value={plan.id}>{plan.name}</option>;
                           })}
                       </select>
-                    ) : (
+                    ) : mapState.plans[_index].selectedPlan !== '' ? (
                       <div class="d-flex flex-grow-1 justify-content-between">
                         <div class="text-primary">
                           {this._getRatePlanNameFromId(mapState.plans[_index].selectedPlan)}
@@ -387,6 +384,8 @@ export class IrMapping {
                           }}
                         />
                       </div>
+                    ) : (
+                      (mapState.plans[_index].plan = 'notMapped')
                     ))}
                 </div>
               </div>

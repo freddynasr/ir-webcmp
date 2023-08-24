@@ -16,7 +16,7 @@ export class IrDropdown {
   @Prop({ reflect: true }) object: any = null;
   @State() show: boolean = false;
 
-  @Event() dropdownItemCLicked: EventEmitter<{ name: string; object: any }>;
+  @Event({ bubbles: true, composed: true }) dropdownItemCLicked: EventEmitter<{ name: string; object: any }>;
   render() {
     let content = null;
     if (this.data !== null) {

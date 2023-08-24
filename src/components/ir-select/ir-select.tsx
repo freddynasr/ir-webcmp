@@ -24,7 +24,7 @@ export class IrSelect {
 
   @State() initial: boolean = true;
   @State() valid: boolean = false;
-  @Event() selectChange: EventEmitter;
+  @Event({ bubbles: true, composed: true }) selectChange: EventEmitter;
 
   @Watch('selectedValue')
   watchHandler(newValue: string) {

@@ -54,9 +54,9 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ir-channel-manager](../ir-channel-manager)
- - [ir-general-settings](../ir-general-settings)
- - [ir-list-item](../ir-listItems)
+ - [ir-channel-manager](../ir-channel/ir-channel-manager)
+ - [ir-general-settings](../ir-channel/ir-general-settings)
+ - [ir-list-item](../ir-channel/ir-listItems)
 
 ### Depends on
 

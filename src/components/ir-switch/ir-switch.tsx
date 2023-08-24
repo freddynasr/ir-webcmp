@@ -7,10 +7,9 @@ import $ from 'jquery';
 import './jquery-extensions';
 
 @Component({
-  tag: 'ir-switch'
+  tag: 'ir-switch',
 })
 export class MyComponent {
-
   @Prop({ mutable: true }) value: boolean = false;
   @Prop() labelOn: string;
   @Prop() labelOff: string;
@@ -30,8 +29,8 @@ export class MyComponent {
   @Prop() labelWidth?: string | 'auto'; // Add labelWidth prop
   @Prop() baseClass?: string; // Add baseClass prop
   @Prop() wrapperClass?: string; // Add wrapperClass prop
-  
-  @Event() valueChange: EventEmitter<boolean>;
+
+  @Event({ bubbles: true, composed: true }) valueChange: EventEmitter<boolean>;
 
   componentId: string = uuidv4();
 
@@ -70,8 +69,6 @@ export class MyComponent {
         wrapperClass: this.wrapperClass,
       });
 
-     
-
       // Add event listener for switch change
       this.testElement.on('switchChange.bootstrapSwitch', (event, state) => {
         console.log('switchChange.bootstrapSwitch', event);
@@ -87,11 +84,6 @@ export class MyComponent {
 
   render() {
     //console.log('Props', this.value);
-    return (
-      <input
-        type="checkbox"
-        id={this.componentId}
-      />
-    )
+    return <input type="checkbox" id={this.componentId} />;
   }
 }

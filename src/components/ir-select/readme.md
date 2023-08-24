@@ -38,7 +38,7 @@
 
 ### Used by
 
- - [ir-general-settings](../ir-general-settings)
+ - [ir-general-settings](../ir-channel/ir-general-settings)
  - [ir-guest-info](../ir-guest-info)
 
 ### Graph

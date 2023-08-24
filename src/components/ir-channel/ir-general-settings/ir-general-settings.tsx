@@ -18,10 +18,9 @@ export class IrGeneralSettings {
   @State() selectedChannel: string = '';
 
   @State() connected: boolean = false;
-  @Event() sendToParent: EventEmitter;
+  @Event({ bubbles: true, composed: true }) sendToParent: EventEmitter;
 
   componentDidLoad() {
-    console.log('this.data', this.data);
     const channelSelect = document.querySelector('ir-select#channel-select');
     console.log('channelSelect', channelSelect);
     channelSelect.addEventListener('selectChange', (event: CustomEvent) => {
