@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ir-general-settings',
@@ -19,6 +19,13 @@ export class IrGeneralSettings {
 
   @State() connected: boolean = false;
   @Event({ bubbles: true, composed: true }) sendToParent: EventEmitter;
+
+  @Watch('data')
+  watchHandler(newValue: any, oldValue: any) {
+    console.log('newValue', newValue);
+    console.log('oldValue', oldValue);
+    this.selectedChannel = newValue.channel;
+  }
 
   componentDidLoad() {
     const channelSelect = document.querySelector('ir-select#channel-select');
