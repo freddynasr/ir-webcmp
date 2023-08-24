@@ -35,7 +35,7 @@ export class IrModal {
     let name = target.name;
 
     if (name === this.leftBtnText) {
-      this.confirmModal.emit();
+      this.confirmModal.emit(this.item);
     } else if (name === this.rightBtnText) {
       this.cancelModal.emit();
       this.closeModal();
@@ -43,12 +43,6 @@ export class IrModal {
   }
 
   @Prop({ reflect: true }) item: any = {};
-
-  confirmClose() {
-    console.log('confirmClose');
-    this.confirmModal.emit();
-    this.confirmModal.emit(this.item);
-  }
 
   render() {
     return [

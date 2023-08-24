@@ -53,8 +53,6 @@ export class IrChannelManager {
 
   @Event() fetchApi: EventEmitter;
 
- 
-
   @Listen('sendToParent')
   sendToParentHandler(event: CustomEvent) {
     this.anyChanges = true;
@@ -66,14 +64,15 @@ export class IrChannelManager {
   sendMappingToParentHandler(event: CustomEvent) {
     this.anyChanges = true;
     console.log(event.detail);
-    const mapping = event.detail
+    const mapping = event.detail;
     if (this.mode === 'edit') {
-      this.listData = this.listData.map((item) => {
+      this.listData = this.listData.map(item => {
         if (item.id === this.selectedItem.id) {
           return { ...this.item, mapping: mapping };
         }
         return item;
       });
+      this.fetchApi.emit({ ...this.item, mapping: mapping, status: 'Active', id: uuidv4() });
       this.mode = 'create';
       this.activeTab = 'General Settings';
       const sidebar = document.querySelector('ir-sidebar');
@@ -82,18 +81,17 @@ export class IrChannelManager {
       return;
     }
     if (this.listData && this.listData.length > 0) {
-    this.listData = [...this.listData, {...this.item, mapping: mapping, status: 'Active', id: uuidv4() }];
+      this.listData = [...this.listData, { ...this.item, mapping: mapping, status: 'Active', id: uuidv4() }];
     } else {
-      this.listData = [{...this.item, mapping: mapping, status: 'Active', id: uuidv4() }];
+      this.listData = [{ ...this.item, mapping: mapping, status: 'Active', id: uuidv4() }];
     }
     console.log(this.listData);
-    this.fetchApi.emit({...this.item, mapping: mapping, status: 'Active', id: uuidv4() });
+    this.fetchApi.emit({ ...this.item, mapping: mapping, status: 'Active', id: uuidv4() });
     const sidebar = document.querySelector('ir-sidebar');
     sidebar.open = !sidebar.open;
     this._reset();
   }
 
-  
   _reset() {
     this.item = {};
     this.mode = 'create';
@@ -102,24 +100,20 @@ export class IrChannelManager {
     this.anyChanges = false;
   }
 
- 
-
-@Listen('createNew')
-openSidebarHandler(event: CustomEvent) {
-  console.log(event);
-  const sidebar = document.querySelector('ir-sidebar');
-  sidebar.open = !sidebar.open;
-  this.loader = true;
-  this.mode = 'create';
-  this.activeTab = 'General Settings';
-  setTimeout(() => {
-    this.loader = false;
-  }, 2000);
-}
-
+  @Listen('createNew')
+  openSidebarHandler(event: CustomEvent) {
+    console.log(event);
+    const sidebar = document.querySelector('ir-sidebar');
+    sidebar.open = !sidebar.open;
+    this.loader = true;
+    this.mode = 'create';
+    this.activeTab = 'General Settings';
+    setTimeout(() => {
+      this.loader = false;
+    }, 2000);
+  }
 
   componentDidLoad() {
-   
     // Add an event listener to the ir-topbar component
     const openSidebar = document.querySelector('ir-topbar');
     openSidebar.addEventListener('openSidebar', () => {
@@ -146,11 +140,11 @@ openSidebarHandler(event: CustomEvent) {
       }
     });
 
-    const modal = document.querySelector('ir-modal');
+    const modal: any = document.querySelector('ir-modal.exit');
 
     modal.addEventListener('confirmModal', (event: CustomEvent) => {
       console.log(event.detail);
-      sidebar.open = false
+      sidebar.open = false;
       modal.closeModal();
       this._reset();
     });
@@ -162,14 +156,14 @@ openSidebarHandler(event: CustomEvent) {
           modal.openModal();
         }
       } else {
-        sidebar.open = false
+        sidebar.open = false;
         this._reset();
       }
     });
   }
 
   goNext() {
-    if (this.activeTab == 'General Settings' ) {
+    if (this.activeTab == 'General Settings') {
       if (!this.item.title || !this.item.channel || !this.item.group || !this.item.property || !this.item.hotelId) {
         alert('Please fill all the fields');
       } else {
@@ -182,7 +176,7 @@ openSidebarHandler(event: CustomEvent) {
     } else if (this.activeTab == 'Mapping') {
       const IrMapping = document.querySelector('ir-mapping');
       IrMapping._onSaveMapping();
-  }
+    }
   }
 
   _exitWithoutSave() {
@@ -244,17 +238,13 @@ openSidebarHandler(event: CustomEvent) {
         )}
 
         <div class="btn-position">
-          <button
-            type="button"
-            class="btn btn-primary btn-sm btn-block"
-            onClick={() => this.goNext()}
-          >
+          <button type="button" class="btn btn-primary btn-sm btn-block" onClick={() => this.goNext()}>
             {this.activeTab == 'General Settings' ? 'Next' : 'Save'}
           </button>
         </div>
       </ir-sidebar>,
 
-      <ir-modal>{this._exitWithoutSave()}</ir-modal>,
+      <ir-modal class={'exit'}>{this._exitWithoutSave()}</ir-modal>,
     ];
   }
 }

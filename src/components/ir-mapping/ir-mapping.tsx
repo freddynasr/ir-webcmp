@@ -13,7 +13,7 @@ export class IrMapping {
   @Event() sendMappingToParent: EventEmitter;
   @Prop() map: any = {};
 
-  @State() mapState: { room: 'notMapped' | 'mapping' | 'mapped'; plans: ('notMapped' | 'mapping' | 'mapped')[] }[];
+  @State() mapState: { room: 'notMapped' | 'mapping' | 'mapped'; plans: { plan: 'notMapped' | 'mapping' | 'mapped'; selectedPlan?: any }[] }[];
 
   @State() selectedMap: any = [];
 
@@ -25,14 +25,54 @@ export class IrMapping {
 
   @Method()
   async _onSaveMapping() {
+    console.log(this.mapState);
     this.sendMappingToParent.emit(this.mapped);
   }
 
   componentWillLoad() {
+    console.log(this.map.mapping);
+    this.mapped = this.map.mapping || [];
     this.mapState = new Array(this.hostRoom.length).fill({
       room: 'notMapped',
       plans: this.hostRoom.map(room => new Array(room.ratePlans.length).fill('notMapped')),
     });
+
+    if (this.map != undefined) {
+      this.mapState = this.map.mapping.map(map => {
+        const index = this.hostRoom.findIndex(room => room.id === map.mappedRoomID);
+        if (index !== -1 && map.selectedPlans !== undefined) {
+          return {
+            room: 'mapped',
+            plans: map.selectedPlans.map(plan => {
+              const _index = this.mapRoom[index].services.findIndex(ratePlan => {
+                return ratePlan.id === plan.id;
+              });
+              if (_index !== -1) {
+                return {
+                  plan: 'mapped',
+                  selectedPlan: plan.id,
+                };
+              } else {
+                return {
+                  plan: 'notMapped',
+                  selectedPlan: '',
+                };
+              }
+            }),
+          };
+        } else {
+          return {
+            room: 'notMapped',
+            plans: this.hostRoom.map(room => new Array(room.ratePlans.length).fill('notMapped')),
+          };
+        }
+      });
+    } else {
+      this.mapState = new Array(this.hostRoom.length).fill({
+        room: 'notMapped',
+        plans: this.hostRoom.map(room => new Array(room.ratePlans.length).fill('notMapped')),
+      });
+    }
   }
 
   _onSelectMap(initialRoom, object) {
@@ -80,27 +120,17 @@ export class IrMapping {
     this.mapped = this.mapped.map(item => {
       if (item.mappingId === mappingId) {
         const selectedPlans = item.selectedPlans || [];
+        // Get the ratePlan from the availableService using the selectedPlan
+        const ratePlan = i.availableRatePlans.find(ratePlan => ratePlan.id === i.selectedPlan);
+        console.log(ratePlan);
         return {
           ...item,
-          selectedPlans: [...selectedPlans, i.selectedPlan],
+          selectedPlans: [...selectedPlans, ratePlan],
         };
       }
       return item;
     });
   }
-
-  // componentWillLoad() {
-  //   this.mapState = new Array(hostRoom.length).fill('notMapped');
-  //   if (this.map.mapping !== undefined) {
-  //     this.selected = this.map.mapping;
-  //     this.mapState = this.map.mapping.map(map => {
-  //       const index = this.mapRoom.findIndex(room => room.id === map.mappedId);
-  //       if (index !== -1) {
-  //         return 'mapped';
-  //       }
-  //     });
-  //   }
-  // }
 
   _deleteMapping(item) {
     // Find the itemId in this.selected that has item.id and remove it
@@ -125,6 +155,34 @@ export class IrMapping {
     return [map.name, map.number_of_people];
   }
 
+  _deleteRatePlan(ratePlanId) {
+    console.log(ratePlanId);
+    console.log(this.mapped);
+    // Find the object that has the same id as the ratePlanId is this.mapping.selectedPlans
+    // then add it to the availableRatePlans
+    this.mapped = this.mapped.map(item => {
+      const index = item.selectedPlans.findIndex(plan => plan.id === ratePlanId);
+      if (index !== -1) {
+        const ratePlan = item.selectedPlans[index];
+        item.availableRatePlans = [...item.availableRatePlans, ratePlan];
+        item.selectedPlans.splice(index, 1);
+      }
+      return item;
+    });
+  }
+
+  _getRatePlanNameFromId(ratePlanId) {
+    for (let item of this.mapped) {
+      for (let plan of item.selectedPlans) {
+        if (plan.id === ratePlanId) {
+          return plan.name;
+        }
+      }
+    }
+    // If no matching plan is found, return undefined or some default value
+    return undefined;
+  }
+
   _renderMapping(item, mapState, index) {
     // Get the services from the selected and compare with the item.id
     // If the item.id is in the selected, then show the mapped services
@@ -141,7 +199,7 @@ export class IrMapping {
     // get the ramining rateplan by checking the mapped and the selectedPlans
     if (mapped?.selectedPlans) {
       mapped.availableRatePlans = mapped.availableRatePlans.filter(ratePlan => {
-        const isSelected = mapped.selectedPlans.includes(ratePlan.id);
+        const isSelected = mapped.selectedPlans.includes(ratePlan);
         return !isSelected;
       });
     }
@@ -167,7 +225,13 @@ export class IrMapping {
                   // this.mapState = [...this.mapState.slice(0, index), 'mapping', ...this.mapState.slice(index + 1)];
                   this.mapState = [
                     ...this.mapState.slice(0, index),
-                    { room: 'mapping', plans: new Array(item.ratePlans.length).fill('notMapped') },
+                    {
+                      room: 'mapping',
+                      plans: new Array(item.ratePlans.length).fill({
+                        plan: 'notMapped',
+                        selectedPlan: '',
+                      }),
+                    },
                     ...this.mapState.slice(index + 1),
                   ];
                   // console.log('this.mapState', this.mapState);
@@ -187,7 +251,13 @@ export class IrMapping {
                   if (event.target.value !== '') {
                     this.mapState = [
                       ...this.mapState.slice(0, index),
-                      { room: 'mapped', plans: new Array(item.ratePlans.length).fill('notMapped') },
+                      {
+                        room: 'mapped',
+                        plans: new Array(item.ratePlans.length).fill({
+                          plan: 'notMapped',
+                          selectedPlan: '',
+                        }),
+                      },
                       ...this.mapState.slice(index + 1),
                     ];
                   }
@@ -218,8 +288,8 @@ export class IrMapping {
             ) : (
               <div class="d-flex flex-grow-1 justify-content-between">
                 <div class="text-primary">
-                  {/* {this._getMapNameFromId(item.id)[0]} */}wqdweqw qwe qweqw
-                  <ir-icon icon="ft-user"></ir-icon> 2
+                  {this._getMapNameFromId(item.id)[0]}
+                  <ir-icon icon="ft-user"></ir-icon> {this._getMapNameFromId(item.id)[1]}
                 </div>
                 <ir-icon
                   icon="text-primary ft-trash"
@@ -246,12 +316,12 @@ export class IrMapping {
                     {ratePlan.name}
                     <ir-icon icon="ft-user"></ir-icon> {item.number_of_people}
                   </div>
-                  {mapState === 'mapped' && <ir-icon icon="la la-long-arrow-right"></ir-icon>}
+                  {mapState.room === 'mapped' && <ir-icon icon="la la-long-arrow-right"></ir-icon>}
                 </div>
                 {}
                 <div class="col-6 pr-0">
                   {mapState.room === 'mapped' &&
-                    (mapState.plans[_index] === 'notMapped' ? (
+                    (mapState.plans[_index].plan === 'notMapped' ? (
                       <div
                         class="text-danger"
                         onClick={() => {
@@ -259,7 +329,7 @@ export class IrMapping {
                           // this.mapState = [...this.mapState.slice(0, index), 'mapping', ...this.mapState.slice(index + 1)];
                           this.mapState = [
                             ...this.mapState.slice(0, index),
-                            { room: 'mapped', plans: [...mapState.plans.slice(0, _index), 'mapping', ...mapState.plans.slice(_index + 1)] },
+                            { room: 'mapped', plans: [...mapState.plans.slice(0, _index), { plan: 'mapping', selectedPlan: '' }, ...mapState.plans.slice(_index + 1)] },
                             ...this.mapState.slice(index + 1),
                           ];
                           // console.log('this.mapState', this.mapState);
@@ -270,7 +340,7 @@ export class IrMapping {
                       >
                         Not mapped
                       </div>
-                    ) : mapState.plans[_index] === 'mapping' ? (
+                    ) : mapState.plans[_index].plan === 'mapping' ? (
                       <select
                         class="form-control form-control-sm"
                         onChange={(event: any) => {
@@ -281,7 +351,7 @@ export class IrMapping {
                               ...this.mapState.slice(0, index),
                               {
                                 room: 'mapped',
-                                plans: [...mapState.plans.slice(0, _index), 'mapped', ...mapState.plans.slice(_index + 1)],
+                                plans: [...mapState.plans.slice(0, _index), { plan: 'mapped', selectedPlan: event.target.value }, ...mapState.plans.slice(_index + 1)],
                               },
                               ...this.mapState.slice(index + 1),
                             ];
@@ -291,41 +361,22 @@ export class IrMapping {
                         <option value="">Select Plan</option>
                         {remainingRatePlans.length > 0 &&
                           remainingRatePlans.map(plan => {
-                            // console.log("plan", plan)
-                            // if (this.map.mapping !== undefined) {
-                            //   console.log('is defined')
-                            //   const index = this.map.mapping.findIndex(mapping => mapping.itemId === item.id);
-                            //   if (index !== -1) {
-                            //     // if the itemId is in the map.mapping, then show the mapped services
-                            //     // console.log(service, this.map.mapping[index]);
-                            //     return (
-                            //       <option value={service} selected={service.id === this.map.mapping[index].selectedService}>
-                            //         {service.name}
-                            //       </option>
-                            //     );
-                            //   } else {
-                            //     console.log('index is -1');
-                            //     // if the itemId is not in the map.mapping, then show the mapped services
-                            //     return <option value={service}>{service.name}</option>;
-                            //   }
-                            // } else {
-                            // if the map.mapping is undefined, then show the mapped services
                             return <option value={plan.id}>{plan.name}</option>;
                           })}
                       </select>
                     ) : (
                       <div class="d-flex flex-grow-1 justify-content-between">
                         <div class="text-primary">
-                          {this._getMapNameFromId(item.id)[0]}
+                          {this._getRatePlanNameFromId(mapState.plans[_index].selectedPlan)}
                           <ir-icon icon="ft-user"></ir-icon> {this._getMapNameFromId(item.id)[1]}
                         </div>
                         <ir-icon
                           icon="text-primary ft-trash"
                           onClick={() => {
-                            this._deleteMapping(item);
+                            this._deleteRatePlan(mapState.plans[_index].selectedPlan);
                             this.mapState = [
                               ...this.mapState.slice(0, index),
-                              { room: 'mapped', plans: [...mapState.plans.slice(0, _index), 'notMapped', ...mapState.plans.slice(_index + 1)] },
+                              { room: 'mapped', plans: [...mapState.plans.slice(0, _index), { plan: 'notMapped', selectedPlan: '' }, ...mapState.plans.slice(_index + 1)] },
                               ...this.mapState.slice(index + 1),
                             ];
                           }}
