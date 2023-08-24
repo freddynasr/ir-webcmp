@@ -16,10 +16,12 @@
 
 ## Events
 
-| Event         | Description | Type               |
-| ------------- | ----------- | ------------------ |
-| `createNew`   |             | `CustomEvent<any>` |
-| `openSidebar` |             | `CustomEvent<any>` |
+| Event          | Description | Type               |
+| -------------- | ----------- | ------------------ |
+| `changeStatus` |             | `CustomEvent<any>` |
+| `createNew`    |             | `CustomEvent<any>` |
+| `openSidebar`  |             | `CustomEvent<any>` |
+| `sendDelete`   |             | `CustomEvent<any>` |
 
 
 ## Dependencies

@@ -76,6 +76,8 @@ export class IrListItem {
     },
   ];
 
+  @Event() sendDelete: EventEmitter
+
   addEventListenerToDropdown(item: any) {
     const dropdown = document.querySelector(`ir-dropdown.dropdown-action-${item.id}`);
     // console.log("dropdown", dropdown)
@@ -98,6 +100,7 @@ export class IrListItem {
 
   @Event() openSidebar: EventEmitter;
   @Event() createNew: EventEmitter;
+  @Event() changeStatus: EventEmitter;
 
   handleCreate(mode: string, item: any) {
     this.openSidebar.emit({ mode: mode, item: item });
@@ -117,11 +120,14 @@ export class IrListItem {
   doAction(event: CustomEvent) {
     const item = event.detail;
     if (this.type === 'delete') {
+      this.sendDelete.emit(item.id)
       this.listData = this.listData.filter(data => data.id !== item.id);
+     
     } else if (this.type === 'disable') {
       this.listData = this.listData.map(data => {
         if (data.id === item.id) {
           data.status = 'Disabled';
+          this.changeStatus.emit(data);
         }
         return data;
       });
@@ -129,9 +135,14 @@ export class IrListItem {
       this.listData = this.listData.map(data => {
         if (data.id === item.id) {
           data.status = 'Active';
+          this.changeStatus.emit(data);
         }
         return data;
       });
+    }
+    const modal = document.querySelector(`ir-modal`)
+    if (modal) {
+      modal.closeModal()
     }
   }
 

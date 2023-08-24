@@ -52,10 +52,11 @@ export class IrChannelManager {
   @State() anyChanges: boolean = false;
 
   @Event({ bubbles: true, composed: true }) fetchApi: EventEmitter;
+  @Event({bubbles: true, composed: true}) requestApiDelete: EventEmitter;
 
   @Listen('sendToParent')
   sendToParentHandler(event: CustomEvent) {
-    console.log(event.detail);
+    console.log("From General Settings", event.detail);
     this.anyChanges = true;
     this.item = event.detail;
     //this.listData = [...this.listData, { ...event.detail, id: this.listData.length + 1, status: 'Active' }];
@@ -63,35 +64,38 @@ export class IrChannelManager {
 
   @Listen('sendMappingToParent')
   sendMappingToParentHandler(event: CustomEvent) {
-    this.anyChanges = true;
-    console.log(event.detail);
+    // Extract the mapping from the event detail
     const mapping = event.detail;
-    if (this.mode === 'edit') {
+  
+    // Flag to track changes
+    this.anyChanges = true;
+  
+    // Update listData based on the mode
+    if (this.mode === 'edit' && this.selectedItem) {
       this.listData = this.listData.map(item => {
         if (item.id === this.selectedItem.id) {
-          return { ...this.item, mapping: mapping };
+          return { ...this.item, mapping: mapping, status: 'Active', id: uuidv4() };
         }
         return item;
       });
-      this.fetchApi.emit({ ...this.item, mapping: mapping, status: 'Active', id: uuidv4() });
-      this.mode = 'create';
-      this.activeTab = 'General Settings';
-      const sidebar = document.querySelector('ir-sidebar');
-      sidebar.open = !sidebar.open;
-      this._reset();
-      return;
-    }
-    if (this.listData && this.listData.length > 0) {
-      this.listData = [...this.listData, { ...this.item, mapping: mapping, status: 'Active', id: uuidv4() }];
     } else {
-      this.listData = [{ ...this.item, mapping: mapping, status: 'Active', id: uuidv4() }];
+      console.log(this.item);
+      this.listData = [...this.listData, { ...this.item, mapping: mapping, status: 'Active', id: uuidv4() }];
     }
-    console.log(this.listData);
+  
+    // Emit the fetchApi event
     this.fetchApi.emit({ ...this.item, mapping: mapping, status: 'Active', id: uuidv4() });
+  
+    // Reset mode, sidebar, and state
+    this.mode = 'create';
+    this.activeTab = 'General Settings';
     const sidebar = document.querySelector('ir-sidebar');
-    sidebar.open = !sidebar.open;
+    if (sidebar) {
+      sidebar.open = !sidebar.open;
+    }
     this._reset();
   }
+  
 
   _reset() {
     this.item = {};
@@ -114,6 +118,17 @@ export class IrChannelManager {
     }, 2000);
   }
 
+  @Listen('sendDelete')
+  requestDelete(event: CustomEvent){
+    this.requestApiDelete.emit(event.detail)
+  }
+  
+  @Listen('changeStatus')
+  changeStatusHandler(event: CustomEvent) {
+    console.log(event.detail);
+    this.fetchApi.emit(event.detail);
+  }
+  
   componentDidLoad() {
     // Add an event listener to the ir-topbar component
     const openSidebar = document.querySelector('ir-topbar');

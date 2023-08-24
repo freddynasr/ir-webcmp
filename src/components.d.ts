@@ -447,6 +447,7 @@ declare namespace LocalJSX {
     mapping: any;
   }[];
         "onFetchApi"?: (event: IrChannelManagerCustomEvent<any>) => void;
+        "onRequestApiDelete"?: (event: IrChannelManagerCustomEvent<any>) => void;
     }
     interface IrCheckbox {
         "checked"?: boolean;
@@ -534,8 +535,10 @@ declare namespace LocalJSX {
     property: string;
     hotelId: string;
   }[];
+        "onChangeStatus"?: (event: IrListItemCustomEvent<any>) => void;
         "onCreateNew"?: (event: IrListItemCustomEvent<any>) => void;
         "onOpenSidebar"?: (event: IrListItemCustomEvent<any>) => void;
+        "onSendDelete"?: (event: IrListItemCustomEvent<any>) => void;
     }
     interface IrLoader {
         "size"?: string;

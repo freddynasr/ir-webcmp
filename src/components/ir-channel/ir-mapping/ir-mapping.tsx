@@ -24,16 +24,17 @@ export class IrMapping {
   }
 
   @Method()
-  async _onSaveMapping() {
-    this.mapped.forEach(map => {
-      if (map.selectedPlans !== undefined) {
-        console.log(this.mapState);
-        this.sendMappingToParent.emit(this.mapped);
-      } else {
-        alert('Please select all the rate plans');
-      }
-    });
+async _onSaveMapping() {
+  // Check if all map elements have selected plans
+  const allSelected = this.mapped.every(map => map.selectedPlans !== undefined);
+
+  if (allSelected) {
+    // Emit the event once if all have selected plans
+    this.sendMappingToParent.emit(this.mapped);
+  } else {
+    alert('Please select all the rate plans');
   }
+}
 
   componentWillLoad() {
     console.log(this.map.mapping);
