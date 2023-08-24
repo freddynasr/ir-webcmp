@@ -32,18 +32,20 @@ export class IrMapping {
   componentWillLoad() {
     console.log(this.map.mapping);
     this.mapped = this.map.mapping || [];
-    this.mapState = new Array(this.hostRoom.length).fill({
+    let temp = new Array(this.hostRoom.length).fill({
       room: 'notMapped',
-      plans: this.hostRoom.map(room => new Array(room.ratePlans.length).fill('notMapped')),
+      plans: this.hostRoom.map(room => new Array(room.ratePlans.length).fill({ plan: 'notMapped', selectedPlan: '' })),
     });
 
     if (this.map != undefined) {
-      this.mapState = this.map.mapping.map(map => {
+      this.map.mapping.forEach(map => {
+        console.log(map, map.mappedRoomID);
         const index = this.hostRoom.findIndex(room => room.id === map.mappedRoomID);
-        if (index !== -1 && map.selectedPlans !== undefined) {
-          return {
+        if (index !== -1) {
+          temp[index] = {
             room: 'mapped',
             plans: map.selectedPlans.map(plan => {
+              console.log(plan);
               const _index = this.mapRoom[index].services.findIndex(ratePlan => {
                 return ratePlan.id === plan.id;
               });
@@ -68,11 +70,14 @@ export class IrMapping {
         }
       });
     } else {
-      this.mapState = new Array(this.hostRoom.length).fill({
+      temp = new Array(this.hostRoom.length).fill({
         room: 'notMapped',
-        plans: this.hostRoom.map(room => new Array(room.ratePlans.length).fill('notMapped')),
+        plans: this.hostRoom.map(room => new Array(room.ratePlans.length).fill({ plan: 'notMapped', selectedPlan: '' })),
       });
     }
+
+    this.mapState = temp;
+    console.log(this.mapState);
   }
 
   _onSelectMap(initialRoom, object) {
