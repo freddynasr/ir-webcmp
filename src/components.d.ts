@@ -138,6 +138,11 @@ export namespace Components {
         "rightBtnColor": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
         "rightBtnText": string;
     }
+    interface IrRadioBtn {
+        "data": selectOption[];
+        "disabled": boolean;
+        "selectedValue": any;
+    }
     interface IrSelect {
         "LabelAvailable": boolean;
         "data": selectOption[];
@@ -254,6 +259,10 @@ export interface IrModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrModalElement;
 }
+export interface IrRadioBtnCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrRadioBtnElement;
+}
 export interface IrSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrSelectElement;
@@ -349,6 +358,12 @@ declare global {
         prototype: HTMLIrModalElement;
         new (): HTMLIrModalElement;
     };
+    interface HTMLIrRadioBtnElement extends Components.IrRadioBtn, HTMLStencilElement {
+    }
+    var HTMLIrRadioBtnElement: {
+        prototype: HTMLIrRadioBtnElement;
+        new (): HTMLIrRadioBtnElement;
+    };
     interface HTMLIrSelectElement extends Components.IrSelect, HTMLStencilElement {
     }
     var HTMLIrSelectElement: {
@@ -405,6 +420,7 @@ declare global {
         "ir-loader": HTMLIrLoaderElement;
         "ir-mapping": HTMLIrMappingElement;
         "ir-modal": HTMLIrModalElement;
+        "ir-radio-btn": HTMLIrRadioBtnElement;
         "ir-select": HTMLIrSelectElement;
         "ir-sidebar": HTMLIrSidebarElement;
         "ir-span": HTMLIrSpanElement;
@@ -556,6 +572,12 @@ declare namespace LocalJSX {
         "rightBtnColor"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
         "rightBtnText"?: string;
     }
+    interface IrRadioBtn {
+        "data"?: selectOption[];
+        "disabled"?: boolean;
+        "onSelectChange"?: (event: IrRadioBtnCustomEvent<any>) => void;
+        "selectedValue"?: any;
+    }
     interface IrSelect {
         "LabelAvailable"?: boolean;
         "data"?: selectOption[];
@@ -644,6 +666,7 @@ declare namespace LocalJSX {
         "ir-loader": IrLoader;
         "ir-mapping": IrMapping;
         "ir-modal": IrModal;
+        "ir-radio-btn": IrRadioBtn;
         "ir-select": IrSelect;
         "ir-sidebar": IrSidebar;
         "ir-span": IrSpan;
@@ -670,6 +693,7 @@ declare module "@stencil/core" {
             "ir-loader": LocalJSX.IrLoader & JSXBase.HTMLAttributes<HTMLIrLoaderElement>;
             "ir-mapping": LocalJSX.IrMapping & JSXBase.HTMLAttributes<HTMLIrMappingElement>;
             "ir-modal": LocalJSX.IrModal & JSXBase.HTMLAttributes<HTMLIrModalElement>;
+            "ir-radio-btn": LocalJSX.IrRadioBtn & JSXBase.HTMLAttributes<HTMLIrRadioBtnElement>;
             "ir-select": LocalJSX.IrSelect & JSXBase.HTMLAttributes<HTMLIrSelectElement>;
             "ir-sidebar": LocalJSX.IrSidebar & JSXBase.HTMLAttributes<HTMLIrSidebarElement>;
             "ir-span": LocalJSX.IrSpan & JSXBase.HTMLAttributes<HTMLIrSpanElement>;
