@@ -55,6 +55,7 @@ export class IrChannelManager {
 
   @Listen('sendToParent')
   sendToParentHandler(event: CustomEvent) {
+    console.log(event.detail);
     this.anyChanges = true;
     this.item = event.detail;
     //this.listData = [...this.listData, { ...event.detail, id: this.listData.length + 1, status: 'Active' }];
@@ -161,6 +162,11 @@ export class IrChannelManager {
       }
     });
   }
+
+  componentDidUpdate() {
+    console.log("this.selectedItem", this.selectedItem);
+  }
+
 
   goNext() {
     if (this.activeTab == 'General Settings') {
