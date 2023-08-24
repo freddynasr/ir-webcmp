@@ -4,6 +4,7 @@ import { Component, h, Prop, State, Event, EventEmitter, Watch } from '@stencil/
   tag: 'ir-general-settings',
 })
 export class IrGeneralSettings {
+
   @State() testLoader: boolean = false;
   @Prop() mode: string;
   @Prop({ reflect: true, mutable: true }) connectionStatus: string = 'Not connected';
@@ -21,7 +22,8 @@ export class IrGeneralSettings {
   @Event({ bubbles: true, composed: true }) sendToParent: EventEmitter;
 
   @Watch('data')
-  watchHandler() {
+  watchHandler(newValue: any, oldValue: any) {
+    console.log(oldValue)
     this.selectedChannel = newValue.channel;
   }
 
@@ -43,6 +45,7 @@ export class IrGeneralSettings {
 
     const titleInput = document.querySelector('ir-input-text#title-input');
     titleInput.addEventListener('textChange', (event: CustomEvent) => {
+      console.log('titleInput', event.detail);
       this.data = { ...this.data, title: event.detail };
     });
 
@@ -52,7 +55,6 @@ export class IrGeneralSettings {
     });
   }
 
-  
 
   componentDidUpdate() {
     const hotelID = document.querySelector('ir-input-text#hotel-id');
@@ -72,6 +74,32 @@ export class IrGeneralSettings {
         ...this.data,
         minimumStay: event.detail.trim(),
       };
+    });
+
+    const channelSelect = document.querySelector('ir-select#channel-select');
+    console.log('channelSelect', channelSelect);
+    channelSelect.addEventListener('selectChange', (event: CustomEvent) => {
+      this.selectedChannel = event.detail;
+      this.data = {
+        ...this.data,
+        channel: event.detail,
+      };
+    });
+
+    const groupSelect = document.querySelector('ir-select#group-select');
+    groupSelect.addEventListener('selectChange', (event: CustomEvent) => {
+      this.data = { ...this.data, group: event.detail };
+    });
+
+    const titleInput = document.querySelector('ir-input-text#title-input');
+    titleInput.addEventListener('textChange', (event: CustomEvent) => {
+      console.log('titleInput', event.detail);
+      this.data = { ...this.data, title: event.detail };
+    });
+
+    const propertySelect = document.querySelector('ir-select#property-select');
+    propertySelect.addEventListener('selectChange', (event: CustomEvent) => {
+      this.data = { ...this.data, property: event.detail };
     });
   }
 

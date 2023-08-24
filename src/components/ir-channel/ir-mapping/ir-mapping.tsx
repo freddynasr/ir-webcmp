@@ -38,11 +38,11 @@ export class IrMapping {
   componentWillLoad() {
     console.log(this.map.mapping);
     this.mapped = this.map.mapping || [];
-    let temp = new Array(this.hostRoom.length).fill({
+    let temp = this.hostRoom.map(room => ({
       room: 'notMapped',
-      plans: this.hostRoom.map(room => new Array(room.ratePlans.length).fill({ plan: 'notMapped', selectedPlan: '' })),
-    });
-
+      plans: room.ratePlans.map(() => ({ plan: 'notMapped', selectedPlan: '' })),
+    }));
+    console.log(temp);
     if (this.map.mapping != undefined) {
       this.map.mapping.forEach(map => {
         console.log(map, map.mappedRoomID);
@@ -52,6 +52,7 @@ export class IrMapping {
             const _index = this.mapRoom[index].services.findIndex(ratePlan => {
               return ratePlan.id === plan.id;
             });
+            console.log(_index);
             if (_index !== -1) {
               temp[index] = {
                 room: 'mapped',
@@ -64,11 +65,6 @@ export class IrMapping {
               };
             }
           });
-        } else {
-          return {
-            room: 'notMapped',
-            plans: this.hostRoom.map(room => new Array(room.ratePlans.length).fill({ plan: 'notMapped', selectedPlan: '' })),
-          };
         }
       });
     }
@@ -323,7 +319,7 @@ export class IrMapping {
 
                 <div class="col-6 pr-0">
                   {mapState.room === 'mapped' &&
-                    (mapState.plans[_index].plan === 'notMapped' || mapState.plans[_index].selectedPlan === '' ? (
+                    (mapState.plans[_index].plan === 'notMapped' ? (
                       <div
                         class="text-danger"
                         onClick={() => {
@@ -366,7 +362,7 @@ export class IrMapping {
                             return <option value={plan.id}>{plan.name}</option>;
                           })}
                       </select>
-                    ) : mapState.plans[_index].selectedPlan !== '' ? (
+                    ) : (
                       <div class="d-flex flex-grow-1 justify-content-between">
                         <div class="text-primary">
                           {this._getRatePlanNameFromId(mapState.plans[_index].selectedPlan)}
@@ -384,8 +380,6 @@ export class IrMapping {
                           }}
                         />
                       </div>
-                    ) : (
-                      (mapState.plans[_index].plan = 'notMapped')
                     ))}
                 </div>
               </div>
