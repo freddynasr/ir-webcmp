@@ -120,8 +120,8 @@ export class IrListItem {
   doAction(event: CustomEvent) {
     const item = event.detail;
     if (this.type === 'delete') {
-      this.sendDelete.emit(item.id);
       this.listData = this.listData.filter(data => data.id !== item.id);
+      this.sendDelete.emit(this.listData);
     } else if (this.type === 'disable') {
       this.listData = this.listData.map(data => {
         if (data.id === item.id) {

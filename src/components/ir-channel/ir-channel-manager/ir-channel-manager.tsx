@@ -120,8 +120,8 @@ export class IrChannelManager {
   }
 
   @Listen('sendDelete')
-  requestDelete(event: CustomEvent) {
-    this.requestApiDelete.emit(event.detail);
+  requestDelete(e: CustomEvent) {
+    this.fetchApi.emit(e.detail);
   }
 
   @Listen('changeStatus')
