@@ -56,7 +56,6 @@ export class IrChannelManager {
 
   @Listen('sendToParent')
   sendToParentHandler(event: CustomEvent) {
-    console.log('From General Settings', event.detail);
     this.anyChanges = true;
     this.item = event.detail;
     //this.listData = [...this.listData, { ...event.detail, id: this.listData.length + 1, status: 'Active' }];
@@ -81,7 +80,6 @@ export class IrChannelManager {
         return item;
       });
     } else {
-      console.log(this.item);
       this.listData = [...this.listData, { ...this.item, mapping: mapping, status: 'Active', id: id }];
     }
 
@@ -107,8 +105,7 @@ export class IrChannelManager {
   }
 
   @Listen('createNew')
-  openSidebarHandler(event: CustomEvent) {
-    console.log(event);
+  openSidebarHandler() {
     const sidebar = document.querySelector('ir-sidebar');
     sidebar.open = !sidebar.open;
     this.loader = true;
@@ -126,7 +123,6 @@ export class IrChannelManager {
 
   @Listen('changeStatus')
   changeStatusHandler(event: CustomEvent) {
-    console.log(event.detail);
     this.fetchApi.emit(event.detail);
   }
 
@@ -134,7 +130,6 @@ export class IrChannelManager {
     // Add an event listener to the ir-topbar component
     const openSidebar = document.querySelector('ir-topbar');
     openSidebar.addEventListener('openSidebar', () => {
-      console.log('openSidebar');
       const sidebar = document.querySelector('ir-sidebar');
       sidebar.open = !sidebar.open;
       this.loader = true;
@@ -151,7 +146,6 @@ export class IrChannelManager {
         this.mode = 'edit';
         this.selectedItem = e.detail.item;
 
-        console.log(this.selectedItem);
         const sidebar = document.querySelector('ir-sidebar');
         sidebar.open = !sidebar.open;
       }
@@ -159,8 +153,7 @@ export class IrChannelManager {
 
     const modal: any = document.querySelector('ir-modal.exit');
 
-    modal.addEventListener('confirmModal', (event: CustomEvent) => {
-      console.log(event.detail);
+    modal.addEventListener('confirmModal', () => {
       sidebar.open = false;
       modal.closeModal();
       this._reset();
@@ -179,9 +172,7 @@ export class IrChannelManager {
     });
   }
 
-  componentDidUpdate() {
-    console.log('this.selectedItem', this.selectedItem);
-  }
+  componentDidUpdate() {}
 
   goNext() {
     if (this.activeTab == 'General Settings') {

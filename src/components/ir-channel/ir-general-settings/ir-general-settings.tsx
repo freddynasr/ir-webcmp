@@ -21,14 +21,12 @@ export class IrGeneralSettings {
   @Event({ bubbles: true, composed: true }) sendToParent: EventEmitter;
 
   @Watch('data')
-  watchHandler(newValue: any, oldValue: any) {
-    console.log(oldValue);
+  watchHandler(newValue: any) {
     this.selectedChannel = newValue.channel;
   }
 
   componentDidLoad() {
     const channelSelect = document.querySelector('ir-select#channel-select');
-    console.log('channelSelect', channelSelect);
     channelSelect.addEventListener('selectChange', (event: CustomEvent) => {
       this.selectedChannel = event.detail;
       this.data = {
@@ -44,7 +42,6 @@ export class IrGeneralSettings {
 
     const titleInput = document.querySelector('ir-input-text#title-input');
     titleInput.addEventListener('textChange', (event: CustomEvent) => {
-      console.log('titleInput', event.detail);
       this.data = { ...this.data, title: event.detail };
     });
 
@@ -67,7 +64,6 @@ export class IrGeneralSettings {
 
     const minimumStay = document.querySelector('ir-select#minimum-stay-select');
     minimumStay.addEventListener('selectChange', (event: CustomEvent) => {
-      console.log('minimumStay', event.detail);
       this.data = {
         ...this.data,
         minimumStay: event.detail.trim(),
@@ -75,7 +71,6 @@ export class IrGeneralSettings {
     });
 
     const channelSelect = document.querySelector('ir-select#channel-select');
-    console.log('channelSelect', channelSelect);
     channelSelect.addEventListener('selectChange', (event: CustomEvent) => {
       this.selectedChannel = event.detail;
       this.data = {
@@ -91,7 +86,6 @@ export class IrGeneralSettings {
 
     const titleInput = document.querySelector('ir-input-text#title-input');
     titleInput.addEventListener('textChange', (event: CustomEvent) => {
-      console.log('titleInput', event.detail);
       this.data = { ...this.data, title: event.detail };
     });
 
@@ -111,12 +105,10 @@ export class IrGeneralSettings {
       setTimeout(() => {
         this.testLoader = false;
         if (this.data.hotelId == '123456') {
-          console.log('testConnection', this.data.hotelId);
           this.connected = true;
           this.connectionStatus = ' Connected';
 
           this.sendToParent.emit(this.data);
-          console.log('this.data', this.data);
         } else {
           this.connected = false;
         }

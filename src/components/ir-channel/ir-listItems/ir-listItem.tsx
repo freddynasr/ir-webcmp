@@ -80,7 +80,6 @@ export class IrListItem {
 
   addEventListenerToDropdown(item: any) {
     const dropdown = document.querySelector(`ir-dropdown.dropdown-action-${item.id}`);
-    // console.log("dropdown", dropdown)
     if (dropdown) {
       const eventHandler = (e: CustomEvent) => {
         if (e.detail.name === 'Edit') {
@@ -109,7 +108,6 @@ export class IrListItem {
   onPressDelete(item: any) {
     this.type = 'delete';
     const modal = document.querySelector(`ir-modal`);
-    console.log('modal', modal);
     if (modal) {
       modal.item = item;
       modal.openModal();
@@ -161,7 +159,6 @@ export class IrListItem {
   }
 
   componentDidUpdate() {
-    console.log('componentDidUpdate');
     this.listData.forEach(item => {
       this.addEventListenerToDropdown(item);
     });

@@ -20,7 +20,6 @@ export class IrMapping {
   @Watch('map')
   mapChangedHandler(newValue: any) {
     this.mapState = new Array(newValue.mapping.length).fill('notMapped');
-    // console.log('this.mapState', this.mapState);
   }
 
   @Method()
@@ -38,23 +37,19 @@ export class IrMapping {
   }
 
   componentWillLoad() {
-    console.log(this.map.mapping);
     this.mapped = this.map.mapping || [];
     let temp = this.hostRoom.map(room => ({
       room: 'notMapped',
       plans: room.ratePlans.map(() => ({ plan: 'notMapped', selectedPlan: '' })),
     }));
-    console.log(temp);
     if (this.map.mapping != undefined) {
       this.map.mapping.forEach(map => {
-        console.log(map, map.mappedRoomID);
         const index = this.hostRoom.findIndex(room => room.id === map.mappedRoomID);
         if (index !== -1) {
           map.selectedPlans.forEach(plan => {
             const _index = this.mapRoom[index].services.findIndex(ratePlan => {
               return ratePlan.id === plan.id;
             });
-            console.log(_index);
             if (_index !== -1) {
               temp[index] = {
                 room: 'mapped',
@@ -72,7 +67,6 @@ export class IrMapping {
     }
 
     this.mapState = temp;
-    console.log(this.mapState);
   }
 
   _onSelectMap(initialRoom, object) {
@@ -95,24 +89,7 @@ export class IrMapping {
         this.mapped = [...this.mapped, obj];
       }
     }
-
-    // const mapped = JSON.parse(object);
-    // const body = {
-    //   itemId: item.id,
-    //   mappedId: mapped.id,
-    //   services: mapped.services,
-    // };
-    // if (this.selected.length >= 0) {
-    //   const index = this.selected.findIndex(selected => selected.itemId === item.id);
-    //   if (index !== -1) {
-    //     this.selected[index] = body;
-    //   } else {
-    //     this.selected = [...this.selected, body];
-    //   }
   }
-
-  //   // console.log('this.selected', this.selected);
-  // }
 
   _onSelectRatePlan(i) {
     const mappingId = i.mappingId;
@@ -122,7 +99,6 @@ export class IrMapping {
         const selectedPlans = item.selectedPlans || [];
         // Get the ratePlan from the availableService using the selectedPlan
         const ratePlan = i.availableRatePlans.find(ratePlan => ratePlan.id === i.selectedPlan);
-        console.log(ratePlan);
         return {
           ...item,
           selectedPlans: [...selectedPlans, ratePlan],
@@ -134,7 +110,6 @@ export class IrMapping {
 
   _deleteMapping(item) {
     // Find the itemId in this.selected that has item.id and remove it
-    console.log(item);
     const index = this.mapped.findIndex(selected => selected.initialRoomID === item.id);
     if (index !== -1) {
       this.mapped.splice(index, 1);
@@ -156,8 +131,6 @@ export class IrMapping {
   }
 
   _deleteRatePlan(ratePlanId) {
-    console.log(ratePlanId);
-    console.log(this.mapped);
     // Find the object that has the same id as the ratePlanId is this.mapping.selectedPlans
     // then add it to the availableRatePlans
     this.mapped = this.mapped.map(item => {
@@ -234,7 +207,6 @@ export class IrMapping {
                     },
                     ...this.mapState.slice(index + 1),
                   ];
-                  // console.log('this.mapState', this.mapState);
                   setTimeout(() => {
                     select.click();
                   }, 100);
@@ -332,7 +304,6 @@ export class IrMapping {
                             { room: 'mapped', plans: [...mapState.plans.slice(0, _index), { plan: 'mapping', selectedPlan: '' }, ...mapState.plans.slice(_index + 1)] },
                             ...this.mapState.slice(index + 1),
                           ];
-                          // console.log('this.mapState', this.mapState);
                           setTimeout(() => {
                             select.click();
                           }, 100);
@@ -407,8 +378,6 @@ export class IrMapping {
   }
 
   render() {
-    // console.log('this.selected', this.selected);
-
     return (
       <div class="Mapping font-size-small">
         <div class="d-flex justify-content-end align-items-center">
