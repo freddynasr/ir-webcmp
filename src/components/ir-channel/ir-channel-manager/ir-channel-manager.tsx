@@ -67,6 +67,8 @@ export class IrChannelManager {
     // Extract the mapping from the event detail
     const mapping = event.detail;
 
+    const id = uuidv4();
+
     // Flag to track changes
     this.anyChanges = true;
 
@@ -74,17 +76,17 @@ export class IrChannelManager {
     if (this.mode === 'edit' && this.selectedItem) {
       this.listData = this.listData.map(item => {
         if (item.id === this.selectedItem.id) {
-          return { ...this.item, mapping: mapping, status: 'Active', id: uuidv4() };
+          return { ...this.item, mapping: mapping, status: 'Active', id: id };
         }
         return item;
       });
     } else {
       console.log(this.item);
-      this.listData = [...this.listData, { ...this.item, mapping: mapping, status: 'Active', id: uuidv4() }];
+      this.listData = [...this.listData, { ...this.item, mapping: mapping, status: 'Active', id: id }];
     }
 
     // Emit the fetchApi event
-    this.fetchApi.emit({ ...this.item, mapping: mapping, status: 'Active', id: uuidv4() });
+    this.fetchApi.emit(this.listData);
 
     // Reset mode, sidebar, and state
     this.mode = 'create';
@@ -229,6 +231,27 @@ export class IrChannelManager {
     );
   }
 
+  _onSwitchTab(tab) {
+    if (this.activeTab == 'General Settings') {
+      if (!this.item.title || !this.item.channel || !this.item.group || !this.item.property || !this.item.hotelId) {
+        const alertModal: any = document.querySelector('ir-modal.alertModal-manager');
+        alertModal.openModal();
+      } else {
+        this.activeTab = tab;
+        this.loader = true;
+        setTimeout(() => {
+          this.loader = false;
+        }, 2000);
+      }
+    } else if (this.activeTab == 'Mapping') {
+      this.activeTab = tab;
+      this.loader = true;
+      setTimeout(() => {
+        this.loader = false;
+      }, 2000);
+    }
+  }
+
   render() {
     return [
       <div id="container">
@@ -249,11 +272,7 @@ export class IrChannelManager {
                 class=""
                 data-mdb-ripple-color="dark"
                 onClick={() => {
-                  this.activeTab = tab;
-                  this.loader = true;
-                  setTimeout(() => {
-                    this.loader = false;
-                  }, 2000);
+                  this._onSwitchTab(tab);
                 }}
               >
                 {tab}
