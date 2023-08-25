@@ -172,8 +172,6 @@ export class IrChannelManager {
     });
   }
 
-  componentDidUpdate() {}
-
   goNext() {
     if (this.activeTab == 'General Settings') {
       if (!this.item.title || !this.item.channel || !this.item.group || !this.item.property || !this.item.hotelId) {
