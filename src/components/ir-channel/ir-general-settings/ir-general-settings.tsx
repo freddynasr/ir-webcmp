@@ -4,7 +4,6 @@ import { Component, h, Prop, State, Event, EventEmitter, Watch } from '@stencil/
   tag: 'ir-general-settings',
 })
 export class IrGeneralSettings {
-
   @State() testLoader: boolean = false;
   @Prop() mode: string;
   @Prop({ reflect: true, mutable: true }) connectionStatus: string = 'Not connected';
@@ -23,7 +22,7 @@ export class IrGeneralSettings {
 
   @Watch('data')
   watchHandler(newValue: any, oldValue: any) {
-    console.log(oldValue)
+    console.log(oldValue);
     this.selectedChannel = newValue.channel;
   }
 
@@ -54,7 +53,6 @@ export class IrGeneralSettings {
       this.data = { ...this.data, property: event.detail };
     });
   }
-
 
   componentDidUpdate() {
     const hotelID = document.querySelector('ir-input-text#hotel-id');
@@ -108,31 +106,33 @@ export class IrGeneralSettings {
     if (!this.data.hotelId) {
       const alertModal: any = document.querySelector('ir-modal.alertFields');
       alertModal.openModal();
+    } else {
+      this.testLoader = true;
+      setTimeout(() => {
+        this.testLoader = false;
+        if (this.data.hotelId == '123456') {
+          console.log('testConnection', this.data.hotelId);
+          this.connected = true;
+          this.connectionStatus = ' Connected';
+
+          this.sendToParent.emit(this.data);
+          console.log('this.data', this.data);
+        } else {
+          this.connected = false;
+        }
+      }, 1000);
     }
-    this.testLoader = true;
-    setTimeout(() => {
-      this.testLoader = false;
-      if (this.data.hotelId == '123456') {
-        console.log('testConnection', this.data.hotelId);
-        this.connected = true;
-        this.connectionStatus = ' Connected';
-
-        this.sendToParent.emit(this.data);
-        console.log('this.data', this.data);
-      } else {
-        this.connected = false;
-      }
-    }, 2000);
   }
-
-  _alert(message: string) {
+  _alert() {
     return (
       <div class="row">
-        <div class="col-2 d-flex justify-content-center ">
-          <ir-icon icon="ft-alert-triangle warning h1"></ir-icon>
+        <div class="col-2 d-flex justify-content-center align-items-center">
+          <ir-icon icon="ft-alert-circle warning h1"></ir-icon>
         </div>
-        <div class="col-10">
-          <div class="font-weight-bold h3">{message}</div>
+        <div class="col-10 ">
+          <div class="font-weight-bold">Please fill all the fields!</div>
+          <br />
+          <div>There are fields that are not filled yet.</div>
         </div>
       </div>
     );
@@ -140,7 +140,7 @@ export class IrGeneralSettings {
 
   render() {
     return [
-      <div class="General Settings">
+      <div class="General Settings font-size-small">
         <div class="container-fluid">
           {this.mode == 'edit' && <div class="text-light border-bottom-light mb-2">{`ID ${this.data.id}`}</div>}
           <div class="column">
@@ -253,10 +253,10 @@ export class IrGeneralSettings {
             </div>
           </div>
         )}
-        <ir-modal class="alertFields" leftBtnActive={false} btnPosition="center" rightBtnText="Close" rightBtnColor="primary">
-          {this._alert('Please fill in all the fields')}
-        </ir-modal>
       </div>,
+      <ir-modal class="alertFields" leftBtnActive={false} btnPosition="center" rightBtnText="Close" rightBtnColor="primary">
+        {this._alert()}
+      </ir-modal>,
     ];
   }
 }

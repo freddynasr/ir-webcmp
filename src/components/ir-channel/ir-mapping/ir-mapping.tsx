@@ -24,17 +24,18 @@ export class IrMapping {
   }
 
   @Method()
-async _onSaveMapping() {
-  // Check if all map elements have selected plans
-  const allSelected = this.mapped.every(map => map.selectedPlans !== undefined);
+  async _onSaveMapping() {
+    // Check if all map elements have selected plans
+    const allSelected = this.mapped.every(map => map.selectedPlans !== undefined);
 
-  if (allSelected) {
-    // Emit the event once if all have selected plans
-    this.sendMappingToParent.emit(this.mapped);
-  } else {
-    alert('Please select all the rate plans');
+    if (allSelected) {
+      // Emit the event once if all have selected plans
+      this.sendMappingToParent.emit(this.mapped);
+    } else {
+      const irModal: any = document.querySelector('ir-modal.alertModal-mapping');
+      irModal.openModal();
+    }
   }
-}
 
   componentWillLoad() {
     console.log(this.map.mapping);
@@ -389,11 +390,27 @@ async _onSaveMapping() {
       </div>
     );
   }
+
+  _alert() {
+    return (
+      <div class="row">
+        <div class="col-2 d-flex justify-content-center align-items-center">
+          <ir-icon icon="ft-alert-circle warning h1"></ir-icon>
+        </div>
+        <div class="col-10">
+          <div class="font-weight-bold">Rate Plan Missing!</div>
+          <br />
+          <div>Choose at least one rate plan for each mapped room.</div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     // console.log('this.selected', this.selected);
 
     return (
-      <div class="Mapping">
+      <div class="Mapping font-size-small">
         <div class="d-flex justify-content-end align-items-center">
           <a class="text-primary">Refresh</a>
         </div>
@@ -410,6 +427,9 @@ async _onSaveMapping() {
             {this.hostRoom.map((item, index) => this._renderMapping(item, this.mapState[index], index))}
           </div>
         </div>
+        <ir-modal class="alertModal-mapping" leftBtnActive={false} btnPosition="center" rightBtnText="Close" rightBtnColor="primary">
+          {this._alert()}
+        </ir-modal>
       </div>
     );
   }

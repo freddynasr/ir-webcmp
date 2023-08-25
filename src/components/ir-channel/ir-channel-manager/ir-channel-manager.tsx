@@ -52,11 +52,11 @@ export class IrChannelManager {
   @State() anyChanges: boolean = false;
 
   @Event({ bubbles: true, composed: true }) fetchApi: EventEmitter;
-  @Event({bubbles: true, composed: true}) requestApiDelete: EventEmitter;
+  @Event({ bubbles: true, composed: true }) requestApiDelete: EventEmitter;
 
   @Listen('sendToParent')
   sendToParentHandler(event: CustomEvent) {
-    console.log("From General Settings", event.detail);
+    console.log('From General Settings', event.detail);
     this.anyChanges = true;
     this.item = event.detail;
     //this.listData = [...this.listData, { ...event.detail, id: this.listData.length + 1, status: 'Active' }];
@@ -66,10 +66,10 @@ export class IrChannelManager {
   sendMappingToParentHandler(event: CustomEvent) {
     // Extract the mapping from the event detail
     const mapping = event.detail;
-  
+
     // Flag to track changes
     this.anyChanges = true;
-  
+
     // Update listData based on the mode
     if (this.mode === 'edit' && this.selectedItem) {
       this.listData = this.listData.map(item => {
@@ -82,10 +82,10 @@ export class IrChannelManager {
       console.log(this.item);
       this.listData = [...this.listData, { ...this.item, mapping: mapping, status: 'Active', id: uuidv4() }];
     }
-  
+
     // Emit the fetchApi event
     this.fetchApi.emit({ ...this.item, mapping: mapping, status: 'Active', id: uuidv4() });
-  
+
     // Reset mode, sidebar, and state
     this.mode = 'create';
     this.activeTab = 'General Settings';
@@ -95,7 +95,6 @@ export class IrChannelManager {
     }
     this._reset();
   }
-  
 
   _reset() {
     this.item = {};
@@ -119,16 +118,16 @@ export class IrChannelManager {
   }
 
   @Listen('sendDelete')
-  requestDelete(event: CustomEvent){
-    this.requestApiDelete.emit(event.detail)
+  requestDelete(event: CustomEvent) {
+    this.requestApiDelete.emit(event.detail);
   }
-  
+
   @Listen('changeStatus')
   changeStatusHandler(event: CustomEvent) {
     console.log(event.detail);
     this.fetchApi.emit(event.detail);
   }
-  
+
   componentDidLoad() {
     // Add an event listener to the ir-topbar component
     const openSidebar = document.querySelector('ir-topbar');
@@ -179,14 +178,14 @@ export class IrChannelManager {
   }
 
   componentDidUpdate() {
-    console.log("this.selectedItem", this.selectedItem);
+    console.log('this.selectedItem', this.selectedItem);
   }
-
 
   goNext() {
     if (this.activeTab == 'General Settings') {
       if (!this.item.title || !this.item.channel || !this.item.group || !this.item.property || !this.item.hotelId) {
-        alert('Please fill all the fields');
+        const alertModal: any = document.querySelector('ir-modal.alertModal-manager');
+        alertModal.openModal();
       } else {
         this.activeTab = 'Mapping';
         this.loader = true;
@@ -215,6 +214,21 @@ export class IrChannelManager {
     );
   }
 
+  _alert() {
+    return (
+      <div class="row">
+        <div class="col-2 d-flex justify-content-center align-items-center">
+          <ir-icon icon="ft-alert-circle warning h1"></ir-icon>
+        </div>
+        <div class="col-10">
+          <div class="font-weight-bold">Please fill all the fields!</div>
+          <br />
+          <div>There are fields that are not filled yet.</div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return [
       <div id="container">
@@ -224,7 +238,7 @@ export class IrChannelManager {
           <ir-list-item id="ir-list-item" listData={this.listData} dropdownData={this.dropdownData}></ir-list-item>
         </div>
       </div>,
-      <ir-sidebar side="right" class="font-size-small">
+      <ir-sidebar side="right" class="">
         <div class="container pt-1">
           <h5 class="font-weight-bold">{this.mode === 'create' ? 'Create' : 'Edit'} Channel</h5>
         </div>
@@ -266,6 +280,9 @@ export class IrChannelManager {
       </ir-sidebar>,
 
       <ir-modal class={'exit'}>{this._exitWithoutSave()}</ir-modal>,
+      <ir-modal class="alertModal-manager" leftBtnActive={false} btnPosition="center" rightBtnText="Close" rightBtnColor="primary">
+        {this._alert()}
+      </ir-modal>,
     ];
   }
 }

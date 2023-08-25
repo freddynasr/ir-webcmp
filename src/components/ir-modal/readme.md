@@ -57,6 +57,7 @@ Type: `Promise<void>`
  - [ir-channel-manager](../ir-channel/ir-channel-manager)
  - [ir-general-settings](../ir-channel/ir-general-settings)
  - [ir-list-item](../ir-channel/ir-listItems)
+ - [ir-mapping](../ir-channel/ir-mapping)
 
 ### Depends on
 
@@ -69,6 +70,7 @@ graph TD;
   ir-channel-manager --> ir-modal
   ir-general-settings --> ir-modal
   ir-list-item --> ir-modal
+  ir-mapping --> ir-modal
   style ir-modal fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

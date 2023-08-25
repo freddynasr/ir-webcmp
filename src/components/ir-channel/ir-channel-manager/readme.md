@@ -58,6 +58,7 @@ graph TD;
   ir-general-settings --> ir-loader
   ir-general-settings --> ir-modal
   ir-mapping --> ir-icon
+  ir-mapping --> ir-modal
   style ir-channel-manager fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

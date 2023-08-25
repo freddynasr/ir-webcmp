@@ -11,6 +11,16 @@
   </head>
 
   <body>
+    <button></button>
 
+    <ir-modal></ir-modal>
+    <script>
+      const modal = document.querySelector('ir-modal');
+      const button = document.querySelector('button');
+
+      button.addEventListener('click', () => {
+        modal.openModal();
+      });
+    </script>
   </body>
 </html>

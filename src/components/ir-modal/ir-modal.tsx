@@ -52,7 +52,7 @@ export class IrModal {
           this.closeModal();
         }}
       ></div>,
-      <div class={{ modal: true, fade: true, show: this.isOpen }} tabindex="-1" style={{ display: this.isOpen ? 'block' : 'none' }}>
+      <div class={`ir-modal  ${this.isOpen ? 'active' : ''}`} tabindex="-1">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-body">

@@ -76,7 +76,7 @@ export class IrListItem {
     },
   ];
 
-  @Event() sendDelete: EventEmitter
+  @Event() sendDelete: EventEmitter;
 
   addEventListenerToDropdown(item: any) {
     const dropdown = document.querySelector(`ir-dropdown.dropdown-action-${item.id}`);
@@ -102,10 +102,6 @@ export class IrListItem {
   @Event() createNew: EventEmitter;
   @Event() changeStatus: EventEmitter;
 
-  @Event() DeleteItem: EventEmitter<any>;
-  @Event() DisableItem: EventEmitter<any>;
-  @Event() EnableItem: EventEmitter<any>;
-
   handleCreate(mode: string, item: any) {
     this.openSidebar.emit({ mode: mode, item: item });
   }
@@ -124,9 +120,8 @@ export class IrListItem {
   doAction(event: CustomEvent) {
     const item = event.detail;
     if (this.type === 'delete') {
-      this.sendDelete.emit(item.id)
+      this.sendDelete.emit(item.id);
       this.listData = this.listData.filter(data => data.id !== item.id);
-     
     } else if (this.type === 'disable') {
       this.listData = this.listData.map(data => {
         if (data.id === item.id) {
@@ -144,9 +139,9 @@ export class IrListItem {
         return data;
       });
     }
-    const modal = document.querySelector(`ir-modal`)
+    const modal = document.querySelector(`ir-modal`);
     if (modal) {
-      modal.closeModal()
+      modal.closeModal();
     }
   }
 
@@ -228,7 +223,7 @@ export class IrListItem {
   _confirmDelete() {
     return (
       <div class="row">
-        <div class="col-2 d-flex justify-content-center ">
+        <div class="col-2 d-flex justify-content-center align-items-center">
           <ir-icon icon="ft-trash danger h1"></ir-icon>
         </div>
         <div class="col-10">
@@ -243,7 +238,7 @@ export class IrListItem {
   _enable_disable() {
     return (
       <div class="row">
-        <div class="col-2 d-flex justify-content-center ">
+        <div class="col-2 d-flex justify-content-center align-items-center">
           <ir-icon icon="ft-alert-circle warning h1"></ir-icon>
         </div>
         <div class="col-10">
