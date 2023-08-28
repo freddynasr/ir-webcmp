@@ -16,9 +16,10 @@
 
 ## Events
 
-| Event          | Description | Type               |
-| -------------- | ----------- | ------------------ |
-| `sendToParent` |             | `CustomEvent<any>` |
+| Event           | Description | Type               |
+| --------------- | ----------- | ------------------ |
+| `connectionOff` |             | `CustomEvent<any>` |
+| `sendToParent`  |             | `CustomEvent<any>` |
 
 
 ## Dependencies
