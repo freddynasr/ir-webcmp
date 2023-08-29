@@ -38,6 +38,8 @@ export class IrMapping {
 
   componentWillLoad() {
     this.mapped = this.map.mapping || [];
+    console.log(this.map);
+
     let temp = this.hostRoom.map(room => ({
       room: 'notMapped',
       plans: room.ratePlans.map(() => ({ plan: 'notMapped', selectedPlan: '' })),

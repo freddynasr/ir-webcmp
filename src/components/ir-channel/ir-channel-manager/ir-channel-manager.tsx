@@ -80,7 +80,11 @@ export class IrChannelManager {
         return item;
       });
     } else {
-      this.listData = [...this.listData, { ...this.item, mapping: mapping, status: 'Active', id: id }];
+      if (this.listData.length == 0) {
+        this.listData = [{ ...this.item, mapping: mapping, status: 'Active', id: id }];
+      } else {
+        this.listData = [...this.listData, { ...this.item, mapping: mapping, status: 'Active', id: id }];
+      }
     }
 
     // Emit the fetchApi event
