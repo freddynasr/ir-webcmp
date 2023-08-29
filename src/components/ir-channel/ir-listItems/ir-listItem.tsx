@@ -1,4 +1,5 @@
 import { Component, h, Prop, Event, EventEmitter, State, Listen } from '@stencil/core';
+import { emptyState } from '../../../sample/channel/images';
 @Component({
   tag: 'ir-list-item',
 })
@@ -124,7 +125,7 @@ export class IrListItem {
       this.listData = this.listData.map(data => {
         if (data.id === item.id) {
           data.status = 'Disabled';
-          this.changeStatus.emit(data);
+          this.changeStatus.emit(this.listData);
         }
         return data;
       });
@@ -132,7 +133,7 @@ export class IrListItem {
       this.listData = this.listData.map(data => {
         if (data.id === item.id) {
           data.status = 'Active';
-          this.changeStatus.emit(data);
+          this.changeStatus.emit(this.listData);
         }
         return data;
       });
@@ -177,7 +178,7 @@ export class IrListItem {
     return (
       <div class="cardBody">
         <div class="emptyBody">
-          <img src="./my-assets/5058446.png" alt="empty" class="img-fluid emptyImg" />
+          <img src={emptyState} alt="empty" class="img-fluid emptyImg" />
           <p class="font-size-small">
             You don't have any channels yet.
             <br />

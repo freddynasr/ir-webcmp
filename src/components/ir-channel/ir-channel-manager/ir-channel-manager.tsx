@@ -54,6 +54,11 @@ export class IrChannelManager {
   @Event({ bubbles: true, composed: true }) fetchApi: EventEmitter;
   @Event({ bubbles: true, composed: true }) requestApiDelete: EventEmitter;
 
+  @Listen('connectionOff')
+  connectionOffHandler() {
+    this.item = {};
+  }
+
   @Listen('sendToParent')
   sendToParentHandler(event: CustomEvent) {
     this.anyChanges = true;
@@ -80,7 +85,7 @@ export class IrChannelManager {
         return item;
       });
     } else {
-      if (this.listData.length == 0) {
+      if (this.listData.length === 0) {
         this.listData = [{ ...this.item, mapping: mapping, status: 'Active', id: id }];
       } else {
         this.listData = [...this.listData, { ...this.item, mapping: mapping, status: 'Active', id: id }];
@@ -180,6 +185,9 @@ export class IrChannelManager {
     if (this.activeTab == 'General Settings') {
       if (!this.item.title || !this.item.channel || !this.item.group || !this.item.property || !this.item.hotelId) {
         const alertModal: any = document.querySelector('ir-modal.alertModal-manager');
+        if (this.mode === 'edit') {
+          return;
+        }
         alertModal.openModal();
       } else {
         this.activeTab = 'Mapping';
@@ -228,6 +236,9 @@ export class IrChannelManager {
     if (this.activeTab == 'General Settings') {
       if (!this.item.title || !this.item.channel || !this.item.group || !this.item.property || !this.item.hotelId) {
         const alertModal: any = document.querySelector('ir-modal.alertModal-manager');
+        if (this.mode == 'edit') {
+          return;
+        }
         alertModal.openModal();
       } else {
         this.activeTab = tab;

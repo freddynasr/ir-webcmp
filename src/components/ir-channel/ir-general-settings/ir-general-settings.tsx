@@ -19,15 +19,28 @@ export class IrGeneralSettings {
 
   @State() connected: boolean = false;
   @Event({ bubbles: true, composed: true }) sendToParent: EventEmitter;
+  @Event({ bubbles: true, composed: true }) connectionOff: EventEmitter;
 
   @Watch('data')
   watchHandler(newValue: any) {
     this.selectedChannel = newValue.channel;
   }
 
+  @Watch('mode')
+  modewatchHandler(newValue: any, oldValue: any) {
+    console.log(oldValue);
+    if (newValue === 'edit') {
+      this.connected = true;
+      this.connectionStatus = 'Connected';
+      this.sendToParent.emit(this.data);
+    }
+  }
+
   componentDidLoad() {
     const channelSelect = document.querySelector('ir-select#channel-select');
     channelSelect.addEventListener('selectChange', (event: CustomEvent) => {
+      this.connected = false;
+
       this.selectedChannel = event.detail;
       this.data = {
         ...this.data,
@@ -37,16 +50,23 @@ export class IrGeneralSettings {
 
     const groupSelect = document.querySelector('ir-select#group-select');
     groupSelect.addEventListener('selectChange', (event: CustomEvent) => {
+      this.connected = false;
+      this.connectionOff.emit();
       this.data = { ...this.data, group: event.detail };
     });
 
     const titleInput = document.querySelector('ir-input-text#title-input');
     titleInput.addEventListener('textChange', (event: CustomEvent) => {
+      this.connected = false;
+      this.connectionOff.emit();
+      console.log('titleInput', event.detail);
       this.data = { ...this.data, title: event.detail };
     });
 
     const propertySelect = document.querySelector('ir-select#property-select');
     propertySelect.addEventListener('selectChange', (event: CustomEvent) => {
+      this.connected = false;
+      this.connectionOff.emit();
       this.data = { ...this.data, property: event.detail };
     });
   }
@@ -55,6 +75,7 @@ export class IrGeneralSettings {
     const hotelID = document.querySelector('ir-input-text#hotel-id');
     hotelID.addEventListener('textChange', (event: CustomEvent) => {
       this.connected = false;
+      this.connectionOff.emit();
       this.connectionStatus = 'Not connected';
       this.data = {
         ...this.data,
@@ -64,6 +85,9 @@ export class IrGeneralSettings {
 
     const minimumStay = document.querySelector('ir-select#minimum-stay-select');
     minimumStay.addEventListener('selectChange', (event: CustomEvent) => {
+      this.connected = false;
+      this.connectionOff.emit();
+      console.log('minimumStay', event.detail);
       this.data = {
         ...this.data,
         minimumStay: event.detail.trim(),
@@ -72,6 +96,8 @@ export class IrGeneralSettings {
 
     const channelSelect = document.querySelector('ir-select#channel-select');
     channelSelect.addEventListener('selectChange', (event: CustomEvent) => {
+      this.connected = false;
+      this.connectionOff.emit();
       this.selectedChannel = event.detail;
       this.data = {
         ...this.data,
@@ -81,16 +107,23 @@ export class IrGeneralSettings {
 
     const groupSelect = document.querySelector('ir-select#group-select');
     groupSelect.addEventListener('selectChange', (event: CustomEvent) => {
+      this.connected = false;
+      this.connectionOff.emit();
       this.data = { ...this.data, group: event.detail };
     });
 
     const titleInput = document.querySelector('ir-input-text#title-input');
     titleInput.addEventListener('textChange', (event: CustomEvent) => {
+      this.connected = false;
+      this.connectionOff.emit();
+      console.log('titleInput', event.detail);
       this.data = { ...this.data, title: event.detail };
     });
 
     const propertySelect = document.querySelector('ir-select#property-select');
     propertySelect.addEventListener('selectChange', (event: CustomEvent) => {
+      this.connected = false;
+      this.connectionOff.emit();
       this.data = { ...this.data, property: event.detail };
     });
   }
@@ -229,8 +262,7 @@ export class IrGeneralSettings {
                       ) : (
                         <span>
                           <ir-icon class="test-icon" icon={this.connected ? 'ft-check-circle success' : 'ft-alert-triangle warning'}></ir-icon>
-                          {this.connected && this.connectionStatus}
-                          {!this.connected && this.connectionStatus}
+                          {this.connected ? 'Connected' : 'Not Connected'}
                         </span>
                       )}
                     </div>

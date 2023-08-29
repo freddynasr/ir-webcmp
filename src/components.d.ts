@@ -478,6 +478,7 @@ declare namespace LocalJSX {
         "connectionStatus"?: string;
         "data"?: any;
         "mode"?: string;
+        "onConnectionOff"?: (event: IrGeneralSettingsCustomEvent<any>) => void;
         "onSendToParent"?: (event: IrGeneralSettingsCustomEvent<any>) => void;
     }
     interface IrGuestInfo {
