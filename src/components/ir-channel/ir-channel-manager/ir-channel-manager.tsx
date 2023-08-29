@@ -202,36 +202,6 @@ export class IrChannelManager {
     }
   }
 
-  _exitWithoutSave() {
-    return (
-      <div class="row">
-        <div class="col-2 d-flex justify-content-center ">
-          <ir-icon icon="ft-alert-circle warning h1"></ir-icon>
-        </div>
-        <div class="col-10">
-          <div class="font-weight-bold">Exit without saving?</div>
-          <br />
-          <div class="font-size-small">All unsaved changes will be lost.</div>
-        </div>
-      </div>
-    );
-  }
-
-  _alert() {
-    return (
-      <div class="row">
-        <div class="col-2 d-flex justify-content-center align-items-center">
-          <ir-icon icon="ft-alert-circle warning h1"></ir-icon>
-        </div>
-        <div class="col-10">
-          <div class="font-weight-bold">Please fill all the fields!</div>
-          <br />
-          <div>There are fields that are not filled yet.</div>
-        </div>
-      </div>
-    );
-  }
-
   _onSwitchTab(tab) {
     if (this.activeTab == 'General Settings') {
       if (!this.item.title || !this.item.channel || !this.item.group || !this.item.property || !this.item.hotelId) {
@@ -302,10 +272,19 @@ export class IrChannelManager {
         </div>
       </ir-sidebar>,
 
-      <ir-modal class={'exit'}>{this._exitWithoutSave()}</ir-modal>,
-      <ir-modal class="alertModal-manager" leftBtnActive={false} btnPosition="center" rightBtnText="Close" rightBtnColor="primary">
-        {this._alert()}
-      </ir-modal>,
+      <ir-modal class={'exit'} modalTitle="Exit without saving?" modalBody="All unsaved changes will be lost." iconAvailable={true} icon="ft-alert-circle warning h1"></ir-modal>,
+
+      <ir-modal
+        class="alertModal-manager"
+        modalTitle="Please fill all the fields!"
+        modalBody="There are fields that are not filled yet."
+        icon="ft-alert-circle warning h1"
+        iconAvailable={true}
+        leftBtnActive={false}
+        btnPosition="center"
+        rightBtnText="Close"
+        rightBtnColor="primary"
+      ></ir-modal>,
     ];
   }
 }

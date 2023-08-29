@@ -129,10 +129,14 @@ export namespace Components {
     interface IrModal {
         "btnPosition": 'left' | 'right' | 'center';
         "closeModal": () => Promise<void>;
+        "icon": string;
+        "iconAvailable": boolean;
         "item": any;
         "leftBtnActive": boolean;
         "leftBtnColor": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
         "leftBtnText": string;
+        "modalBody": string;
+        "modalTitle": string;
         "openModal": () => Promise<void>;
         "rightBtnActive": boolean;
         "rightBtnColor": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
@@ -550,10 +554,14 @@ declare namespace LocalJSX {
     }
     interface IrModal {
         "btnPosition"?: 'left' | 'right' | 'center';
+        "icon"?: string;
+        "iconAvailable"?: boolean;
         "item"?: any;
         "leftBtnActive"?: boolean;
         "leftBtnColor"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
         "leftBtnText"?: string;
+        "modalBody"?: string;
+        "modalTitle"?: string;
         "onCancelModal"?: (event: IrModalCustomEvent<any>) => void;
         "onConfirmModal"?: (event: IrModalCustomEvent<any>) => void;
         "rightBtnActive"?: boolean;

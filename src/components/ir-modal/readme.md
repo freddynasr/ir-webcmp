@@ -7,16 +7,20 @@
 
 ## Properties
 
-| Property         | Attribute          | Description | Type                                                                                            | Default       |
-| ---------------- | ------------------ | ----------- | ----------------------------------------------------------------------------------------------- | ------------- |
-| `btnPosition`    | `btn-position`     |             | `"center" \| "left" \| "right"`                                                                 | `'right'`     |
-| `item`           | `item`             |             | `any`                                                                                           | `{}`          |
-| `leftBtnActive`  | `left-btn-active`  |             | `boolean`                                                                                       | `true`        |
-| `leftBtnColor`   | `left-btn-color`   |             | `"danger" \| "dark" \| "info" \| "light" \| "primary" \| "secondary" \| "success" \| "warning"` | `'secondary'` |
-| `leftBtnText`    | `left-btn-text`    |             | `string`                                                                                        | `'Confirm'`   |
-| `rightBtnActive` | `right-btn-active` |             | `boolean`                                                                                       | `true`        |
-| `rightBtnColor`  | `right-btn-color`  |             | `"danger" \| "dark" \| "info" \| "light" \| "primary" \| "secondary" \| "success" \| "warning"` | `'primary'`   |
-| `rightBtnText`   | `right-btn-text`   |             | `string`                                                                                        | `'Close'`     |
+| Property         | Attribute          | Description | Type                                                                                            | Default         |
+| ---------------- | ------------------ | ----------- | ----------------------------------------------------------------------------------------------- | --------------- |
+| `btnPosition`    | `btn-position`     |             | `"center" \| "left" \| "right"`                                                                 | `'right'`       |
+| `icon`           | `icon`             |             | `string`                                                                                        | `''`            |
+| `iconAvailable`  | `icon-available`   |             | `boolean`                                                                                       | `false`         |
+| `item`           | `item`             |             | `any`                                                                                           | `{}`            |
+| `leftBtnActive`  | `left-btn-active`  |             | `boolean`                                                                                       | `true`          |
+| `leftBtnColor`   | `left-btn-color`   |             | `"danger" \| "dark" \| "info" \| "light" \| "primary" \| "secondary" \| "success" \| "warning"` | `'secondary'`   |
+| `leftBtnText`    | `left-btn-text`    |             | `string`                                                                                        | `'Confirm'`     |
+| `modalBody`      | `modal-body`       |             | `string`                                                                                        | `'Modal Body'`  |
+| `modalTitle`     | `modal-title`      |             | `string`                                                                                        | `'Modal Title'` |
+| `rightBtnActive` | `right-btn-active` |             | `boolean`                                                                                       | `true`          |
+| `rightBtnColor`  | `right-btn-color`  |             | `"danger" \| "dark" \| "info" \| "light" \| "primary" \| "secondary" \| "success" \| "warning"` | `'primary'`     |
+| `rightBtnText`   | `right-btn-text`   |             | `string`                                                                                        | `'Close'`       |
 
 
 ## Events
@@ -61,11 +65,13 @@ Type: `Promise<void>`
 
 ### Depends on
 
+- [ir-icon](../ir-icon)
 - [ir-button](../ir-button)
 
 ### Graph
 ```mermaid
 graph TD;
+  ir-modal --> ir-icon
   ir-modal --> ir-button
   ir-channel-manager --> ir-modal
   ir-general-settings --> ir-modal

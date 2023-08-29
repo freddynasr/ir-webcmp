@@ -25,7 +25,6 @@
 
 ### Depends on
 
-- [ir-icon](../../ir-icon)
 - [ir-topbar](../ir-topBar)
 - [ir-list-item](../ir-listItems)
 - [ir-sidebar](../../ir-sidebar)
@@ -37,7 +36,6 @@
 ### Graph
 ```mermaid
 graph TD;
-  ir-channel-manager --> ir-icon
   ir-channel-manager --> ir-topbar
   ir-channel-manager --> ir-list-item
   ir-channel-manager --> ir-sidebar
@@ -50,12 +48,13 @@ graph TD;
   ir-list-item --> ir-icon
   ir-list-item --> ir-modal
   ir-dropdown --> ir-icon
+  ir-modal --> ir-icon
   ir-modal --> ir-button
   ir-sidebar --> ir-icon
-  ir-general-settings --> ir-icon
   ir-general-settings --> ir-select
   ir-general-settings --> ir-input-text
   ir-general-settings --> ir-loader
+  ir-general-settings --> ir-icon
   ir-general-settings --> ir-modal
   ir-mapping --> ir-icon
   ir-mapping --> ir-modal

@@ -1,11 +1,3 @@
-.modal-header {
-  border: none !important;
-}
-
-.modal-footer {
-  border: none !important;
-}
-
 .backdropModal {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
@@ -43,7 +35,7 @@
   overflow: hidden;
   outline: 0;
   opacity: 0;
-  transform: translate(20%, -20%); /* change from translate(20%, -20%) for a vertical slide effect */
+  transform: translateY(-20%); /* change from translate(20%, -20%) for a vertical slide effect */
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
   visibility: hidden; /* Add this line to ensure modal is hidden */
   pointer-events: none; /* Avoid blocking other elements when modal is hidden */

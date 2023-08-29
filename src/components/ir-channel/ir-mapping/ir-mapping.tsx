@@ -364,21 +364,6 @@ export class IrMapping {
     );
   }
 
-  _alert() {
-    return (
-      <div class="row">
-        <div class="col-2 d-flex justify-content-center align-items-center">
-          <ir-icon icon="ft-alert-circle warning h1"></ir-icon>
-        </div>
-        <div class="col-10">
-          <div class="font-weight-bold">Rate Plan Missing!</div>
-          <br />
-          <div>Choose at least one rate plan for each mapped room.</div>
-        </div>
-      </div>
-    );
-  }
-
   render() {
     return (
       <div class="Mapping font-size-small">
@@ -398,9 +383,17 @@ export class IrMapping {
             {this.hostRoom.map((item, index) => this._renderMapping(item, this.mapState[index], index))}
           </div>
         </div>
-        <ir-modal class="alertModal-mapping" leftBtnActive={false} btnPosition="center" rightBtnText="Close" rightBtnColor="primary">
-          {this._alert()}
-        </ir-modal>
+        <ir-modal
+          class="alertModal-mapping"
+          modalTitle="Rate Plan Missing!"
+          modalBody="Choose at least one rate plan for each mapped room."
+          icon="ft-alert-circle warning h1"
+          iconAvailable={true}
+          leftBtnActive={false}
+          btnPosition="center"
+          rightBtnText="Close"
+          rightBtnColor="primary"
+        ></ir-modal>
       </div>
     );
   }

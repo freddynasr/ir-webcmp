@@ -148,20 +148,6 @@ export class IrGeneralSettings {
       }, 1000);
     }
   }
-  _alert() {
-    return (
-      <div class="row">
-        <div class="col-2 d-flex justify-content-center align-items-center">
-          <ir-icon icon="ft-alert-circle warning h1"></ir-icon>
-        </div>
-        <div class="col-10 ">
-          <div class="font-weight-bold">Please fill all the fields!</div>
-          <br />
-          <div>There are fields that are not filled yet.</div>
-        </div>
-      </div>
-    );
-  }
 
   render() {
     return [
@@ -278,9 +264,17 @@ export class IrGeneralSettings {
           </div>
         )}
       </div>,
-      <ir-modal class="alertFields" leftBtnActive={false} btnPosition="center" rightBtnText="Close" rightBtnColor="primary">
-        {this._alert()}
-      </ir-modal>,
+      <ir-modal
+        class="alertFields"
+        modalTitle="Please fill all the fields!"
+        modalBody="There are fields that are not filled yet."
+        iconAvailable={true}
+        icon="ft-alert-circle warning h1"
+        leftBtnActive={false}
+        btnPosition="center"
+        rightBtnText="Close"
+        rightBtnColor="primary"
+      ></ir-modal>,
     ];
   }
 }

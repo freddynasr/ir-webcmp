@@ -30,20 +30,21 @@
 
 ### Depends on
 
-- [ir-icon](../../ir-icon)
 - [ir-select](../../ir-select)
 - [ir-input-text](../../ir-input-text)
 - [ir-loader](../../ir-loader)
+- [ir-icon](../../ir-icon)
 - [ir-modal](../../ir-modal)
 
 ### Graph
 ```mermaid
 graph TD;
-  ir-general-settings --> ir-icon
   ir-general-settings --> ir-select
   ir-general-settings --> ir-input-text
   ir-general-settings --> ir-loader
+  ir-general-settings --> ir-icon
   ir-general-settings --> ir-modal
+  ir-modal --> ir-icon
   ir-modal --> ir-button
   ir-channel-manager --> ir-general-settings
   style ir-general-settings fill:#f9f,stroke:#333,stroke-width:4px

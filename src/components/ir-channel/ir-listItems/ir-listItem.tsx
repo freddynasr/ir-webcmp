@@ -250,7 +250,12 @@ export class IrListItem {
   render() {
     return [
       this.listData.length > 0 ? this._renderItem() : this._renderEmptyState(),
-      <ir-modal>{this.type === 'delete' ? this._confirmDelete() : this._enable_disable()}</ir-modal>,
+      <ir-modal
+        modalTitle={this.type === 'delete' ? 'Are you sure you want to delete?' : `Would you like to ${this.type} this channel?`}
+        modalBody={this.type === 'delete' ? 'What you delete here will be permanently deleted.' : `This channel will be ${this.type}d.`}
+        icon="ft-alert-circle warning h1"
+        iconAvailable={true}
+      ></ir-modal>,
     ];
   }
 }

@@ -48,6 +48,7 @@ Type: `Promise<void>`
 graph TD;
   ir-mapping --> ir-icon
   ir-mapping --> ir-modal
+  ir-modal --> ir-icon
   ir-modal --> ir-button
   ir-channel-manager --> ir-mapping
   style ir-mapping fill:#f9f,stroke:#333,stroke-width:4px
