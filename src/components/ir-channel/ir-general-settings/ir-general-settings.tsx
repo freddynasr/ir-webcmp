@@ -25,15 +25,12 @@ export class IrGeneralSettings {
   @Event({ bubbles: true, composed: true }) connectionOff: EventEmitter;
 
   @Watch('data')
-  watchHandler(newValue: any, oldValue: any) {
+  watchHandler(newValue: any) {
     this.selectedChannel = newValue.channel;
-    console.log('watchHandler', newValue);
-    console.log('watchHandler', oldValue);
   }
 
   @Watch('mode')
-  modewatchHandler(newValue: any, oldValue: any) {
-    console.log(oldValue);
+  modewatchHandler(newValue: any) {
     if (newValue === 'edit') {
       this.connected = true;
       this.connectionStatus = 'Connected';
@@ -64,7 +61,6 @@ export class IrGeneralSettings {
     titleInput.addEventListener('textChange', (event: CustomEvent) => {
       this.connected = false;
       this.connectionOff.emit();
-      console.log('titleInput', event.detail);
       this.data = { ...this.data, title: event.detail };
     });
 
@@ -92,7 +88,6 @@ export class IrGeneralSettings {
     minimumStay.addEventListener('selectChange', (event: CustomEvent) => {
       this.connected = false;
       this.connectionOff.emit();
-      console.log('minimumStay', event.detail);
       this.data = {
         ...this.data,
         minimumStay: event.detail.trim(),
@@ -121,7 +116,6 @@ export class IrGeneralSettings {
     titleInput.addEventListener('textChange', (event: CustomEvent) => {
       this.connected = false;
       this.connectionOff.emit();
-      console.log('titleInput', event.detail);
       this.data = { ...this.data, title: event.detail };
     });
 
@@ -155,7 +149,6 @@ export class IrGeneralSettings {
   }
 
   render() {
-    console.log(this.data);
     return [
       <div class="General Settings font-size-small">
         <div class="container-fluid">

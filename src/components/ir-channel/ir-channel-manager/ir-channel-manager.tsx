@@ -77,7 +77,7 @@ export class IrChannelManager {
         return item;
       });
     } else {
-      if (this.listData.length === 0) {
+      if (this.listData === null) {
         this.listData = [{ ...this.item, RoomsMapping: mapping, status: 'Active', id: id }];
       } else {
         this.listData = [...this.listData, { ...this.item, RoomsMapping: mapping, status: 'Active', id: id }];
@@ -252,8 +252,8 @@ export class IrChannelManager {
           </div>
         ) : (
           <span>
-            {this.activeTab == 'General Settings' && <ir-general-settings data={this.selectedItem} mode={this.mode}></ir-general-settings>}
-            {this.activeTab == 'Mapping' && <ir-mapping map={this.mode === 'edit' ? this.selectedItem.RoomsMapping : null}></ir-mapping>}
+            {this.activeTab == 'General Settings' && <ir-general-settings class="mb-3" data={this.selectedItem} mode={this.mode}></ir-general-settings>}
+            {this.activeTab == 'Mapping' && <ir-mapping class="mb-3" map={this.mode === 'edit' ? this.selectedItem.RoomsMapping : null}></ir-mapping>}
           </span>
         )}
 

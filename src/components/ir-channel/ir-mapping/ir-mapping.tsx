@@ -1,4 +1,4 @@
-import { Component, h, State, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+import { Component, h, State, Event, EventEmitter, Method, Prop } from '@stencil/core';
 import { Map, MappingModal, RoomType, RatePlan } from '../../../sample/channel/data';
 
 @Component({
@@ -14,18 +14,6 @@ export class IrMapping {
   @Method()
   async _onSaveMapping() {
     this.sendMappingToParent.emit(this.hostRoom);
-    this.hostRoom = null;
-    this.mapReference = null;
-  }
-
-  @Watch('hostRoom')
-  hostRoomHandler(newValue, oldValue) {
-    console.log(newValue, oldValue);
-  }
-
-  @Watch('map')
-  mapHandler(newValue, oldValue) {
-    console.log(newValue, oldValue);
   }
 
   componentWillLoad() {
@@ -43,7 +31,6 @@ export class IrMapping {
   }
 
   _onSelectMap(room: RoomType, value: RoomType, index: number) {
-    console.log(value);
     room = {
       ...room,
       value: value,
@@ -53,7 +40,6 @@ export class IrMapping {
     };
     this.hostRoom = [...this.hostRoom.slice(0, index), room, ...this.hostRoom.slice(index + 1)];
     this.mapReference = this.mapReference.filter(map => map.id !== value.id);
-    console.log(this.mapReference);
   }
 
   _onSelectRatePlan(ratePlan: RatePlan, _index: number, value: RatePlan, room: RoomType, index: number) {
@@ -101,7 +87,8 @@ export class IrMapping {
   }
 
   _deselectRatePlan(ratePlan: RatePlan, _index: number, room: RoomType, index: number) {
-    room.value.ratePlans = [...room.value.ratePlans, ratePlan];
+    console.log(ratePlan);
+    room.value.ratePlans = [...room.value.ratePlans, ratePlan.value];
     room.value.ratePlans = room.value.ratePlans.sort((a, b) => (a.id > b.id ? 1 : -1));
     ratePlan = {
       ...ratePlan,
@@ -121,7 +108,6 @@ export class IrMapping {
   }
 
   render() {
-    console.log(this.hostRoom);
     return [
       <div class="Mapping font-size-small">
         <div class="d-flex justify-content-end align-items-center">
@@ -229,7 +215,6 @@ export class IrMapping {
                                       },
                                       ...this.hostRoom.slice(index + 1),
                                     ];
-                                    console.log(this.hostRoom);
                                   }}
                                 >
                                   Not mapped
@@ -244,7 +229,6 @@ export class IrMapping {
                                   }}
                                 >
                                   <option value="">Select Plan</option>
-                                  {console.log(room)}
                                   {room.value.ratePlans.length > 0 ? room.value.ratePlans.map(ratePlan => <option value={JSON.stringify(ratePlan)}>{ratePlan.name}</option>) : null}
                                 </select>
                               ) : (
