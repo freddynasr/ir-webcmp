@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
-
+import { ChannelManager } from '../../../sample/channel/data';
 @Component({
   tag: 'ir-general-settings',
 })
@@ -7,13 +7,16 @@ export class IrGeneralSettings {
   @State() testLoader: boolean = false;
   @Prop() mode: string;
   @Prop({ reflect: true, mutable: true }) connectionStatus: string = 'Not connected';
-  @Prop({ reflect: true, mutable: true }) data: any = {
+  @Prop({ reflect: true, mutable: true }) data: ChannelManager = {
     id: '123456',
     channel: 'Channel Name',
+    status: 'Active',
     group: 'Group',
     title: 'Title',
     property: 'Property',
+    minimumStay: 'Arrival',
     hotelId: 'hotelId',
+    RoomsMapping: null,
   };
   @State() selectedChannel: string = '';
 
@@ -22,8 +25,10 @@ export class IrGeneralSettings {
   @Event({ bubbles: true, composed: true }) connectionOff: EventEmitter;
 
   @Watch('data')
-  watchHandler(newValue: any) {
+  watchHandler(newValue: any, oldValue: any) {
     this.selectedChannel = newValue.channel;
+    console.log('watchHandler', newValue);
+    console.log('watchHandler', oldValue);
   }
 
   @Watch('mode')
@@ -37,7 +42,7 @@ export class IrGeneralSettings {
   }
 
   componentDidLoad() {
-    const channelSelect = document.querySelector('ir-select#channel-select');
+    const channelSelect = document.querySelector('ir-select.channel-select');
     channelSelect.addEventListener('selectChange', (event: CustomEvent) => {
       this.connected = false;
 
@@ -94,7 +99,7 @@ export class IrGeneralSettings {
       };
     });
 
-    const channelSelect = document.querySelector('ir-select#channel-select');
+    const channelSelect = document.querySelector('ir-select.channel-select');
     channelSelect.addEventListener('selectChange', (event: CustomEvent) => {
       this.connected = false;
       this.connectionOff.emit();
@@ -150,13 +155,14 @@ export class IrGeneralSettings {
   }
 
   render() {
+    console.log(this.data);
     return [
       <div class="General Settings font-size-small">
         <div class="container-fluid">
           {this.mode == 'edit' && <div class="text-light border-bottom-light mb-2">{`ID ${this.data.id}`}</div>}
           <div class="column">
             <ir-select
-              id="channel-select"
+              class="channel-select"
               label="Channel"
               data={[
                 { value: 'expedia', text: 'Expedia' },
@@ -168,7 +174,7 @@ export class IrGeneralSettings {
               size="sm"
               textSize="sm"
               labelWidth={4}
-              selectedValue={this.data.channel}
+              selectedValue={this.data !== null ? this.data.channel : null}
             />
             <ir-select
               id="group-select"
@@ -181,13 +187,13 @@ export class IrGeneralSettings {
               size="sm"
               textSize="sm"
               labelWidth={4}
-              selectedValue={this.data.group}
+              selectedValue={this.data !== null ? this.data.group : null}
             />
             <ir-input-text
               id="title-input"
               label="Title"
               placeholder="Title"
-              value={this.data.title}
+              value={this.data !== null ? this.data.title : null}
               label-background="white"
               label-position="right"
               label-border="none"
@@ -205,7 +211,7 @@ export class IrGeneralSettings {
               size="sm"
               textSize="sm"
               labelWidth={4}
-              selectedValue={this.data.property}
+              selectedValue={this.data !== null ? this.data.property : null}
             />
           </div>
         </div>
@@ -217,7 +223,7 @@ export class IrGeneralSettings {
                 id={'hotel-id'}
                 label="Hotel ID"
                 placeholder="Hotel ID"
-                value={this.data.hotelId}
+                value={this.data !== null ? this.data.hotelId : null}
                 label-background="white"
                 label-position="right"
                 label-border="none"
@@ -236,7 +242,7 @@ export class IrGeneralSettings {
                 textSize="sm"
                 class="col-12"
                 labelWidth={4}
-                selectedValue={this.data.minimumStay}
+                selectedValue={this.data !== null ? this.data.minimumStay : null}
               />
               <div class="col-12 pb-1 ">
                 <div class="row">

@@ -1,5 +1,6 @@
 import { Component, h, Listen, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { v4 as uuidv4 } from 'uuid';
+import { ChannelManager } from '../../../sample/channel/data';
 
 @Component({
   tag: 'ir-channel-manager',
@@ -32,31 +33,22 @@ export class IrChannelManager {
     ],
   };
 
-  @Prop({ reflect: true, mutable: true }) listData: {
-    title: string;
-    channel: string;
-    status: string;
-    id: string;
-    group: string;
-    property: string;
-    hotelId: string;
-    mapping: any;
-  }[] = [];
+  @Prop({ reflect: true, mutable: true }) listData: ChannelManager[] = null;
 
   @State() loader: boolean = false;
   @State() mode: string = 'create';
   tabs: string[] = ['General Settings', 'Mapping', 'Channel Settings'];
   @State() activeTab: string = 'General Settings';
-  @State() selectedItem: any = {};
-  @State() item: any = {};
+  @State() selectedItem: ChannelManager = null;
+  @State() item: ChannelManager = null;
   @State() anyChanges: boolean = false;
 
-  @Event({ bubbles: true, composed: true }) fetchApi: EventEmitter;
+  @Event({ bubbles: true, composed: true }) fetchApi: EventEmitter<ChannelManager[]>;
   @Event({ bubbles: true, composed: true }) requestApiDelete: EventEmitter;
 
   @Listen('connectionOff')
   connectionOffHandler() {
-    this.item = {};
+    this.item = null;
   }
 
   @Listen('sendToParent')
@@ -80,15 +72,15 @@ export class IrChannelManager {
     if (this.mode === 'edit' && this.selectedItem) {
       this.listData = this.listData.map(item => {
         if (item.id === this.selectedItem.id) {
-          return { ...this.item, mapping: mapping, status: 'Active', id: id };
+          return { ...this.item, RoomsMapping: mapping, status: 'Active', id: id };
         }
         return item;
       });
     } else {
       if (this.listData.length === 0) {
-        this.listData = [{ ...this.item, mapping: mapping, status: 'Active', id: id }];
+        this.listData = [{ ...this.item, RoomsMapping: mapping, status: 'Active', id: id }];
       } else {
-        this.listData = [...this.listData, { ...this.item, mapping: mapping, status: 'Active', id: id }];
+        this.listData = [...this.listData, { ...this.item, RoomsMapping: mapping, status: 'Active', id: id }];
       }
     }
 
@@ -106,10 +98,10 @@ export class IrChannelManager {
   }
 
   _reset() {
-    this.item = {};
+    this.item = null;
     this.mode = 'create';
     this.activeTab = 'General Settings';
-    this.selectedItem = {};
+    this.selectedItem = null;
     this.anyChanges = false;
   }
 
@@ -261,7 +253,7 @@ export class IrChannelManager {
         ) : (
           <span>
             {this.activeTab == 'General Settings' && <ir-general-settings data={this.selectedItem} mode={this.mode}></ir-general-settings>}
-            {this.activeTab == 'Mapping' && <ir-mapping map={this.selectedItem}></ir-mapping>}
+            {this.activeTab == 'Mapping' && <ir-mapping map={this.mode === 'edit' ? this.selectedItem.RoomsMapping : null}></ir-mapping>}
           </span>
         )}
 

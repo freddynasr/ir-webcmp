@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property           | Attribute           | Description | Type     | Default                                                                                                                                          |
-| ------------------ | ------------------- | ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `connectionStatus` | `connection-status` |             | `string` | `'Not connected'`                                                                                                                                |
-| `data`             | `data`              |             | `any`    | `{     id: '123456',     channel: 'Channel Name',     group: 'Group',     title: 'Title',     property: 'Property',     hotelId: 'hotelId',   }` |
-| `mode`             | `mode`              |             | `string` | `undefined`                                                                                                                                      |
+| Property           | Attribute           | Description | Type             | Default                                                                                                                                                                                                                    |
+| ------------------ | ------------------- | ----------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `connectionStatus` | `connection-status` |             | `string`         | `'Not connected'`                                                                                                                                                                                                          |
+| `data`             | --                  |             | `ChannelManager` | `{     id: '123456',     channel: 'Channel Name',     status: 'Active',     group: 'Group',     title: 'Title',     property: 'Property',     minimumStay: 'Arrival',     hotelId: 'hotelId',     RoomsMapping: null,   }` |
+| `mode`             | `mode`              |             | `string`         | `undefined`                                                                                                                                                                                                                |
 
 
 ## Events

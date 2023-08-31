@@ -1,5 +1,7 @@
 import { Component, h, Prop, Event, EventEmitter, State, Listen } from '@stencil/core';
 import { emptyState } from '../../../sample/channel/images';
+import { ChannelManager } from '../../../sample/channel/data';
+
 @Component({
   tag: 'ir-list-item',
 })
@@ -57,25 +59,7 @@ export class IrListItem {
     ],
   };
 
-  @Prop({ reflect: true }) listData: {
-    title: string;
-    channel: string;
-    status: string;
-    id: string;
-    group: string;
-    property: string;
-    hotelId: string;
-  }[] = [
-    {
-      title: 'Title',
-      channel: 'Channel',
-      status: 'Status',
-      id: '1',
-      group: 'All',
-      property: 'Twins',
-      hotelId: '123',
-    },
-  ];
+  @Prop({ reflect: true }) listData: ChannelManager[] = null;
 
   @Event() sendDelete: EventEmitter;
 
@@ -154,15 +138,19 @@ export class IrListItem {
   }
 
   componentDidLoad() {
-    this.listData.forEach(item => {
-      this.addEventListenerToDropdown(item);
-    });
+    if (this.listData !== null) {
+      this.listData.forEach(item => {
+        this.addEventListenerToDropdown(item);
+      });
+    }
   }
 
   componentDidUpdate() {
-    this.listData.forEach(item => {
-      this.addEventListenerToDropdown(item);
-    });
+    if (this.listData !== null) {
+      this.listData.forEach(item => {
+        this.addEventListenerToDropdown(item);
+      });
+    }
   }
 
   // disconnectedCallback() {
@@ -249,11 +237,11 @@ export class IrListItem {
 
   render() {
     return [
-      this.listData.length > 0 ? this._renderItem() : this._renderEmptyState(),
+      this.listData !== null && this.listData.length > 0 ? this._renderItem() : this._renderEmptyState(),
       <ir-modal
         modalTitle={this.type === 'delete' ? 'Are you sure you want to delete?' : `Would you like to ${this.type} this channel?`}
         modalBody={this.type === 'delete' ? 'What you delete here will be permanently deleted.' : `This channel will be ${this.type}d.`}
-        icon="ft-alert-circle warning h1"
+        icon="ft-trash warning h1"
         iconAvailable={true}
       ></ir-modal>,
     ];

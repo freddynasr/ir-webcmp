@@ -5,7 +5,9 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ChannelManager, RoomType } from "./sample/channel/data";
 import { checkboxes, guestInfo, selectOption } from "./common/models";
+export { ChannelManager, RoomType } from "./sample/channel/data";
 export { checkboxes, guestInfo, selectOption } from "./common/models";
 export namespace Components {
     interface IrButton {
@@ -28,16 +30,7 @@ export namespace Components {
       icon: string;
     }[];
   };
-        "listData": {
-    title: string;
-    channel: string;
-    status: string;
-    id: string;
-    group: string;
-    property: string;
-    hotelId: string;
-    mapping: any;
-  }[];
+        "listData": ChannelManager[];
     }
     interface IrCheckbox {
         "checked": boolean;
@@ -63,7 +56,7 @@ export namespace Components {
     }
     interface IrGeneralSettings {
         "connectionStatus": string;
-        "data": any;
+        "data": ChannelManager;
         "mode": string;
     }
     interface IrGuestInfo {
@@ -109,22 +102,14 @@ export namespace Components {
       icon: string;
     }[];
   };
-        "listData": {
-    title: string;
-    channel: string;
-    status: string;
-    id: string;
-    group: string;
-    property: string;
-    hotelId: string;
-  }[];
+        "listData": ChannelManager[];
     }
     interface IrLoader {
         "size": string;
     }
     interface IrMapping {
         "_onSaveMapping": () => Promise<void>;
-        "map": any;
+        "map": RoomType[];
     }
     interface IrModal {
         "btnPosition": 'left' | 'right' | 'center';
@@ -440,17 +425,8 @@ declare namespace LocalJSX {
       icon: string;
     }[];
   };
-        "listData"?: {
-    title: string;
-    channel: string;
-    status: string;
-    id: string;
-    group: string;
-    property: string;
-    hotelId: string;
-    mapping: any;
-  }[];
-        "onFetchApi"?: (event: IrChannelManagerCustomEvent<any>) => void;
+        "listData"?: ChannelManager[];
+        "onFetchApi"?: (event: IrChannelManagerCustomEvent<ChannelManager[]>) => void;
         "onRequestApiDelete"?: (event: IrChannelManagerCustomEvent<any>) => void;
     }
     interface IrCheckbox {
@@ -480,7 +456,7 @@ declare namespace LocalJSX {
     }
     interface IrGeneralSettings {
         "connectionStatus"?: string;
-        "data"?: any;
+        "data"?: ChannelManager;
         "mode"?: string;
         "onConnectionOff"?: (event: IrGeneralSettingsCustomEvent<any>) => void;
         "onSendToParent"?: (event: IrGeneralSettingsCustomEvent<any>) => void;
@@ -531,15 +507,7 @@ declare namespace LocalJSX {
       icon: string;
     }[];
   };
-        "listData"?: {
-    title: string;
-    channel: string;
-    status: string;
-    id: string;
-    group: string;
-    property: string;
-    hotelId: string;
-  }[];
+        "listData"?: ChannelManager[];
         "onChangeStatus"?: (event: IrListItemCustomEvent<any>) => void;
         "onCreateNew"?: (event: IrListItemCustomEvent<any>) => void;
         "onOpenSidebar"?: (event: IrListItemCustomEvent<any>) => void;
@@ -549,7 +517,7 @@ declare namespace LocalJSX {
         "size"?: string;
     }
     interface IrMapping {
-        "map"?: any;
+        "map"?: RoomType[];
         "onSendMappingToParent"?: (event: IrMappingCustomEvent<any>) => void;
     }
     interface IrModal {

@@ -7,18 +7,18 @@
 
 ## Properties
 
-| Property       | Attribute | Description | Type                                                                                                                                | Default                                                                                                                                                                                                                                                                          |
-| -------------- | --------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `dropdownData` | --        |             | `{ name: string; icon: string; children: { name: string; icon: string; }[]; }`                                                      | `{     name: 'Action',     icon: '',     children: [       {         name: 'Edit',         icon: 'ft-edit',       },       {         name: 'Delete',         icon: 'ft-trash',       },       {         name: 'Disable',         icon: 'ft-alert-triangle',       },     ],   }` |
-| `listData`     | --        |             | `{ title: string; channel: string; status: string; id: string; group: string; property: string; hotelId: string; mapping: any; }[]` | `[]`                                                                                                                                                                                                                                                                             |
+| Property       | Attribute | Description | Type                                                                           | Default                                                                                                                                                                                                                                                                          |
+| -------------- | --------- | ----------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `dropdownData` | --        |             | `{ name: string; icon: string; children: { name: string; icon: string; }[]; }` | `{     name: 'Action',     icon: '',     children: [       {         name: 'Edit',         icon: 'ft-edit',       },       {         name: 'Delete',         icon: 'ft-trash',       },       {         name: 'Disable',         icon: 'ft-alert-triangle',       },     ],   }` |
+| `listData`     | --        |             | `ChannelManager[]`                                                             | `null`                                                                                                                                                                                                                                                                           |
 
 
 ## Events
 
-| Event              | Description | Type               |
-| ------------------ | ----------- | ------------------ |
-| `fetchApi`         |             | `CustomEvent<any>` |
-| `requestApiDelete` |             | `CustomEvent<any>` |
+| Event              | Description | Type                            |
+| ------------------ | ----------- | ------------------------------- |
+| `fetchApi`         |             | `CustomEvent<ChannelManager[]>` |
+| `requestApiDelete` |             | `CustomEvent<any>`              |
 
 
 ## Dependencies
@@ -57,7 +57,6 @@ graph TD;
   ir-general-settings --> ir-icon
   ir-general-settings --> ir-modal
   ir-mapping --> ir-icon
-  ir-mapping --> ir-modal
   style ir-channel-manager fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
