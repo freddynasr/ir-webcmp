@@ -16,6 +16,7 @@
 
 ### Used by
 
+ - [ir-booking-details](../ir-booking-details)
  - [ir-dropdown](../ir-dropdown)
  - [ir-general-settings](../ir-channel/ir-general-settings)
  - [ir-list-item](../ir-channel/ir-listItems)
@@ -27,6 +28,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  ir-booking-details --> ir-icon
   ir-dropdown --> ir-icon
   ir-general-settings --> ir-icon
   ir-list-item --> ir-icon

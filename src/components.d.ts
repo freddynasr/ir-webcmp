@@ -10,6 +10,8 @@ import { checkboxes, guestInfo, selectOption } from "./common/models";
 export { ChannelManager, RoomType } from "./sample/channel/data";
 export { checkboxes, guestInfo, selectOption } from "./common/models";
 export namespace Components {
+    interface IrBookingDetails {
+    }
     interface IrButton {
         "btn_block": boolean;
         "btn_color": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
@@ -260,6 +262,12 @@ export interface IrTopbarCustomEvent<T> extends CustomEvent<T> {
     target: HTMLIrTopbarElement;
 }
 declare global {
+    interface HTMLIrBookingDetailsElement extends Components.IrBookingDetails, HTMLStencilElement {
+    }
+    var HTMLIrBookingDetailsElement: {
+        prototype: HTMLIrBookingDetailsElement;
+        new (): HTMLIrBookingDetailsElement;
+    };
     interface HTMLIrButtonElement extends Components.IrButton, HTMLStencilElement {
     }
     var HTMLIrButtonElement: {
@@ -381,6 +389,7 @@ declare global {
         new (): HTMLMyComponentElement;
     };
     interface HTMLElementTagNameMap {
+        "ir-booking-details": HTMLIrBookingDetailsElement;
         "ir-button": HTMLIrButtonElement;
         "ir-channel-manager": HTMLIrChannelManagerElement;
         "ir-checkbox": HTMLIrCheckboxElement;
@@ -404,6 +413,8 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface IrBookingDetails {
+    }
     interface IrButton {
         "btn_block"?: boolean;
         "btn_color"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
@@ -611,6 +622,7 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface IntrinsicElements {
+        "ir-booking-details": IrBookingDetails;
         "ir-button": IrButton;
         "ir-channel-manager": IrChannelManager;
         "ir-checkbox": IrCheckbox;
@@ -637,6 +649,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "ir-booking-details": LocalJSX.IrBookingDetails & JSXBase.HTMLAttributes<HTMLIrBookingDetailsElement>;
             "ir-button": LocalJSX.IrButton & JSXBase.HTMLAttributes<HTMLIrButtonElement>;
             "ir-channel-manager": LocalJSX.IrChannelManager & JSXBase.HTMLAttributes<HTMLIrChannelManagerElement>;
             "ir-checkbox": LocalJSX.IrCheckbox & JSXBase.HTMLAttributes<HTMLIrCheckboxElement>;
