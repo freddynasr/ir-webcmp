@@ -5,6 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property         | Attribute         | Description | Type  | Default     |
+| ---------------- | ----------------- | ----------- | ----- | ----------- |
+| `bookingDetails` | `booking-details` |             | `any` | `undefined` |
+
+
 ## Dependencies
 
 ### Depends on
@@ -12,6 +19,9 @@
 - [ir-select](../ir-select)
 - [ir-button](../ir-button)
 - [ir-icon](../ir-icon)
+- [ir-label](label)
+- [ir-room](ir-room)
+- [ir-payment-details](ir-payment-details)
 - [ir-sidebar](../ir-sidebar)
 - [ir-guest-info](../ir-guest-info)
 
@@ -21,8 +31,16 @@ graph TD;
   ir-booking-details --> ir-select
   ir-booking-details --> ir-button
   ir-booking-details --> ir-icon
+  ir-booking-details --> ir-label
+  ir-booking-details --> ir-room
+  ir-booking-details --> ir-payment-details
   ir-booking-details --> ir-sidebar
   ir-booking-details --> ir-guest-info
+  ir-label --> ir-icon
+  ir-room --> ir-icon
+  ir-room --> ir-button
+  ir-room --> ir-label
+  ir-payment-details --> ir-icon
   ir-sidebar --> ir-icon
   ir-guest-info --> ir-select
   ir-guest-info --> ir-input-text

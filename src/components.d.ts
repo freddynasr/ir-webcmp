@@ -11,6 +11,10 @@ export { ChannelManager, RoomType } from "./sample/channel/data";
 export { checkboxes, guestInfo, selectOption } from "./common/models";
 export namespace Components {
     interface IrBookingDetails {
+        "arrivalTimes": any;
+        "bookingDetails": any;
+        "bookingStatuses": any;
+        "foodPackages": any;
     }
     interface IrButton {
         "btn_block": boolean;
@@ -87,6 +91,11 @@ export namespace Components {
         "type": string;
         "value": any;
     }
+    interface IrLabel {
+        "iconShown": boolean;
+        "label": string;
+        "value": string;
+    }
     interface IrListItem {
         "dropdownData": {
     name: string;
@@ -128,6 +137,12 @@ export namespace Components {
         "rightBtnActive": boolean;
         "rightBtnColor": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
         "rightBtnText": string;
+    }
+    interface IrPaymentDetails {
+        "item": any;
+    }
+    interface IrRoom {
+        "item": any;
     }
     interface IrSelect {
         "LabelAvailable": boolean;
@@ -322,6 +337,12 @@ declare global {
         prototype: HTMLIrInputTextElement;
         new (): HTMLIrInputTextElement;
     };
+    interface HTMLIrLabelElement extends Components.IrLabel, HTMLStencilElement {
+    }
+    var HTMLIrLabelElement: {
+        prototype: HTMLIrLabelElement;
+        new (): HTMLIrLabelElement;
+    };
     interface HTMLIrListItemElement extends Components.IrListItem, HTMLStencilElement {
     }
     var HTMLIrListItemElement: {
@@ -345,6 +366,18 @@ declare global {
     var HTMLIrModalElement: {
         prototype: HTMLIrModalElement;
         new (): HTMLIrModalElement;
+    };
+    interface HTMLIrPaymentDetailsElement extends Components.IrPaymentDetails, HTMLStencilElement {
+    }
+    var HTMLIrPaymentDetailsElement: {
+        prototype: HTMLIrPaymentDetailsElement;
+        new (): HTMLIrPaymentDetailsElement;
+    };
+    interface HTMLIrRoomElement extends Components.IrRoom, HTMLStencilElement {
+    }
+    var HTMLIrRoomElement: {
+        prototype: HTMLIrRoomElement;
+        new (): HTMLIrRoomElement;
     };
     interface HTMLIrSelectElement extends Components.IrSelect, HTMLStencilElement {
     }
@@ -399,10 +432,13 @@ declare global {
         "ir-guest-info": HTMLIrGuestInfoElement;
         "ir-icon": HTMLIrIconElement;
         "ir-input-text": HTMLIrInputTextElement;
+        "ir-label": HTMLIrLabelElement;
         "ir-list-item": HTMLIrListItemElement;
         "ir-loader": HTMLIrLoaderElement;
         "ir-mapping": HTMLIrMappingElement;
         "ir-modal": HTMLIrModalElement;
+        "ir-payment-details": HTMLIrPaymentDetailsElement;
+        "ir-room": HTMLIrRoomElement;
         "ir-select": HTMLIrSelectElement;
         "ir-sidebar": HTMLIrSidebarElement;
         "ir-span": HTMLIrSpanElement;
@@ -414,6 +450,10 @@ declare global {
 }
 declare namespace LocalJSX {
     interface IrBookingDetails {
+        "arrivalTimes"?: any;
+        "bookingDetails"?: any;
+        "bookingStatuses"?: any;
+        "foodPackages"?: any;
     }
     interface IrButton {
         "btn_block"?: boolean;
@@ -501,6 +541,11 @@ declare namespace LocalJSX {
         "type"?: string;
         "value"?: any;
     }
+    interface IrLabel {
+        "iconShown"?: boolean;
+        "label"?: string;
+        "value"?: string;
+    }
     interface IrListItem {
         "dropdownData"?: {
     name: string;
@@ -546,6 +591,12 @@ declare namespace LocalJSX {
         "rightBtnActive"?: boolean;
         "rightBtnColor"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
         "rightBtnText"?: string;
+    }
+    interface IrPaymentDetails {
+        "item"?: any;
+    }
+    interface IrRoom {
+        "item"?: any;
     }
     interface IrSelect {
         "LabelAvailable"?: boolean;
@@ -632,10 +683,13 @@ declare namespace LocalJSX {
         "ir-guest-info": IrGuestInfo;
         "ir-icon": IrIcon;
         "ir-input-text": IrInputText;
+        "ir-label": IrLabel;
         "ir-list-item": IrListItem;
         "ir-loader": IrLoader;
         "ir-mapping": IrMapping;
         "ir-modal": IrModal;
+        "ir-payment-details": IrPaymentDetails;
+        "ir-room": IrRoom;
         "ir-select": IrSelect;
         "ir-sidebar": IrSidebar;
         "ir-span": IrSpan;
@@ -659,10 +713,13 @@ declare module "@stencil/core" {
             "ir-guest-info": LocalJSX.IrGuestInfo & JSXBase.HTMLAttributes<HTMLIrGuestInfoElement>;
             "ir-icon": LocalJSX.IrIcon & JSXBase.HTMLAttributes<HTMLIrIconElement>;
             "ir-input-text": LocalJSX.IrInputText & JSXBase.HTMLAttributes<HTMLIrInputTextElement>;
+            "ir-label": LocalJSX.IrLabel & JSXBase.HTMLAttributes<HTMLIrLabelElement>;
             "ir-list-item": LocalJSX.IrListItem & JSXBase.HTMLAttributes<HTMLIrListItemElement>;
             "ir-loader": LocalJSX.IrLoader & JSXBase.HTMLAttributes<HTMLIrLoaderElement>;
             "ir-mapping": LocalJSX.IrMapping & JSXBase.HTMLAttributes<HTMLIrMappingElement>;
             "ir-modal": LocalJSX.IrModal & JSXBase.HTMLAttributes<HTMLIrModalElement>;
+            "ir-payment-details": LocalJSX.IrPaymentDetails & JSXBase.HTMLAttributes<HTMLIrPaymentDetailsElement>;
+            "ir-room": LocalJSX.IrRoom & JSXBase.HTMLAttributes<HTMLIrRoomElement>;
             "ir-select": LocalJSX.IrSelect & JSXBase.HTMLAttributes<HTMLIrSelectElement>;
             "ir-sidebar": LocalJSX.IrSidebar & JSXBase.HTMLAttributes<HTMLIrSidebarElement>;
             "ir-span": LocalJSX.IrSpan & JSXBase.HTMLAttributes<HTMLIrSpanElement>;
