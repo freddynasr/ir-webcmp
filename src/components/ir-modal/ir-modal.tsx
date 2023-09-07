@@ -41,6 +41,7 @@ export class IrModal {
 
     if (name === this.leftBtnText) {
       this.confirmModal.emit(this.item);
+      this.closeModal();
     } else if (name === this.rightBtnText) {
       this.cancelModal.emit();
       this.closeModal();

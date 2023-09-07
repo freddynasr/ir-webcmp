@@ -53,8 +53,8 @@ export class IrPaymentDetails {
     this.confirmModal = !this.confirmModal;
     
     // Close the modal
-    const modal = document.querySelector('ir-modal');
-    modal.closeModal();
+    // const modal = document.querySelector('ir-modal');
+    // modal.closeModal();
   }
 
   _renderTableRow(item: any, rowMode: 'add' | 'normal' = 'normal') {
