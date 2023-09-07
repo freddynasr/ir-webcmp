@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, h, Prop, State, EventEmitter, Event, Listen } from '@stencil/core';
 import moment from 'moment';
 
 @Component({
@@ -8,6 +8,20 @@ export class IrRoom {
   @Prop() item: any;
   @Prop({reflect: true}) mealCode: any;
   @State() tAmount: number = 0;
+
+  @Event({bubbles: true, composed: true}) pressCheckIn: EventEmitter;
+  @Event({bubbles: true, composed: true}) pressCheckOut: EventEmitter;
+
+  @Listen('clickHanlder')
+  handleClick(e) {
+    let target = e.target;
+    if (target.id == 'checkin') {
+      this.pressCheckIn.emit(this.item);
+    } else if (target.id == 'checkout') {
+      this.pressCheckOut.emit(this.item);
+    }
+  }
+
 
   _formatDate(date: string) {
     // Month Name 3 letters, Day, Year
@@ -81,8 +95,8 @@ export class IrRoom {
                 {this._formatDate(this.item.FROM_DATE)} - {this._formatDate(this.item.TO_DATE)}
               </span>
               {this.item.UNIT && <span class="light-blue-bg mr-2 ">{this.item.UNIT}</span>}
-              <ir-button icon="" class="mr-1" btn_color="info" size="sm" text="Check in"></ir-button>
-              <ir-button icon="" btn_color="info" size="sm" text="Check out"></ir-button>
+              <ir-button id="checkin" icon="" class="mr-1" btn_color="info" size="sm" text="Check in"></ir-button>
+              <ir-button id='checkout' icon="" btn_color="info" size="sm" text="Check out"></ir-button>
             </div>
             <div class="collapse" id="myCollapse">
               <div class="d-flex">

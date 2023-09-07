@@ -5,10 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ChannelManager, RoomType } from "./sample/channel/data";
 import { checkboxes, guestInfo, selectOption } from "./common/models";
-export { ChannelManager, RoomType } from "./sample/channel/data";
+import { ChannelManager, RoomType } from "./sample/channel/data";
 export { checkboxes, guestInfo, selectOption } from "./common/models";
+export { ChannelManager, RoomType } from "./sample/channel/data";
 export namespace Components {
     interface IrBookingDetails {
         "arrivalTimes": any;
@@ -217,6 +217,10 @@ export namespace Components {
         "middle": string;
     }
 }
+export interface IrBookingDetailsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrBookingDetailsElement;
+}
 export interface IrButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrButtonElement;
@@ -264,6 +268,14 @@ export interface IrMappingCustomEvent<T> extends CustomEvent<T> {
 export interface IrModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrModalElement;
+}
+export interface IrPaymentDetailsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrPaymentDetailsElement;
+}
+export interface IrRoomCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrRoomElement;
 }
 export interface IrSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -459,6 +471,7 @@ declare namespace LocalJSX {
         "bookingDetails"?: any;
         "bookingStatuses"?: any;
         "foodArrangeCats"?: any;
+        "onSendDataToServer"?: (event: IrBookingDetailsCustomEvent<guestInfo>) => void;
     }
     interface IrButton {
         "btn_block"?: boolean;
@@ -600,10 +613,13 @@ declare namespace LocalJSX {
     }
     interface IrPaymentDetails {
         "item"?: any;
+        "onAddItem"?: (event: IrPaymentDetailsCustomEvent<any>) => void;
     }
     interface IrRoom {
         "item"?: any;
         "mealCode"?: any;
+        "onPressCheckIn"?: (event: IrRoomCustomEvent<any>) => void;
+        "onPressCheckOut"?: (event: IrRoomCustomEvent<any>) => void;
     }
     interface IrSelect {
         "LabelAvailable"?: boolean;

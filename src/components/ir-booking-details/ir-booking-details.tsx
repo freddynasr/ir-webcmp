@@ -1,4 +1,4 @@
-import { Component, Listen, h, Prop, Watch, State } from '@stencil/core';
+import { Component, Listen, h, Prop, Watch, State, Event, EventEmitter } from '@stencil/core';
 import moment from 'moment';
 import { guestInfo } from '../../common/models';
 
@@ -15,6 +15,8 @@ export class IrBookingDetails {
 
   @State() guestData: guestInfo = null;
   @State() rerenderFlag = false
+
+  @Event() sendDataToServer: EventEmitter<guestInfo>;
 
 
   openEditSidebar() {
@@ -60,6 +62,7 @@ export class IrBookingDetails {
       // close the sidebar
       const sidebar: any = document.querySelector('ir-sidebar#editGuestInfo');
       sidebar.open = false;
+      this.sendDataToServer.emit(this.bookingDetails);
 
   }
 
@@ -139,8 +142,9 @@ export class IrBookingDetails {
         <div class="d-flex align-items-end">
           <div class="font-size-large sm-padding-right">{`Booking#${this.bookingDetails.BOOK_NBR}`}</div>
           {/* format date */}@ {moment(this.bookingDetails.BOOK_DATE).format('DD MMM YYYY')}
+          {" "}
           {/* format time */}
-          {this._formatTime(this.bookingDetails.BOOK_HOUR, this.bookingDetails.BOOK_MINUTE)}
+          {this._formatTime(this.bookingDetails.BOOK_HOUR, + " " + this.bookingDetails.BOOK_MINUTE)}
         </div>
         <div class="d-flex align-items-center">
           <span class="confirmed btn-sm mr-2">{this._getBookingStatus(this.bookingDetails.BOOK_STATUS_CODE)}</span>

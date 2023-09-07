@@ -13,6 +13,14 @@
 | `mealCode` | `meal-code` |             | `any` | `undefined` |
 
 
+## Events
+
+| Event           | Description | Type               |
+| --------------- | ----------- | ------------------ |
+| `pressCheckIn`  |             | `CustomEvent<any>` |
+| `pressCheckOut` |             | `CustomEvent<any>` |
+
+
 ## Dependencies
 
 ### Used by

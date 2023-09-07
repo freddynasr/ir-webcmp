@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import moment from 'moment';
 import accounting from 'accounting';
 
@@ -6,9 +6,17 @@ import accounting from 'accounting';
   tag: 'ir-payment-details',
 })
 export class IrPaymentDetails {
-  @Prop() item: any;
+  @Prop({mutable: true, reflect: true}) item: any;
   @State() newTableRow: boolean = false;
 
+  @Event() addItem: EventEmitter<any>;
+
+  itemToBeAdded: any = {
+    date: '',
+    amount: 0,
+    designation: '',
+    reference: '',
+  }
   
   _formatDate(date: string) {
     // Month Name 3 letters, Day, Year
@@ -20,6 +28,20 @@ export class IrPaymentDetails {
     return accounting.formatMoney(amount);
   }
 
+  _handleSave() {
+    // emit the item to be added
+    this.item.My_Payment = [...this.item.My_Payment, this.itemToBeAdded];
+    console.log(this.itemToBeAdded);
+    console.log(this.item.My_Payment);
+    this.addItem.emit(this.itemToBeAdded);
+    this.itemToBeAdded = {
+      PAYMENT_DATE: '',
+      PAYMENT_AMOUNT: '',
+      DESIGNATION: '',
+      REFERENCE: '',
+    }
+  }
+
   
 
   _renderTableRow(item: any, rowMode: 'add' | 'normal' = 'normal') {
@@ -28,21 +50,38 @@ export class IrPaymentDetails {
         <div class="col-9 p-0">
           <div class="row m-0">
             <div class="col-4 border-right-dark p-0 border-bottom-dark">
-              {rowMode === 'normal' ? <span class="sm-padding-left">{this._formatDate(item.PAYMENT_DATE)}</span> : <input class="border-0 w-100" type="date"></input>}
+              {rowMode === 'normal' ? <span class="sm-padding-left">{this._formatDate(item.PAYMENT_DATE)}</span> 
+              : <input class="border-0 w-100"  onChange={(event)=>{this.itemToBeAdded.PAYMENT_DATE = (event.target as HTMLInputElement).value}} type="date"></input>}
             </div>
             <div class="col-4 border-right-dark d-flex p-0 justify-content-end border-bottom-dark sm-padding-right">
-              {rowMode === 'normal' ? <span class="sm-padding-right">${item.PAYMENT_AMOUNT}</span> : <input class="border-0 w-100" type="number"></input>}
+              {rowMode === 'normal' ? <span class="sm-padding-right">${item.PAYMENT_AMOUNT}</span> 
+              : <input class="border-0 w-100"  onChange={(event)=>{this.itemToBeAdded.PAYMENT_AMOUNT = (event.target as HTMLInputElement).value}} type="number"></input>}
             </div>
             <div class="col-4 border-right-dark p-0 border-bottom-dark sm-padding-left">
-              {rowMode === 'normal' ? <span class="sm-padding-left">{item.DESIGNATION}</span> : <input class="border-0 w-100" type="text"></input>}
+              {rowMode === 'normal' ? <span class="sm-padding-left">{item.DESIGNATION}</span> 
+              : <input class="border-0 w-100"  onChange={(event)=>{this.itemToBeAdded.DESIGNATION = (event.target as HTMLInputElement).value}} type="text"></input>}
             </div>
             <div class="col-12 border-right-dark p-0 border-bottom-dark sm-padding-left">
-              {rowMode === 'normal' ? <span class="sm-padding-left">{item.REFERENCE}</span> : <input class="border-0 w-100" type="text"></input>}
+              {rowMode === 'normal' ? <span class="sm-padding-left">{item.REFERENCE}</span> 
+              : <input class="border-0 w-100" onChange={(event)=>{this.itemToBeAdded.REFERENCE = (event.target as HTMLInputElement).value}} type="text"></input>}
             </div>
           </div>
         </div>
         <div class="col-3 d-flex align-items-center justify-content-between border-right-dark border-bottom-dark">
-          <ir-icon icon="ft-save primary-blue h5 pointer"></ir-icon>
+
+          <ir-icon icon="ft-save primary-blue h5 pointer"
+            onClick={
+              rowMode === 'add'
+                ? () => {
+                    this.newTableRow = false;
+                    this._handleSave()
+                  }
+                : () => {
+                   
+                  }
+            }
+          ></ir-icon>
+
           <ir-icon
             icon="ft-trash-2 danger h5 pointer"
             onClick={

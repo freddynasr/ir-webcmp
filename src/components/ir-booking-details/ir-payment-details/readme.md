@@ -12,6 +12,13 @@
 | `item`   | `item`    |             | `any` | `undefined` |
 
 
+## Events
+
+| Event     | Description | Type               |
+| --------- | ----------- | ------------------ |
+| `addItem` |             | `CustomEvent<any>` |
+
+
 ## Dependencies
 
 ### Used by

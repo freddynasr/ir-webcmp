@@ -15,6 +15,13 @@
 | `foodArrangeCats` | `food-arrange-cats` |             | `any` | `[]`    |
 
 
+## Events
+
+| Event              | Description | Type                     |
+| ------------------ | ----------- | ------------------------ |
+| `sendDataToServer` |             | `CustomEvent<guestInfo>` |
+
+
 ## Dependencies
 
 ### Depends on
