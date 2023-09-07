@@ -51,6 +51,9 @@ graph TD;
   ir-room --> ir-button
   ir-room --> ir-label
   ir-payment-details --> ir-icon
+  ir-payment-details --> ir-modal
+  ir-modal --> ir-icon
+  ir-modal --> ir-button
   ir-sidebar --> ir-icon
   ir-guest-info --> ir-select
   ir-guest-info --> ir-input-text
