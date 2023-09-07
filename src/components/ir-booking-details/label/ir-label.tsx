@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, h, EventEmitter, Event } from '@stencil/core';
 
 @Component({
   tag: 'ir-label',
@@ -7,9 +7,10 @@ export class IrLabel {
    @Prop() label: string;
     @Prop() value: string; 
   @Prop() iconShown = false;
+  @Event() editSidebar: EventEmitter;
 
     openEditSidebar() { 
-        console.log('openEditSidebar');
+    this.editSidebar.emit();
     }
 
 

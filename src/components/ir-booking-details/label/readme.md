@@ -14,6 +14,13 @@
 | `value`     | `value`      |             | `string`  | `undefined` |
 
 
+## Events
+
+| Event         | Description | Type               |
+| ------------- | ----------- | ------------------ |
+| `editSidebar` |             | `CustomEvent<any>` |
+
+
 ## Dependencies
 
 ### Used by
