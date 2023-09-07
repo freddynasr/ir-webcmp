@@ -81,15 +81,8 @@ export class IrPaymentDetails {
           <div class="mb-2 h4">
             Due Balance: <span class="danger font-weight-bold">$40.00</span>
           </div>
-          <div>
-            <strong>Booking Guarantee</strong>
-            <div>
-              Card: <span>1234 5678 9123</span> Expiry <span> 1/2027</span>
-            </div>
-            <div>
-              Name: <span>Rony Rizk</span> - CVC: <span> 123</span>
-            </div>
-          </div>
+
+          {this.item.IS_DIRECT && this.directPayment()}
           <div class="mt-2">
             <div>
               <strong>Payment due dates</strong>
