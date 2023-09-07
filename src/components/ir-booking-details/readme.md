@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property          | Attribute          | Description | Type  | Default     |
-| ----------------- | ------------------ | ----------- | ----- | ----------- |
-| `arrivalTimes`    | `arrival-times`    |             | `any` | `undefined` |
-| `bookingDetails`  | `booking-details`  |             | `any` | `undefined` |
-| `bookingStatuses` | `booking-statuses` |             | `any` | ````        |
-| `foodPackages`    | `food-packages`    |             | `any` | `undefined` |
+| Property          | Attribute           | Description | Type  | Default     |
+| ----------------- | ------------------- | ----------- | ----- | ----------- |
+| `arrivalTimes`    | `arrival-times`     |             | `any` | `undefined` |
+| `bookingDetails`  | `booking-details`   |             | `any` | `undefined` |
+| `bookingStatuses` | `booking-statuses`  |             | `any` | `undefined` |
+| `foodArrangeCats` | `food-arrange-cats` |             | `any` | `undefined` |
 
 
 ## Dependencies

@@ -8,6 +8,8 @@ import accounting from 'accounting';
 export class IrPaymentDetails {
   @Prop() item: any;
   @State() newTableRow: boolean = false;
+
+  
   _formatDate(date: string) {
     // Month Name 3 letters, Day, Year
     return moment(date).format('MMM DD, YYYY');
@@ -17,6 +19,8 @@ export class IrPaymentDetails {
     // format the amount using accounting.js
     return accounting.formatMoney(amount);
   }
+
+  
 
   _renderTableRow(item: any, rowMode: 'add' | 'normal' = 'normal') {
     return (

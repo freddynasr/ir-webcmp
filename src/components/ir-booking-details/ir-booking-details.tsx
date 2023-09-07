@@ -8,8 +8,8 @@ import moment from 'moment';
 export class IrBookingDetails {
   @Prop() bookingDetails: any;
   // Statuses and Codes
-  @Prop() bookingStatuses: any = ``;
-  @Prop() foodPackages: any;
+  @Prop() bookingStatuses: any;
+  @Prop() foodArrangeCats: any;
   @Prop() arrivalTimes: any;
 
   openEditSidebar() {
@@ -38,6 +38,7 @@ export class IrBookingDetails {
     console.log('The old value of bookingDetails is: ', oldValue);
   }
 
+
   _formatTime(hour: string, minute: string) {
     // format them as AM/PM using moment.js
     return moment(`${hour}:${minute}`, 'HH:mm').format('hh:mm A');
@@ -55,6 +56,24 @@ export class IrBookingDetails {
     return diff;
   }
 
+  _getBookingStatus(statusCode: string) {
+    // get the status from the bookingStatuses array
+    const status = this.bookingStatuses.find((status: any) => status.CODE_NAME === statusCode);
+    // return the status
+    return status.CODE_VALUE_EN;
+  }
+
+ 
+
+  _getArrivalTime(timeCode: string) {
+    // get the time from the arrivalTimes array
+    const time = this.arrivalTimes.find((time: any) => time.CODE_NAME === timeCode);
+    // return the time
+    return time.CODE_VALUE_EN;
+  }
+  
+
+
   render() {
     if (!this.bookingDetails) {
       return null;
@@ -68,7 +87,7 @@ export class IrBookingDetails {
           {this._formatTime(this.bookingDetails.BOOK_HOUR, this.bookingDetails.BOOK_MINUTE)}
         </div>
         <div class="d-flex align-items-center">
-          <span class="confirmed btn-sm mr-2">Confirmed</span>
+          <span class="confirmed btn-sm mr-2">{this._getBookingStatus(this.bookingDetails.BOOK_STATUS_CODE)}</span>
           <ir-select id="update-status" size="sm" label-available="false" data={this.selectData} textSize="sm" class="sm-padding-right"></ir-select>
           <ir-button icon="" id="update-status-btn" size="sm" text="Update"></ir-button>
           <ir-icon icon="ft-file-text h1 primary-blue ml-1 pointer"></ir-icon>
@@ -89,7 +108,7 @@ export class IrBookingDetails {
                 <ir-label label="Email:" value={this.bookingDetails.My_Guest.My_User.EMAIL}></ir-label>
                 <ir-label label="Alternate Email:" value={this.bookingDetails.My_Guest.My_User.DISCLOSED_EMAIL}></ir-label>
                 <ir-label label="Address:" value={this.bookingDetails.My_Guest.ADDRESS}></ir-label>
-                <ir-label label="Arrival Time:" value="2 PM - 4 PM"></ir-label>
+                <ir-label label="Arrival Time:" value={this._getArrivalTime(this.bookingDetails.ARRIVAL_TIME_CODE)}></ir-label>
                 <ir-label label="Notes:" value={this.bookingDetails.GUEST_REMARK}></ir-label>
               </div>
             </div>
@@ -101,7 +120,7 @@ export class IrBookingDetails {
               <ir-icon icon="ft-plus-square h3 primary-blue pointer"></ir-icon>
             </div>
             {this.bookingDetails.My_Bsa.map((bsa: any) => {
-              return <ir-room item={bsa}></ir-room>;
+              return <ir-room mealCode={this.foodArrangeCats} item={bsa}></ir-room>;
             })}
           </div>
           <div class="col-5 pr-0">

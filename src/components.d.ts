@@ -14,7 +14,7 @@ export namespace Components {
         "arrivalTimes": any;
         "bookingDetails": any;
         "bookingStatuses": any;
-        "foodPackages": any;
+        "foodArrangeCats": any;
     }
     interface IrButton {
         "btn_block": boolean;
@@ -143,6 +143,7 @@ export namespace Components {
     }
     interface IrRoom {
         "item": any;
+        "mealCode": any;
     }
     interface IrSelect {
         "LabelAvailable": boolean;
@@ -457,7 +458,7 @@ declare namespace LocalJSX {
         "arrivalTimes"?: any;
         "bookingDetails"?: any;
         "bookingStatuses"?: any;
-        "foodPackages"?: any;
+        "foodArrangeCats"?: any;
     }
     interface IrButton {
         "btn_block"?: boolean;
@@ -602,6 +603,7 @@ declare namespace LocalJSX {
     }
     interface IrRoom {
         "item"?: any;
+        "mealCode"?: any;
     }
     interface IrSelect {
         "LabelAvailable"?: boolean;
