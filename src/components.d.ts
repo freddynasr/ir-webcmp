@@ -248,6 +248,10 @@ export interface IrInputTextCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrInputTextElement;
 }
+export interface IrLabelCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrLabelElement;
+}
 export interface IrListItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrListItemElement;
@@ -544,6 +548,7 @@ declare namespace LocalJSX {
     interface IrLabel {
         "iconShown"?: boolean;
         "label"?: string;
+        "onEditSidebar"?: (event: IrLabelCustomEvent<any>) => void;
         "value"?: string;
     }
     interface IrListItem {

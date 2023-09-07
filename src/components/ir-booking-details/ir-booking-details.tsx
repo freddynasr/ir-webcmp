@@ -8,7 +8,8 @@ import moment from 'moment';
 export class IrBookingDetails {
 
   @Prop() bookingDetails: any;
-  @Prop() bookingStatuses: any;
+  // Statuses and Codes
+  @Prop() bookingStatuses: any;``
   @Prop() foodPackages: any;
   @Prop() arrivalTimes: any;
 
@@ -26,6 +27,12 @@ export class IrBookingDetails {
     const sidebar: any = document.querySelector('ir-sidebar#editGuestInfo');
     sidebar.open = false;
   }
+
+  @Listen('editSidebar')
+  handleEditSidebar() {
+    this.openEditSidebar();
+  }
+
 
   @Watch('bookingDetails')
   watchHandler(newValue: any, oldValue: any) {
@@ -81,8 +88,8 @@ export class IrBookingDetails {
           <div class="col-7 pl-0">
             <div class="card">
               <div class="p-1">
-                Theo Sunset Bay hotel
-                <ir-label label="Source:" value="CH-BDC-37973903"></ir-label>
+                {this.bookingDetails.My_Ac?.NAME || ""}
+                <ir-label label="Source:" value={this.bookingDetails.My_Source.Label}></ir-label>
                 <ir-label label="Booked by:" value={`${this.bookingDetails.My_Guest.FIRST_NAME} ${this.bookingDetails.My_Guest.LAST_NAME}`} iconShown={true}></ir-label>
                 <ir-label label="Phone:" value={this.bookingDetails.My_Guest.MOBILE}></ir-label>
                 <ir-label label="Email:" value={this.bookingDetails.My_Guest.My_User.EMAIL}></ir-label>
@@ -94,7 +101,6 @@ export class IrBookingDetails {
             </div>
             <div class="font-size-large d-flex justify-content-between align-items-center ml-1 mb-1">
               {`${this._formatDate(this.bookingDetails.FROM_DATE)} - ${this._formatDate(this.bookingDetails.TO_DATE)} (${this._calculateNights(this.bookingDetails.FROM_DATE, this.bookingDetails.TO_DATE)} nights)`}
-              {/* Jul 12, 2023 - Jul 23 - 2023 (3 nights - 2 rooms) */}
               <ir-icon icon="ft-plus-square h3 primary-blue pointer"></ir-icon>
             </div>
             {this.bookingDetails.My_Bsa.map((bsa: any) => {

@@ -46,6 +46,24 @@ export class IrPaymentDetails {
     );
   }
 
+  directPayment() {
+    return (
+      <div>
+        <strong>Booking Guarantee</strong>
+        <div>
+          Card: <span>{this.item.My_Guest?.CCN}</span> Expiry{' '}
+          <span>
+            {' '}
+            {this.item?.My_Guest?.CC_EXP_MONTH}/{this.item?.My_Guest?.CC_EXP_YEAR}
+          </span>
+        </div>
+        <div>
+          Name: <span>{this.item.My_Guest?.CHN}</span> - CVC: <span> {this.item.My_Guest?.CVC}</span>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     console.log('this.item', this.item.My_Payment);
     return (
