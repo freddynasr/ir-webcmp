@@ -7,9 +7,12 @@
 
 ## Properties
 
-| Property         | Attribute         | Description | Type  | Default     |
-| ---------------- | ----------------- | ----------- | ----- | ----------- |
-| `bookingDetails` | `booking-details` |             | `any` | `undefined` |
+| Property          | Attribute          | Description | Type  | Default     |
+| ----------------- | ------------------ | ----------- | ----- | ----------- |
+| `arrivalTimes`    | `arrival-times`    |             | `any` | `undefined` |
+| `bookingDetails`  | `booking-details`  |             | `any` | `undefined` |
+| `bookingStatuses` | `booking-statuses` |             | `any` | `undefined` |
+| `foodPackages`    | `food-packages`    |             | `any` | `undefined` |
 
 
 ## Dependencies
