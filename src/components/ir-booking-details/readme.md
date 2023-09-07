@@ -11,7 +11,7 @@
 | ----------------- | ------------------ | ----------- | ----- | ----------- |
 | `arrivalTimes`    | `arrival-times`    |             | `any` | `undefined` |
 | `bookingDetails`  | `booking-details`  |             | `any` | `undefined` |
-| `bookingStatuses` | `booking-statuses` |             | `any` | `undefined` |
+| `bookingStatuses` | `booking-statuses` |             | `any` | ````        |
 | `foodPackages`    | `food-packages`    |             | `any` | `undefined` |
 
 

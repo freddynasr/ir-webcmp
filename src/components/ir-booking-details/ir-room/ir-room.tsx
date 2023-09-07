@@ -26,7 +26,6 @@ export class IrRoom {
   }
 
   render() {
-    console.log(this.item.My_Room_type);
     return (
       <div class="card">
         <div class="p-1 d-flex">
