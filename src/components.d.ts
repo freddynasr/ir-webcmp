@@ -15,6 +15,8 @@ export namespace Components {
         "bookingDetails": any;
         "bookingStatuses": any;
         "foodArrangeCats": any;
+        "setupDataCountries": selectOption[];
+        "setupDataCountriesCode": selectOption[];
     }
     interface IrButton {
         "btn_block": boolean;
@@ -472,6 +474,8 @@ declare namespace LocalJSX {
         "bookingStatuses"?: any;
         "foodArrangeCats"?: any;
         "onSendDataToServer"?: (event: IrBookingDetailsCustomEvent<guestInfo>) => void;
+        "setupDataCountries"?: selectOption[];
+        "setupDataCountriesCode"?: selectOption[];
     }
     interface IrButton {
         "btn_block"?: boolean;

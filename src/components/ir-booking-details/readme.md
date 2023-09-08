@@ -7,12 +7,14 @@
 
 ## Properties
 
-| Property          | Attribute           | Description | Type  | Default |
-| ----------------- | ------------------- | ----------- | ----- | ------- |
-| `arrivalTimes`    | `arrival-times`     |             | `any` | `[]`    |
-| `bookingDetails`  | `booking-details`   |             | `any` | `null`  |
-| `bookingStatuses` | `booking-statuses`  |             | `any` | `[]`    |
-| `foodArrangeCats` | `food-arrange-cats` |             | `any` | `[]`    |
+| Property                 | Attribute           | Description | Type             | Default |
+| ------------------------ | ------------------- | ----------- | ---------------- | ------- |
+| `arrivalTimes`           | `arrival-times`     |             | `any`            | `[]`    |
+| `bookingDetails`         | `booking-details`   |             | `any`            | `null`  |
+| `bookingStatuses`        | `booking-statuses`  |             | `any`            | `[]`    |
+| `foodArrangeCats`        | `food-arrange-cats` |             | `any`            | `[]`    |
+| `setupDataCountries`     | --                  |             | `selectOption[]` | `null`  |
+| `setupDataCountriesCode` | --                  |             | `selectOption[]` | `null`  |
 
 
 ## Events

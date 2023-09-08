@@ -1,23 +1,25 @@
 import { Component, Listen, h, Prop, Watch, State, Event, EventEmitter } from '@stencil/core';
 import moment from 'moment';
-import { guestInfo } from '../../common/models';
+import { guestInfo, selectOption } from '../../common/models';
 
 @Component({
   tag: 'ir-booking-details',
   styleUrl: 'ir-booking-details.css',
 })
 export class IrBookingDetails {
-  @Prop({mutable: true, reflect: true}) bookingDetails: any = null;
+  @Prop({ mutable: true, reflect: true }) bookingDetails: any = null;
+
+  @Prop() setupDataCountries: selectOption[] = null;
+  @Prop() setupDataCountriesCode: selectOption[] = null;
   // Statuses and Codes
-  @Prop() bookingStatuses: any = []
-  @Prop() foodArrangeCats: any = []
-  @Prop() arrivalTimes: any = []
+  @Prop() bookingStatuses: any = [];
+  @Prop() foodArrangeCats: any = [];
+  @Prop() arrivalTimes: any = [];
 
   @State() guestData: guestInfo = null;
-  @State() rerenderFlag = false
+  @State() rerenderFlag = false;
 
   @Event() sendDataToServer: EventEmitter<guestInfo>;
-
 
   openEditSidebar() {
     const sidebar: any = document.querySelector('ir-sidebar#editGuestInfo');
@@ -40,32 +42,30 @@ export class IrBookingDetails {
   }
 
   @Listen('submitForm')
-    handleFormSubmit(e) {
-      const data = e.detail;
-      // handle changes in the booking details
-      const bookingDetails = this.bookingDetails;
-      bookingDetails.My_Guest.FIRST_NAME = data.firstName;
-      bookingDetails.My_Guest.LAST_NAME = data.lastName;
-      bookingDetails.My_Guest.COUNTRY_ID = data.country;
-      bookingDetails.My_Guest.CITY = data.city;
-      bookingDetails.My_Guest.ADDRESS = data.address;
-      bookingDetails.My_Guest.MOBILE = data.mobile;
-      bookingDetails.My_Guest.PHONE_PREFIX = data.prefix;
-      bookingDetails.My_Guest.IS_NEWS_LETTER = data.newsletter;
-      bookingDetails.My_Guest.My_User.CURRENCY = data.currency;
-      bookingDetails.My_Guest.My_User.DISCLOSED_EMAIL = data.altEmail;
-      bookingDetails.My_Guest.My_User.PASSWORD = data.password;
-      bookingDetails.My_Guest.My_User.EMAIL = data.email;
-      this.bookingDetails = bookingDetails;
-      console.log('Form submitted with data: ', this.bookingDetails);
-      this.rerenderFlag = !this.rerenderFlag;
-      // close the sidebar
-      const sidebar: any = document.querySelector('ir-sidebar#editGuestInfo');
-      sidebar.open = false;
-      this.sendDataToServer.emit(this.bookingDetails);
-
+  handleFormSubmit(e) {
+    const data = e.detail;
+    // handle changes in the booking details
+    const bookingDetails = this.bookingDetails;
+    bookingDetails.My_Guest.FIRST_NAME = data.firstName;
+    bookingDetails.My_Guest.LAST_NAME = data.lastName;
+    bookingDetails.My_Guest.COUNTRY_ID = data.country;
+    bookingDetails.My_Guest.CITY = data.city;
+    bookingDetails.My_Guest.ADDRESS = data.address;
+    bookingDetails.My_Guest.MOBILE = data.mobile;
+    bookingDetails.My_Guest.PHONE_PREFIX = data.prefix;
+    bookingDetails.My_Guest.IS_NEWS_LETTER = data.newsletter;
+    bookingDetails.My_Guest.My_User.CURRENCY = data.currency;
+    bookingDetails.My_Guest.My_User.DISCLOSED_EMAIL = data.altEmail;
+    bookingDetails.My_Guest.My_User.PASSWORD = data.password;
+    bookingDetails.My_Guest.My_User.EMAIL = data.email;
+    this.bookingDetails = bookingDetails;
+    console.log('Form submitted with data: ', this.bookingDetails);
+    this.rerenderFlag = !this.rerenderFlag;
+    // close the sidebar
+    const sidebar: any = document.querySelector('ir-sidebar#editGuestInfo');
+    sidebar.open = false;
+    this.sendDataToServer.emit(this.bookingDetails);
   }
-
 
   @Watch('bookingDetails')
   watchHandler(newValue: any, oldValue: any) {
@@ -88,8 +88,6 @@ export class IrBookingDetails {
     };
     this.guestData = _data;
   }
-
-
 
   _formatTime(hour: string, minute: string) {
     // format them as AM/PM using moment.js
@@ -115,22 +113,17 @@ export class IrBookingDetails {
     return status.CODE_VALUE_EN;
   }
 
- 
-
   _getArrivalTime(timeCode: string) {
     // get the time from the arrivalTimes array
     const time = this.arrivalTimes.find((time: any) => time.CODE_NAME === timeCode);
     // return the time
     return time.CODE_VALUE_EN;
   }
-  
-
 
   render() {
     if (!this.bookingDetails) {
       return null;
     }
-
 
     const guestInfo = document.querySelector('ir-guest-info');
     if (guestInfo) {
@@ -141,10 +134,8 @@ export class IrBookingDetails {
       <div class="fluid-container d-flex justify-content-between pt-1 mr-2 ml-2">
         <div class="d-flex align-items-end">
           <div class="font-size-large sm-padding-right">{`Booking#${this.bookingDetails.BOOK_NBR}`}</div>
-          {/* format date */}@ {moment(this.bookingDetails.BOOK_DATE).format('DD MMM YYYY')}
-          {" "}
-          {/* format time */}
-          {this._formatTime(this.bookingDetails.BOOK_HOUR, + " " + this.bookingDetails.BOOK_MINUTE)}
+          {/* format date */}@ {moment(this.bookingDetails.BOOK_DATE).format('DD MMM YYYY')} {/* format time */}
+          {this._formatTime(this.bookingDetails.BOOK_HOUR, +' ' + this.bookingDetails.BOOK_MINUTE)}
         </div>
         <div class="d-flex align-items-center">
           <span class="confirmed btn-sm mr-2">{this._getBookingStatus(this.bookingDetails.BOOK_STATUS_CODE)}</span>
@@ -189,7 +180,7 @@ export class IrBookingDetails {
         </div>
       </div>,
       <ir-sidebar side={'right'} id="editGuestInfo">
-        <ir-guest-info ></ir-guest-info>
+        <ir-guest-info setupDataCountries={this.setupDataCountries} setupDataCountriesCode={this.setupDataCountriesCode}></ir-guest-info>
       </ir-sidebar>,
     ];
   }
