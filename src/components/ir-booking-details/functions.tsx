@@ -6,7 +6,7 @@ export const _formatDate = (date: string) => {
   return moment(date).format('MMM DD, YYYY');
 };
 
-export const _formatAmount = (amount: string) => {
+export const _formatAmount = (amount: any) => {
   // format the amount using accounting.js
   return accounting.formatMoney(amount);
 };
