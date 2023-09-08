@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, EventEmitter, Event, Listen } from '@stencil/core';
-import { _formatDate, _getDay } from '../functions';
+import { _formatAmount, _formatDate, _getDay } from '../functions';
 
 @Component({
   tag: 'ir-room',
@@ -59,7 +59,7 @@ export class IrRoom {
               </div>
               <div>
                 {/* <span class="mr-1">{this.item.TOTAL_AMOUNT + this.item.EXCLUDED_TAXES}</span> */}
-                <span class="mr-1">${this.tAmount}</span>
+                <span class="mr-1">${_formatAmount(this.tAmount)}</span>
                 <ir-icon icon="ft-edit primary-blue h4 pointer"></ir-icon>
                 <ir-icon icon="ft-trash-2 danger h4 pointer"></ir-icon>
               </div>
@@ -96,7 +96,7 @@ export class IrRoom {
                   {this.item.My_Bsad.length > 0 &&
                     this.item.My_Bsad.map(item => (
                       <div>
-                        {_getDay(item.ALLOTMENT_DATE)} ${item.TOTAL_AMOUNT}
+                        {_getDay(item.ALLOTMENT_DATE)} ${_formatAmount(item.TOTAL_AMOUNT)}
                       </div>
                     ))}
                 </div>
