@@ -1,6 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Listen } from '@stencil/core';
-import moment from 'moment';
-import accounting from 'accounting';
+import { _formatDate } from '../functions';
 
 @Component({
   tag: 'ir-payment-details',
@@ -20,15 +19,15 @@ export class IrPaymentDetails {
     reference: '',
   }
   
-  _formatDate(date: string) {
-    // Month Name 3 letters, Day, Year
-    return moment(date).format('MMM DD, YYYY');
-  }
+  // _formatDate(date: string) {
+  //   // Month Name 3 letters, Day, Year
+  //   return moment(date).format('MMM DD, YYYY');
+  // }
 
-  _formatAmount(amount: string) {
-    // format the amount using accounting.js
-    return accounting.formatMoney(amount);
-  }
+  // _formatAmount(amount: string) {
+  //   // format the amount using accounting.js
+  //   return accounting.formatMoney(amount);
+  // }
 
   _handleSave() {
     // emit the item to be added
@@ -63,7 +62,7 @@ export class IrPaymentDetails {
         <div class="col-9 p-0">
           <div class="row m-0">
             <div class="col-4 border-right-dark p-0 border-bottom-dark">
-              {rowMode === 'normal' ? <span class="sm-padding-left">{this._formatDate(item.PAYMENT_DATE)}</span> 
+              {rowMode === 'normal' ? <span class="sm-padding-left">{_formatDate(item.PAYMENT_DATE)}</span> 
               : <input class="border-0 w-100"  onChange={(event)=>{this.itemToBeAdded.PAYMENT_DATE = (event.target as HTMLInputElement).value}} type="date"></input>}
             </div>
             <div class="col-4 border-right-dark d-flex p-0 justify-content-end border-bottom-dark sm-padding-right">

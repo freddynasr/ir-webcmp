@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, EventEmitter, Event, Listen } from '@stencil/core';
-import moment from 'moment';
+import { _formatDate, _getDay } from '../functions';
 
 @Component({
   tag: 'ir-room',
@@ -20,17 +20,6 @@ export class IrRoom {
     } else if (target.id == 'checkout') {
       this.pressCheckOut.emit(this.item);
     }
-  }
-
-
-  _formatDate(date: string) {
-    // Month Name 3 letters, Day, Year
-    return moment(date).format('MMM DD, YYYY');
-  }
-
-  _getDay(date: string) {
-    // formate it as day number/month number and day name
-    return moment(date).format('DD/MM ddd');
   }
 
   componentWillLoad() {
@@ -92,7 +81,7 @@ export class IrRoom {
             </div>
             <div class="d-flex align-items-center">
               <span class=" mr-1">
-                {this._formatDate(this.item.FROM_DATE)} - {this._formatDate(this.item.TO_DATE)}
+                {_formatDate(this.item.FROM_DATE)} - {_formatDate(this.item.TO_DATE)}
               </span>
               {this.item.UNIT && <span class="light-blue-bg mr-2 ">{this.item.UNIT}</span>}
               <ir-button id="checkin" icon="" class="mr-1" btn_color="info" size="sm" text="Check in"></ir-button>
@@ -107,7 +96,7 @@ export class IrRoom {
                   {this.item.My_Bsad.length > 0 &&
                     this.item.My_Bsad.map(item => (
                       <div>
-                        {this._getDay(item.ALLOTMENT_DATE)} ${item.TOTAL_AMOUNT}
+                        {_getDay(item.ALLOTMENT_DATE)} ${item.TOTAL_AMOUNT}
                       </div>
                     ))}
                 </div>

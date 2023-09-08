@@ -1,6 +1,7 @@
 import { Component, Listen, h, Prop, Watch, State, Event, EventEmitter } from '@stencil/core';
 import moment from 'moment';
 import { guestInfo, selectOption } from '../../common/models';
+import { _formatDate, _formatTime } from './functions';
 
 @Component({
   tag: 'ir-booking-details',
@@ -89,15 +90,7 @@ export class IrBookingDetails {
     this.guestData = _data;
   }
 
-  _formatTime(hour: string, minute: string) {
-    // format them as AM/PM using moment.js
-    return moment(`${hour}:${minute}`, 'HH:mm').format('hh:mm A');
-  }
 
-  _formatDate(date: string) {
-    // Month Name 3 letters, Day, Year
-    return moment(date).format('MMM DD, YYYY');
-  }
 
   _calculateNights(fromDate: string, toDate: string) {
     // calculate the difference between the two dates
@@ -135,7 +128,7 @@ export class IrBookingDetails {
         <div class="d-flex align-items-end">
           <div class="font-size-large sm-padding-right">{`Booking#${this.bookingDetails.BOOK_NBR}`}</div>
           {/* format date */}@ {moment(this.bookingDetails.BOOK_DATE).format('DD MMM YYYY')} {/* format time */}
-          {this._formatTime(this.bookingDetails.BOOK_HOUR, +' ' + this.bookingDetails.BOOK_MINUTE)}
+          {_formatTime(this.bookingDetails.BOOK_HOUR, +' ' + this.bookingDetails.BOOK_MINUTE)}
         </div>
         <div class="d-flex align-items-center">
           <span class="confirmed btn-sm mr-2">{this._getBookingStatus(this.bookingDetails.BOOK_STATUS_CODE)}</span>
@@ -164,7 +157,7 @@ export class IrBookingDetails {
               </div>
             </div>
             <div class="font-size-large d-flex justify-content-between align-items-center ml-1 mb-1">
-              {`${this._formatDate(this.bookingDetails.FROM_DATE)} - ${this._formatDate(this.bookingDetails.TO_DATE)} (${this._calculateNights(
+              {`${_formatDate(this.bookingDetails.FROM_DATE)} - ${_formatDate(this.bookingDetails.TO_DATE)} (${this._calculateNights(
                 this.bookingDetails.FROM_DATE,
                 this.bookingDetails.TO_DATE,
               )} nights)`}
