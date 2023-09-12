@@ -7,21 +7,39 @@
 
 ## Properties
 
-| Property                 | Attribute           | Description | Type             | Default |
-| ------------------------ | ------------------- | ----------- | ---------------- | ------- |
-| `arrivalTimes`           | `arrival-times`     |             | `any`            | `[]`    |
-| `bookingDetails`         | `booking-details`   |             | `any`            | `null`  |
-| `bookingStatuses`        | `booking-statuses`  |             | `any`            | `[]`    |
-| `foodArrangeCats`        | `food-arrange-cats` |             | `any`            | `[]`    |
-| `setupDataCountries`     | --                  |             | `selectOption[]` | `null`  |
-| `setupDataCountriesCode` | --                  |             | `selectOption[]` | `null`  |
+| Property                 | Attribute           | Description | Type                                 | Default                                                                                           |
+| ------------------------ | ------------------- | ----------- | ------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| `arrivalTimes`           | `arrival-times`     |             | `any`                                | `[]`                                                                                              |
+| `bookingDetails`         | `booking-details`   |             | `any`                                | `null`                                                                                            |
+| `bookingStatuses`        | `booking-statuses`  |             | `any`                                | `[]`                                                                                              |
+| `foodArrangeCats`        | `food-arrange-cats` |             | `any`                                | `[]`                                                                                              |
+| `hasCheckIn`             | `has-check-in`      |             | `boolean`                            | `false`                                                                                           |
+| `hasCheckOut`            | `has-check-out`     |             | `boolean`                            | `false`                                                                                           |
+| `hasDelete`              | `has-delete`        |             | `boolean`                            | `false`                                                                                           |
+| `hasMenu`                | `has-menu`          |             | `boolean`                            | `false`                                                                                           |
+| `hasPrint`               | `has-print`         |             | `boolean`                            | `false`                                                                                           |
+| `hasReceipt`             | `has-receipt`       |             | `boolean`                            | `false`                                                                                           |
+| `hasRoomAdd`             | `has-room-add`      |             | `boolean`                            | `false`                                                                                           |
+| `hasRoomDelete`          | `has-room-delete`   |             | `boolean`                            | `false`                                                                                           |
+| `hasRoomEdit`            | `has-room-edit`     |             | `boolean`                            | `false`                                                                                           |
+| `setupDataCountries`     | --                  |             | `selectOption[]`                     | `null`                                                                                            |
+| `setupDataCountriesCode` | --                  |             | `selectOption[]`                     | `null`                                                                                            |
+| `statusData`             | --                  |             | `{ value: string; text: string; }[]` | `[     { value: '1', text: '' },     { value: '2', text: '' },     { value: '3', text: '' },   ]` |
 
 
 ## Events
 
-| Event              | Description | Type                     |
-| ------------------ | ----------- | ------------------------ |
-| `sendDataToServer` |             | `CustomEvent<guestInfo>` |
+| Event                | Description | Type                     |
+| -------------------- | ----------- | ------------------------ |
+| `handleAddPayment`   |             | `CustomEvent<any>`       |
+| `handleDeleteClick`  |             | `CustomEvent<any>`       |
+| `handleMenuClick`    |             | `CustomEvent<any>`       |
+| `handlePrintClick`   |             | `CustomEvent<any>`       |
+| `handleReceiptClick` |             | `CustomEvent<any>`       |
+| `handleRoomAdd`      |             | `CustomEvent<any>`       |
+| `handleRoomDelete`   |             | `CustomEvent<any>`       |
+| `handleRoomEdit`     |             | `CustomEvent<any>`       |
+| `sendDataToServer`   |             | `CustomEvent<guestInfo>` |
 
 
 ## Dependencies

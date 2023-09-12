@@ -14,9 +14,9 @@
 
 ## Events
 
-| Event     | Description | Type               |
-| --------- | ----------- | ------------------ |
-| `addItem` |             | `CustomEvent<any>` |
+| Event                     | Description | Type               |
+| ------------------------- | ----------- | ------------------ |
+| `handlePaymentItemChange` |             | `CustomEvent<any>` |
 
 
 ## Dependencies

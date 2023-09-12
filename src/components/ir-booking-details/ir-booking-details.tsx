@@ -8,29 +8,93 @@ import { _formatDate, _formatTime } from './functions';
   styleUrl: 'ir-booking-details.css',
 })
 export class IrBookingDetails {
+  // Booking Details
   @Prop({ mutable: true, reflect: true }) bookingDetails: any = null;
-
+  // Setup Data
   @Prop() setupDataCountries: selectOption[] = null;
   @Prop() setupDataCountriesCode: selectOption[] = null;
+
   // Statuses and Codes
   @Prop() bookingStatuses: any = [];
   @Prop() foodArrangeCats: any = [];
   @Prop() arrivalTimes: any = [];
 
+  // Booleans Conditions
+  @Prop() hasPrint: boolean = false;
+  @Prop() hasReceipt: boolean = false;
+  @Prop() hasDelete: boolean = false;
+  @Prop() hasMenu: boolean = false;
+
+  // Room Booleans
+  @Prop() hasRoomEdit: boolean = false;
+  @Prop() hasRoomDelete: boolean = false;
+  @Prop() hasRoomAdd: boolean = false;
+  @Prop() hasCheckIn: boolean = false;
+  @Prop() hasCheckOut: boolean = false;
+
+  @Prop() statusData = [
+    { value: '1', text: '' },
+    { value: '2', text: '' },
+    { value: '3', text: '' },
+  ];
+  // Guest Data
   @State() guestData: guestInfo = null;
+
+  // Rerender Flag
   @State() rerenderFlag = false;
 
-  @Event() sendDataToServer: EventEmitter<guestInfo>;
+  // Event Emitters
 
-  openEditSidebar() {
-    const sidebar: any = document.querySelector('ir-sidebar#editGuestInfo');
-    sidebar.open = true;
+  // Guest Event
+  @Event() sendDataToServer: EventEmitter<guestInfo>;
+  @Event() handlePrintClick: EventEmitter;
+  @Event() handleReceiptClick: EventEmitter;
+  @Event() handleDeleteClick: EventEmitter;
+  @Event() handleMenuClick: EventEmitter;
+  // Room Event
+  @Event() handleRoomAdd: EventEmitter;
+  @Event() handleRoomEdit: EventEmitter;
+  @Event() handleRoomDelete: EventEmitter;
+  // Payment Event
+  @Event() handleAddPayment: EventEmitter;
+
+
+  @Listen('iconClickHandler')
+  handleIconClick(e) {
+    const target = e.target;
+    
+    switch (target.id) {
+      case 'print':
+        this.handlePrintClick.emit();
+        return 
+      case 'receipt':
+        this.handleReceiptClick.emit();
+        return
+      case 'book-delete':
+        this.handleDeleteClick.emit();
+        return
+      case 'menu':
+        this.handleMenuClick.emit();
+        return
+      case 'room-add':
+        this.handleRoomAdd.emit();
+        return  
+      case 'add-payment':
+        this.handleAddPayment.emit();
+        return
+    }
+
+    const targetID: string = target.id;
+    if (targetID.includes('roomEdit')) {
+      const roomID = target.id.split('-')[1];
+      this.handleRoomEdit.emit(roomID);
+    } else if (target.id.includes('roomDelete')) {
+      const roomID = target.id.split('-')[1];
+      this.handleRoomDelete.emit(roomID);
+    }
   }
-  selectData = [
-    { value: '1', text: 'One' },
-    { value: '2', text: 'Two' },
-    { value: '3', text: 'Three' },
-  ];
+
+  
   @Listen('irSidebarToggle')
   handleSidebarToggle() {
     const sidebar: any = document.querySelector('ir-sidebar#editGuestInfo');
@@ -91,7 +155,11 @@ export class IrBookingDetails {
   }
 
 
-
+  openEditSidebar() {
+    const sidebar: any = document.querySelector('ir-sidebar#editGuestInfo');
+    sidebar.open = true;
+  }
+  
   _calculateNights(fromDate: string, toDate: string) {
     // calculate the difference between the two dates
     const diff = moment(toDate).diff(moment(fromDate), 'days');
@@ -132,12 +200,12 @@ export class IrBookingDetails {
         </div>
         <div class="d-flex align-items-center">
           <span class="confirmed btn-sm mr-2">{this._getBookingStatus(this.bookingDetails.BOOK_STATUS_CODE)}</span>
-          <ir-select id="update-status" size="sm" label-available="false" data={this.selectData} textSize="sm" class="sm-padding-right"></ir-select>
+          <ir-select id="update-status" size="sm" label-available="false" data={this.statusData} textSize="sm" class="sm-padding-right"></ir-select>
           <ir-button icon="" id="update-status-btn" size="sm" text="Update"></ir-button>
-          <ir-icon icon="ft-file-text h1 primary-blue ml-1 pointer"></ir-icon>
-          <ir-icon icon="ft-printer h1 primary-blue ml-1 pointer"></ir-icon>
-          <ir-icon icon="ft-trash-2 h1 danger ml-1 pointer"></ir-icon>
-          <ir-icon icon="ft-list h1 primary-blue ml-1 pointer"></ir-icon>
+          { this.hasReceipt && <ir-icon id='receipt' icon="ft-file-text h1 primary-blue ml-1 pointer"></ir-icon>}
+          { this.hasPrint && <ir-icon id='print' icon="ft-printer h1 primary-blue ml-1 pointer"></ir-icon>}
+        { this.hasDelete &&  <ir-icon id='book-delete' icon="ft-trash-2 h1 danger ml-1 pointer"></ir-icon>}
+          { this.hasMenu && <ir-icon id='menu' icon="ft-list h1 primary-blue ml-1 pointer"></ir-icon>}
         </div>
       </div>,
       <div class="fluid-container m-1">
@@ -146,7 +214,7 @@ export class IrBookingDetails {
             <div class="card">
               <div class="p-1">
                 {this.bookingDetails.My_Ac?.NAME || ''}
-                <ir-label label="Source:" value={this.bookingDetails.My_Source.Label}></ir-label>
+                <ir-label label="Source:" value={this.bookingDetails.My_Source.Label} imageSrc={this.bookingDetails.My_Source.Icon}></ir-label>
                 <ir-label label="Booked by:" value={`${this.bookingDetails.My_Guest.FIRST_NAME} ${this.bookingDetails.My_Guest.LAST_NAME}`} iconShown={true}></ir-label>
                 <ir-label label="Phone:" value={this.bookingDetails.My_Guest.MOBILE}></ir-label>
                 <ir-label label="Email:" value={this.bookingDetails.My_Guest.My_User.EMAIL}></ir-label>
@@ -161,10 +229,16 @@ export class IrBookingDetails {
                 this.bookingDetails.FROM_DATE,
                 this.bookingDetails.TO_DATE,
               )} nights)`}
-              <ir-icon icon="ft-plus-square h3 primary-blue pointer"></ir-icon>
+              { this.hasRoomAdd && <ir-icon id='room-add' icon="ft-plus-square h3 primary-blue pointer"></ir-icon>}
             </div>
             {this.bookingDetails.My_Bsa.map((bsa: any) => {
-              return <ir-room mealCode={this.foodArrangeCats} item={bsa}></ir-room>;
+              return <ir-room
+               hasRoomEdit={this.hasRoomEdit}
+                hasRoomDelete={this.hasRoomDelete}
+                hasCheckIn={this.hasCheckIn}
+                hasCheckOut={this.hasCheckOut}
+              mealCode={this.foodArrangeCats} 
+              item={bsa}></ir-room>;
             })}
           </div>
           <div class="col-5 pr-0">

@@ -10,6 +10,7 @@
 | Property    | Attribute    | Description | Type      | Default     |
 | ----------- | ------------ | ----------- | --------- | ----------- |
 | `iconShown` | `icon-shown` |             | `boolean` | `false`     |
+| `imageSrc`  | `image-src`  |             | `string`  | `undefined` |
 | `label`     | `label`      |             | `string`  | `undefined` |
 | `value`     | `value`      |             | `string`  | `undefined` |
 

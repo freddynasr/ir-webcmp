@@ -12,6 +12,13 @@
 | `icon`   | `icon`    |             | `string` | `'ft-check'` |
 
 
+## Events
+
+| Event              | Description | Type               |
+| ------------------ | ----------- | ------------------ |
+| `iconClickHandler` |             | `CustomEvent<any>` |
+
+
 ## Dependencies
 
 ### Used by

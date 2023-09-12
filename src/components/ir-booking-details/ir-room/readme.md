@@ -7,10 +7,15 @@
 
 ## Properties
 
-| Property   | Attribute   | Description | Type  | Default     |
-| ---------- | ----------- | ----------- | ----- | ----------- |
-| `item`     | `item`      |             | `any` | `undefined` |
-| `mealCode` | `meal-code` |             | `any` | `undefined` |
+| Property        | Attribute         | Description | Type      | Default     |
+| --------------- | ----------------- | ----------- | --------- | ----------- |
+| `hasCheckIn`    | `has-check-in`    |             | `boolean` | `false`     |
+| `hasCheckOut`   | `has-check-out`   |             | `boolean` | `false`     |
+| `hasRoomAdd`    | `has-room-add`    |             | `boolean` | `false`     |
+| `hasRoomDelete` | `has-room-delete` |             | `boolean` | `false`     |
+| `hasRoomEdit`   | `has-room-edit`   |             | `boolean` | `false`     |
+| `item`          | `item`            |             | `any`     | `undefined` |
+| `mealCode`      | `meal-code`       |             | `any`     | `undefined` |
 
 
 ## Events

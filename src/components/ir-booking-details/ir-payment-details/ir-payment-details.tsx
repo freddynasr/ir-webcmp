@@ -5,36 +5,30 @@ import { _formatDate } from '../functions';
   tag: 'ir-payment-details',
 })
 export class IrPaymentDetails {
-  @Prop({mutable: true, reflect: true}) item: any;
+  @Prop({mutable: true, reflect: true}) item: any
   @State() newTableRow: boolean = false;
 
   @State() confirmModal: boolean = false;
 
-  @Event() addItem: EventEmitter<any>;
+  @Event({bubbles: true}) handlePaymentItemChange: EventEmitter<any>;
 
   itemToBeAdded: any = {
-    date: '',
-    amount: 0,
-    designation: '',
-    reference: '',
+    PAYMENT_DATE: '',
+    PAYMENT_AMOUNT: '',
+    DESIGNATION: '',
+    REFERENCE: '',
   }
+
+ @State() toBeDeletedItem: any = {};
   
-  // _formatDate(date: string) {
-  //   // Month Name 3 letters, Day, Year
-  //   return moment(date).format('MMM DD, YYYY');
-  // }
-
-  // _formatAmount(amount: string) {
-  //   // format the amount using accounting.js
-  //   return accounting.formatMoney(amount);
-  // }
-
   _handleSave() {
     // emit the item to be added
+    if (this.item.My_Payment == null) {
+      this.item.My_Payment = [];
+    }
     this.item.My_Payment = [...this.item.My_Payment, this.itemToBeAdded];
-    console.log(this.itemToBeAdded);
-    console.log(this.item.My_Payment);
-    this.addItem.emit(this.itemToBeAdded);
+    console.log(this.item);
+    this.handlePaymentItemChange.emit(this.item.My_Payment);
     this.itemToBeAdded = {
       PAYMENT_DATE: '',
       PAYMENT_AMOUNT: '',
@@ -45,19 +39,16 @@ export class IrPaymentDetails {
 
   @Listen('confirmModal')
   handleConfirmModal(e) {
-    console.log(e.detail);
     // Remove the item from the array
     const newPaymentArray = this.item.My_Payment.filter((item: any) => item.PAYMENT_DATE !== e.detail.PAYMENT_DATE);
     this.item.My_Payment = newPaymentArray;
     this.confirmModal = !this.confirmModal;
-    
-    // Close the modal
-    // const modal = document.querySelector('ir-modal');
-    // modal.closeModal();
+    this.handlePaymentItemChange.emit(this.item.My_Payment);
+    this.toBeDeletedItem = {};
   }
 
   _renderTableRow(item: any, rowMode: 'add' | 'normal' = 'normal') {
-    return [
+    return (
       <div class="row m-0">
         <div class="col-9 p-0">
           <div class="row m-0">
@@ -75,7 +66,14 @@ export class IrPaymentDetails {
             </div>
             <div class="col-12 border-right-dark p-0 border-bottom-dark sm-padding-left">
               {rowMode === 'normal' ? <span class="sm-padding-left">{item.REFERENCE}</span> 
-              : <input class="border-0 w-100" onChange={(event)=>{this.itemToBeAdded.REFERENCE = (event.target as HTMLInputElement).value}} type="text"></input>}
+              : <input class="border-0 w-100" 
+              onKeyPress={(event)=>{
+                if(event.key === 'Enter') {
+                  this.newTableRow = false;
+                  this._handleSave();
+                }
+              }}
+              onChange={(event)=>{this.itemToBeAdded.REFERENCE = (event.target as HTMLInputElement).value}} type="text"></input>}
             </div>
           </div>
         </div>
@@ -109,25 +107,15 @@ export class IrPaymentDetails {
 
                   }
                 : () => {
+                    this.toBeDeletedItem = item;
                     const modal: any = document.querySelector('.delete-record-modal');
                     modal.openModal();
                   }
             }
           ></ir-icon>
         </div>
-      </div>,
-      <ir-modal 
-      item={item}
-      class={'delete-record-modal'} 
-      modalTitle="Are you sure you want to delete this payment record?" 
-      modalBody="If deleted it will be permnantly lost!" 
-      iconAvailable={true} 
-      icon="ft-alert-triangle danger h1" 
-      leftBtnText='Delete'
-      rightBtnText='Cancel'
-      leftBtnColor='danger'
-      rightBtnColor='primary'
-      ></ir-modal>,  ]
+      </div>
+      );
   }
 
   directPayment() {
@@ -135,21 +123,28 @@ export class IrPaymentDetails {
       <div>
         <strong>Booking Guarantee</strong>
         <div>
-          Card: <span>{this.item.My_Guest?.CCN}</span> Expiry{' '}
+          {this.item?.My_Guest?.CCN && 'Card:'} <span>{this.item?.My_Guest?.CCN || ''}</span> {this.item?.My_Guest?.CC_EXP_MONTH && 'Expiry: '}
           <span>
             {' '}
-            {this.item?.My_Guest?.CC_EXP_MONTH}/{this.item?.My_Guest?.CC_EXP_YEAR}
+            {this.item?.My_Guest?.CC_EXP_MONTH || ''} {this.item?.My_Guest?.CC_EXP_YEAR && '/' + this.item?.My_Guest?.CC_EXP_YEAR}
           </span>
         </div>
         <div>
-          Name: <span>{this.item.My_Guest?.CHN}</span> - CVC: <span> {this.item.My_Guest?.CVC}</span>
+         {this.item?.My_Guest?.CHN && 'Name:'} <span>{this.item?.My_Guest?.CHN || ''}</span> {this.item?.My_Guest?.CVC && '- CVC:'} <span> {this.item.My_Guest?.CVC || ''}</span>
         </div>
       </div>
     );
   }
 
+ 
+
   render() {
-    return (
+
+    if (!this.item) {
+      return <div></div>;
+    }
+
+    return [
       <div class="card">
         <div class="p-1">
           <div class="mb-2 h4">
@@ -192,6 +187,7 @@ export class IrPaymentDetails {
                 </div>
                 <div class="col-3 text-center border-right-dark p-0 border-bottom-dark">
                   <ir-icon
+                    id="add-payment"
                     icon="ft-plus font-weight-bold primary-blue pointer p-0"
                     onClick={() => {
                       this.newTableRow = true;
@@ -199,12 +195,24 @@ export class IrPaymentDetails {
                   ></ir-icon>
                 </div>
               </div>
-              {this.item.My_Payment.map((item: any) => this._renderTableRow(item))}
+              {this.item.My_Payment && this.item.My_Payment.map((item: any) => this._renderTableRow(item))}
               {this.newTableRow ? this._renderTableRow(null, 'add') : null}
             </div>
           </div>
         </div>
-      </div>
-    );
+      </div>,
+        <ir-modal 
+        item={this.toBeDeletedItem}
+        class={'delete-record-modal'} 
+        modalTitle="Are you sure you want to delete this payment record?" 
+        modalBody="If deleted it will be permnantly lost!" 
+        iconAvailable={true} 
+        icon="ft-alert-triangle danger h1" 
+        leftBtnText='Delete'
+        rightBtnText='Cancel'
+        leftBtnColor='danger'
+        rightBtnColor='primary'
+        ></ir-modal>
+    ];
   }
 }

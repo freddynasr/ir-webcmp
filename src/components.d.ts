@@ -15,8 +15,18 @@ export namespace Components {
         "bookingDetails": any;
         "bookingStatuses": any;
         "foodArrangeCats": any;
+        "hasCheckIn": boolean;
+        "hasCheckOut": boolean;
+        "hasDelete": boolean;
+        "hasMenu": boolean;
+        "hasPrint": boolean;
+        "hasReceipt": boolean;
+        "hasRoomAdd": boolean;
+        "hasRoomDelete": boolean;
+        "hasRoomEdit": boolean;
         "setupDataCountries": selectOption[];
         "setupDataCountriesCode": selectOption[];
+        "statusData": { value: string; text: string; }[];
     }
     interface IrButton {
         "btn_block": boolean;
@@ -95,6 +105,7 @@ export namespace Components {
     }
     interface IrLabel {
         "iconShown": boolean;
+        "imageSrc": string;
         "label": string;
         "value": string;
     }
@@ -144,6 +155,11 @@ export namespace Components {
         "item": any;
     }
     interface IrRoom {
+        "hasCheckIn": boolean;
+        "hasCheckOut": boolean;
+        "hasRoomAdd": boolean;
+        "hasRoomDelete": boolean;
+        "hasRoomEdit": boolean;
         "item": any;
         "mealCode": any;
     }
@@ -250,6 +266,10 @@ export interface IrGeneralSettingsCustomEvent<T> extends CustomEvent<T> {
 export interface IrGuestInfoCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIrGuestInfoElement;
+}
+export interface IrIconCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIrIconElement;
 }
 export interface IrInputTextCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -473,9 +493,27 @@ declare namespace LocalJSX {
         "bookingDetails"?: any;
         "bookingStatuses"?: any;
         "foodArrangeCats"?: any;
+        "hasCheckIn"?: boolean;
+        "hasCheckOut"?: boolean;
+        "hasDelete"?: boolean;
+        "hasMenu"?: boolean;
+        "hasPrint"?: boolean;
+        "hasReceipt"?: boolean;
+        "hasRoomAdd"?: boolean;
+        "hasRoomDelete"?: boolean;
+        "hasRoomEdit"?: boolean;
+        "onHandleAddPayment"?: (event: IrBookingDetailsCustomEvent<any>) => void;
+        "onHandleDeleteClick"?: (event: IrBookingDetailsCustomEvent<any>) => void;
+        "onHandleMenuClick"?: (event: IrBookingDetailsCustomEvent<any>) => void;
+        "onHandlePrintClick"?: (event: IrBookingDetailsCustomEvent<any>) => void;
+        "onHandleReceiptClick"?: (event: IrBookingDetailsCustomEvent<any>) => void;
+        "onHandleRoomAdd"?: (event: IrBookingDetailsCustomEvent<any>) => void;
+        "onHandleRoomDelete"?: (event: IrBookingDetailsCustomEvent<any>) => void;
+        "onHandleRoomEdit"?: (event: IrBookingDetailsCustomEvent<any>) => void;
         "onSendDataToServer"?: (event: IrBookingDetailsCustomEvent<guestInfo>) => void;
         "setupDataCountries"?: selectOption[];
         "setupDataCountriesCode"?: selectOption[];
+        "statusData"?: { value: string; text: string; }[];
     }
     interface IrButton {
         "btn_block"?: boolean;
@@ -543,6 +581,7 @@ declare namespace LocalJSX {
     }
     interface IrIcon {
         "icon"?: string;
+        "onIconClickHandler"?: (event: IrIconCustomEvent<any>) => void;
     }
     interface IrInputText {
         "LabelAvailable"?: boolean;
@@ -565,6 +604,7 @@ declare namespace LocalJSX {
     }
     interface IrLabel {
         "iconShown"?: boolean;
+        "imageSrc"?: string;
         "label"?: string;
         "onEditSidebar"?: (event: IrLabelCustomEvent<any>) => void;
         "value"?: string;
@@ -617,9 +657,14 @@ declare namespace LocalJSX {
     }
     interface IrPaymentDetails {
         "item"?: any;
-        "onAddItem"?: (event: IrPaymentDetailsCustomEvent<any>) => void;
+        "onHandlePaymentItemChange"?: (event: IrPaymentDetailsCustomEvent<any>) => void;
     }
     interface IrRoom {
+        "hasCheckIn"?: boolean;
+        "hasCheckOut"?: boolean;
+        "hasRoomAdd"?: boolean;
+        "hasRoomDelete"?: boolean;
+        "hasRoomEdit"?: boolean;
         "item"?: any;
         "mealCode"?: any;
         "onPressCheckIn"?: (event: IrRoomCustomEvent<any>) => void;
