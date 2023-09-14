@@ -1,14 +1,13 @@
 import moment from 'moment';
-import accounting from 'accounting';
 
 export const _formatDate = (date: string) => {
   // Month Name 3 letters, Day, Year
   return moment(date).format('MMM DD, YYYY');
 };
 
-export const _formatAmount = (amount: any) => {
+export const _formatAmount = (amount: any, currency: string = 'USD') => {
   // format the amount using accounting.js
-  return accounting.formatMoney(amount);
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: currency }).format(amount);
 };
 
 export const _getDay = (date: string) => {

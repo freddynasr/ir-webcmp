@@ -14,6 +14,7 @@ export namespace Components {
         "arrivalTimes": any;
         "bookingDetails": any;
         "bookingStatuses": any;
+        "dropdownStatuses": any;
         "foodArrangeCats": any;
         "hasCheckIn": boolean;
         "hasCheckOut": boolean;
@@ -26,7 +27,6 @@ export namespace Components {
         "hasRoomEdit": boolean;
         "setupDataCountries": selectOption[];
         "setupDataCountriesCode": selectOption[];
-        "statusData": { value: string; text: string; }[];
     }
     interface IrButton {
         "btn_block": boolean;
@@ -155,6 +155,7 @@ export namespace Components {
         "item": any;
     }
     interface IrRoom {
+        "currency": string;
         "hasCheckIn": boolean;
         "hasCheckOut": boolean;
         "hasRoomAdd": boolean;
@@ -492,6 +493,7 @@ declare namespace LocalJSX {
         "arrivalTimes"?: any;
         "bookingDetails"?: any;
         "bookingStatuses"?: any;
+        "dropdownStatuses"?: any;
         "foodArrangeCats"?: any;
         "hasCheckIn"?: boolean;
         "hasCheckOut"?: boolean;
@@ -513,7 +515,6 @@ declare namespace LocalJSX {
         "onSendDataToServer"?: (event: IrBookingDetailsCustomEvent<guestInfo>) => void;
         "setupDataCountries"?: selectOption[];
         "setupDataCountriesCode"?: selectOption[];
-        "statusData"?: { value: string; text: string; }[];
     }
     interface IrButton {
         "btn_block"?: boolean;
@@ -660,6 +661,7 @@ declare namespace LocalJSX {
         "onHandlePaymentItemChange"?: (event: IrPaymentDetailsCustomEvent<any>) => void;
     }
     interface IrRoom {
+        "currency"?: string;
         "hasCheckIn"?: boolean;
         "hasCheckOut"?: boolean;
         "hasRoomAdd"?: boolean;

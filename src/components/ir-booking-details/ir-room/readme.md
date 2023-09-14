@@ -9,6 +9,7 @@
 
 | Property        | Attribute         | Description | Type      | Default     |
 | --------------- | ----------------- | ----------- | --------- | ----------- |
+| `currency`      | `currency`        |             | `string`  | `'USD'`     |
 | `hasCheckIn`    | `has-check-in`    |             | `boolean` | `false`     |
 | `hasCheckOut`   | `has-check-out`   |             | `boolean` | `false`     |
 | `hasRoomAdd`    | `has-room-add`    |             | `boolean` | `false`     |

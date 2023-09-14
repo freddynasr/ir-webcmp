@@ -8,6 +8,9 @@ export class IrRoom {
   // Room Data
   @Prop() item: any;
 
+  // Currency
+  @Prop() currency: string = 'USD';
+
   // Statuses and Codes
   @Prop({reflect: true}) mealCode: any;
 
@@ -72,7 +75,7 @@ export class IrRoom {
               </div>
               <div>
                 {/* <span class="mr-1">{this.item.TOTAL_AMOUNT + this.item.EXCLUDED_TAXES}</span> */}
-                <span class="mr-1">{_formatAmount(this.tAmount)}</span>
+                <span class="mr-1">{_formatAmount(this.tAmount, this.currency)}</span>
                 { this.hasRoomEdit && <ir-icon id={`roomEdit-${this.item.BSA_ID}`} icon="ft-edit primary-blue h4 pointer"></ir-icon>}
                {this.hasRoomDelete && <ir-icon 
                 id={`roomDelete-${this.item.BSA_ID}`}
@@ -111,7 +114,7 @@ export class IrRoom {
                   {this.item.My_Bsad.length > 0 &&
                     this.item.My_Bsad.map(item => (
                       <div>
-                        {_getDay(item.ALLOTMENT_DATE)} {_formatAmount(item.TOTAL_AMOUNT)}
+                        {_getDay(item.ALLOTMENT_DATE)} {_formatAmount(item.TOTAL_AMOUNT, this.currency)}
                       </div>
                     ))}
                 </div>

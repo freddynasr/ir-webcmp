@@ -1,26 +1,26 @@
 import { Component, h, Prop, State, Event, EventEmitter, Listen } from '@stencil/core';
-import { _formatDate } from '../functions';
+import { _formatAmount, _formatDate } from '../functions';
 
 @Component({
   tag: 'ir-payment-details',
 })
 export class IrPaymentDetails {
-  @Prop({mutable: true, reflect: true}) item: any
+  @Prop({ mutable: true, reflect: true }) item: any;
   @State() newTableRow: boolean = false;
 
   @State() confirmModal: boolean = false;
 
-  @Event({bubbles: true}) handlePaymentItemChange: EventEmitter<any>;
+  @Event({ bubbles: true }) handlePaymentItemChange: EventEmitter<any>;
 
   itemToBeAdded: any = {
     PAYMENT_DATE: '',
     PAYMENT_AMOUNT: '',
     DESIGNATION: '',
     REFERENCE: '',
-  }
+  };
 
- @State() toBeDeletedItem: any = {};
-  
+  @State() toBeDeletedItem: any = {};
+
   _handleSave() {
     // emit the item to be added
     if (this.item.My_Payment == null) {
@@ -34,7 +34,7 @@ export class IrPaymentDetails {
       PAYMENT_AMOUNT: '',
       DESIGNATION: '',
       REFERENCE: '',
-    }
+    };
   }
 
   @Listen('confirmModal')
@@ -53,42 +53,75 @@ export class IrPaymentDetails {
         <div class="col-9 p-0">
           <div class="row m-0">
             <div class="col-4 border-right-dark p-0 border-bottom-dark">
-              {rowMode === 'normal' ? <span class="sm-padding-left">{_formatDate(item.PAYMENT_DATE)}</span> 
-              : <input class="border-0 w-100"  onChange={(event)=>{this.itemToBeAdded.PAYMENT_DATE = (event.target as HTMLInputElement).value}} type="date"></input>}
+              {rowMode === 'normal' ? (
+                <span class="sm-padding-left">{_formatDate(item.PAYMENT_DATE)}</span>
+              ) : (
+                <input
+                  class="border-0 w-100"
+                  onChange={event => {
+                    this.itemToBeAdded.PAYMENT_DATE = (event.target as HTMLInputElement).value;
+                  }}
+                  type="date"
+                ></input>
+              )}
             </div>
             <div class="col-4 border-right-dark d-flex p-0 justify-content-end border-bottom-dark sm-padding-right">
-              {rowMode === 'normal' ? <span class="sm-padding-right">${item.PAYMENT_AMOUNT}</span> 
-              : <input class="border-0 w-100"  onChange={(event)=>{this.itemToBeAdded.PAYMENT_AMOUNT = (event.target as HTMLInputElement).value}} type="number"></input>}
+              {rowMode === 'normal' ? (
+                <span class="sm-padding-right">${item.PAYMENT_AMOUNT}</span>
+              ) : (
+                <input
+                  class="border-0 w-100"
+                  onChange={event => {
+                    this.itemToBeAdded.PAYMENT_AMOUNT = (event.target as HTMLInputElement).value;
+                  }}
+                  type="number"
+                ></input>
+              )}
             </div>
             <div class="col-4 border-right-dark p-0 border-bottom-dark sm-padding-left">
-              {rowMode === 'normal' ? <span class="sm-padding-left">{item.DESIGNATION}</span> 
-              : <input class="border-0 w-100"  onChange={(event)=>{this.itemToBeAdded.DESIGNATION = (event.target as HTMLInputElement).value}} type="text"></input>}
+              {rowMode === 'normal' ? (
+                <span class="sm-padding-left">{item.DESIGNATION}</span>
+              ) : (
+                <input
+                  class="border-0 w-100"
+                  onChange={event => {
+                    this.itemToBeAdded.DESIGNATION = (event.target as HTMLInputElement).value;
+                  }}
+                  type="text"
+                ></input>
+              )}
             </div>
             <div class="col-12 border-right-dark p-0 border-bottom-dark sm-padding-left">
-              {rowMode === 'normal' ? <span class="sm-padding-left">{item.REFERENCE}</span> 
-              : <input class="border-0 w-100" 
-              onKeyPress={(event)=>{
-                if(event.key === 'Enter') {
-                  this.newTableRow = false;
-                  this._handleSave();
-                }
-              }}
-              onChange={(event)=>{this.itemToBeAdded.REFERENCE = (event.target as HTMLInputElement).value}} type="text"></input>}
+              {rowMode === 'normal' ? (
+                <span class="sm-padding-left">{item.REFERENCE}</span>
+              ) : (
+                <input
+                  class="border-0 w-100"
+                  onKeyPress={event => {
+                    if (event.key === 'Enter') {
+                      this.newTableRow = false;
+                      this._handleSave();
+                    }
+                  }}
+                  onChange={event => {
+                    this.itemToBeAdded.REFERENCE = (event.target as HTMLInputElement).value;
+                  }}
+                  type="text"
+                ></input>
+              )}
             </div>
           </div>
         </div>
         <div class="col-3 d-flex align-items-center justify-content-between border-right-dark border-bottom-dark">
-
-          <ir-icon icon="ft-save primary-blue h5 pointer"
+          <ir-icon
+            icon="ft-save primary-blue h5 pointer"
             onClick={
               rowMode === 'add'
                 ? () => {
                     this.newTableRow = false;
-                    this._handleSave()
+                    this._handleSave();
                   }
-                : () => {
-                   
-                  }
+                : () => {}
             }
           ></ir-icon>
 
@@ -103,8 +136,7 @@ export class IrPaymentDetails {
                       PAYMENT_AMOUNT: '',
                       DESIGNATION: '',
                       REFERENCE: '',
-                    }
-
+                    };
                   }
                 : () => {
                     this.toBeDeletedItem = item;
@@ -115,7 +147,7 @@ export class IrPaymentDetails {
           ></ir-icon>
         </div>
       </div>
-      );
+    );
   }
 
   directPayment() {
@@ -130,16 +162,25 @@ export class IrPaymentDetails {
           </span>
         </div>
         <div>
-         {this.item?.My_Guest?.CHN && 'Name:'} <span>{this.item?.My_Guest?.CHN || ''}</span> {this.item?.My_Guest?.CVC && '- CVC:'} <span> {this.item.My_Guest?.CVC || ''}</span>
+          {this.item?.My_Guest?.CHN && 'Name:'} <span>{this.item?.My_Guest?.CHN || ''}</span> {this.item?.My_Guest?.CVC && '- CVC:'} <span> {this.item.My_Guest?.CVC || ''}</span>
         </div>
       </div>
     );
   }
 
- 
+  _renderDueDate(item) {
+    return (
+      <div class="d-flex justify-content-between">
+        {/* make the text of the span flex-start */}
+        <span class="w-100">{item.Room}</span> 
+        <span class="w-100">{_formatDate(item.Date)}</span>
+        <span class="w-100">{item.Description}</span>
+        <span class="w-100">{_formatAmount(item.Amount, this.item.My_Currency.REF)}</span>
+      </div>
+    );
+  }
 
   render() {
-
     if (!this.item) {
       return <div></div>;
     }
@@ -155,21 +196,7 @@ export class IrPaymentDetails {
           <div class="mt-2">
             <div>
               <strong>Payment due dates</strong>
-              <div class="d-flex justify-content-between">
-                <span>Aug 09 2023</span>
-                <span>Prepayment</span>
-                <span>$60.00</span>
-              </div>
-              <div class="d-flex justify-content-between">
-                <span>Aug 20 2023</span>
-                <span>Cancelation</span>
-                <span>$100.00</span>
-              </div>
-              <div class="d-flex justify-content-between">
-                <span>Aug 25 2023</span>
-                <span>Cancelation</span>
-                <span>$25.00</span>
-              </div>
+              {this.item?.My_DueDates && this.item?.My_DueDates.map(item => this._renderDueDate(item))}
             </div>
           </div>
           <div class="mt-2">
@@ -201,18 +228,18 @@ export class IrPaymentDetails {
           </div>
         </div>
       </div>,
-        <ir-modal 
+      <ir-modal
         item={this.toBeDeletedItem}
-        class={'delete-record-modal'} 
-        modalTitle="Are you sure you want to delete this payment record?" 
-        modalBody="If deleted it will be permnantly lost!" 
-        iconAvailable={true} 
-        icon="ft-alert-triangle danger h1" 
-        leftBtnText='Delete'
-        rightBtnText='Cancel'
-        leftBtnColor='danger'
-        rightBtnColor='primary'
-        ></ir-modal>
+        class={'delete-record-modal'}
+        modalTitle="Are you sure you want to delete this payment record?"
+        modalBody="If deleted it will be permnantly lost!"
+        iconAvailable={true}
+        icon="ft-alert-triangle danger h1"
+        leftBtnText="Delete"
+        rightBtnText="Cancel"
+        leftBtnColor="danger"
+        rightBtnColor="primary"
+      ></ir-modal>,
     ];
   }
 }

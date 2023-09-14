@@ -14,6 +14,8 @@ export class IrBookingDetails {
   @Prop() setupDataCountries: selectOption[] = null;
   @Prop() setupDataCountriesCode: selectOption[] = null;
 
+  @Prop({mutable: true}) dropdownStatuses: any = [];
+
   // Statuses and Codes
   @Prop() bookingStatuses: any = [];
   @Prop() foodArrangeCats: any = [];
@@ -32,11 +34,14 @@ export class IrBookingDetails {
   @Prop() hasCheckIn: boolean = false;
   @Prop() hasCheckOut: boolean = false;
 
-  @Prop() statusData = [
+  @State() statusData = [
     { value: '1', text: '' },
     { value: '2', text: '' },
     { value: '3', text: '' },
   ];
+  // Temp Status Before Save
+  @State() tempStatus: string = null;
+
   // Guest Data
   @State() guestData: guestInfo = null;
 
@@ -57,6 +62,10 @@ export class IrBookingDetails {
   @Event() handleRoomDelete: EventEmitter;
   // Payment Event
   @Event() handleAddPayment: EventEmitter;
+
+
+
+
 
 
   @Listen('iconClickHandler')
@@ -132,6 +141,30 @@ export class IrBookingDetails {
     this.sendDataToServer.emit(this.bookingDetails);
   }
 
+  @Listen('selectChange')
+  handleSelectChange(e) {
+    const target = e.target;
+    const targetID = target.id;
+    switch (targetID) {
+      case 'update-status':
+        this.tempStatus = e.detail
+        break;
+    }
+  }
+
+  @Listen('clickHanlder')
+  handleClick(e) {
+    const target = e.target;
+    const targetID = target.id;
+    switch (targetID) {
+      case 'update-status-btn':
+        this.updateStatus();
+        break;
+    }
+  }
+
+
+
   @Watch('bookingDetails')
   watchHandler(newValue: any, oldValue: any) {
     console.log('The new value of bookingDetails is: ', newValue);
@@ -152,6 +185,21 @@ export class IrBookingDetails {
       language: newValue.My_Guest.My_User.LANGUAGE,
     };
     this.guestData = _data;
+  }
+
+  @Watch('dropdownStatuses')
+  watchDropdownStatuses(newValue: any, oldValue: any) {
+    console.log('The new value of dropdownStatuses is: ', newValue);
+    console.log('The old value of dropdownStatuses is: ', oldValue);
+    // Make the newValue in way that can be handled by the dropdown
+    const _newValue = newValue.map((item) => {
+      return {
+        value: item.CODE_NAME,
+        text: this._getBookingStatus(item.CODE_NAME),
+      };
+    });
+    this.statusData = _newValue;
+    this.rerenderFlag = !this.rerenderFlag;
   }
 
 
@@ -181,6 +229,14 @@ export class IrBookingDetails {
     return time.CODE_VALUE_EN;
   }
 
+  updateStatus() {
+    const bookingDetails = this.bookingDetails;
+    bookingDetails.BOOK_STATUS_CODE = this.tempStatus;
+    this.bookingDetails = bookingDetails;
+    this.rerenderFlag = !this.rerenderFlag;
+    this.sendDataToServer.emit(this.bookingDetails);
+  }
+
   render() {
     if (!this.bookingDetails) {
       return null;
@@ -195,13 +251,13 @@ export class IrBookingDetails {
       <div class="fluid-container d-flex justify-content-between pt-1 mr-2 ml-2">
         <div class="d-flex align-items-end">
           <div class="font-size-large sm-padding-right">{`Booking#${this.bookingDetails.BOOK_NBR}`}</div>
-          {/* format date */}@ {moment(this.bookingDetails.BOOK_DATE).format('DD MMM YYYY')} {/* format time */}
+          {/* format date */}@ {_formatDate(this.bookingDetails.BOOK_DATE)} {/* format time */}
           {_formatTime(this.bookingDetails.BOOK_HOUR, +' ' + this.bookingDetails.BOOK_MINUTE)}
         </div>
         <div class="d-flex align-items-center">
           <span class="confirmed btn-sm mr-2">{this._getBookingStatus(this.bookingDetails.BOOK_STATUS_CODE)}</span>
           <ir-select id="update-status" size="sm" label-available="false" data={this.statusData} textSize="sm" class="sm-padding-right"></ir-select>
-          <ir-button icon="" id="update-status-btn" size="sm" text="Update"></ir-button>
+          <ir-button  icon="" id="update-status-btn" size="sm" text="Update"></ir-button>
           { this.hasReceipt && <ir-icon id='receipt' icon="ft-file-text h1 primary-blue ml-1 pointer"></ir-icon>}
           { this.hasPrint && <ir-icon id='print' icon="ft-printer h1 primary-blue ml-1 pointer"></ir-icon>}
         { this.hasDelete &&  <ir-icon id='book-delete' icon="ft-trash-2 h1 danger ml-1 pointer"></ir-icon>}
@@ -233,6 +289,7 @@ export class IrBookingDetails {
             </div>
             {this.bookingDetails.My_Bsa.map((bsa: any) => {
               return <ir-room
+              currency={this.bookingDetails.My_Currency.REF}
                hasRoomEdit={this.hasRoomEdit}
                 hasRoomDelete={this.hasRoomDelete}
                 hasCheckIn={this.hasCheckIn}
