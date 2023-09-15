@@ -52,7 +52,7 @@ export class IrPaymentDetails {
       <div class="row m-0">
         <div class="col-9 p-0">
           <div class="row m-0">
-            <div class="col-4 border-right-dark p-0 border-bottom-dark">
+            <div class="col-4 border-right-light p-0 border-bottom-light border-2">
               {rowMode === 'normal' ? (
                 <span class="sm-padding-left">{_formatDate(item.PAYMENT_DATE)}</span>
               ) : (
@@ -65,7 +65,7 @@ export class IrPaymentDetails {
                 ></input>
               )}
             </div>
-            <div class="col-4 border-right-dark d-flex p-0 justify-content-end border-bottom-dark sm-padding-right">
+            <div class="col-4 border-right-light d-flex p-0 justify-content-end border-bottom-light border-2 sm-padding-right">
               {rowMode === 'normal' ? (
                 <span class="sm-padding-right">${item.PAYMENT_AMOUNT}</span>
               ) : (
@@ -78,7 +78,7 @@ export class IrPaymentDetails {
                 ></input>
               )}
             </div>
-            <div class="col-4 border-right-dark p-0 border-bottom-dark sm-padding-left">
+            <div class="col-4 border-right-light p-0 border-bottom-light border-2 sm-padding-left">
               {rowMode === 'normal' ? (
                 <span class="sm-padding-left">{item.DESIGNATION}</span>
               ) : (
@@ -91,7 +91,7 @@ export class IrPaymentDetails {
                 ></input>
               )}
             </div>
-            <div class="col-12 border-right-dark p-0 border-bottom-dark sm-padding-left">
+            <div class="col-12 border-right-light p-0 border-bottom-light border-2 sm-padding-left">
               {rowMode === 'normal' ? (
                 <span class="sm-padding-left">{item.REFERENCE}</span>
               ) : (
@@ -112,9 +112,9 @@ export class IrPaymentDetails {
             </div>
           </div>
         </div>
-        <div class="col-3 d-flex align-items-center justify-content-between border-right-dark border-bottom-dark">
+        <div class="col-3 d-flex align-items-center justify-content-between border-right-light border-bottom-light border-2">
           <ir-icon
-            icon="ft-save primary-blue h5 pointer"
+            icon="ft-save color-ir-light-blue-hover h5 pointer"
             onClick={
               rowMode === 'add'
                 ? () => {
@@ -170,12 +170,11 @@ export class IrPaymentDetails {
 
   _renderDueDate(item) {
     return (
-      <div class="d-flex justify-content-between">
-        {/* make the text of the span flex-start */}
-        <span class="w-100">{item.Room}</span> 
-        <span class="w-100">{_formatDate(item.Date)}</span>
-        <span class="w-100">{item.Description}</span>
-        <span class="w-100">{_formatAmount(item.Amount, this.item.My_Currency.REF)}</span>
+      <div class="row mb-1">
+        <span class="col-xl-3 col-lg-4 col-md-3">{_formatDate(item.Date)}</span>
+        <span class="col-xl-3 col-lg-4 col-md-3">{item.Description}</span>
+        <span class="col-xl-3 col-lg-4 col-md-3 d-flex justify-content-end">{_formatAmount(item.Amount, this.item.My_Currency.REF)}</span>
+        <span class="ml-1 col-12 font-size-small collapse roomName">{item.Room}</span>
       </div>
     );
   }
@@ -195,27 +194,38 @@ export class IrPaymentDetails {
           {this.item.IS_DIRECT && this.directPayment()}
           <div class="mt-2">
             <div>
-              <strong>Payment due dates</strong>
+              <div class="d-flex align-items-center">
+                <strong class="mr-1">Payment due dates</strong>
+                <ir-icon
+                  id="drawer-icon"
+                  icon="ft-eye h2 color-ir-light-blue-hover"
+                  data-toggle="collapse"
+                  data-target={`.roomName`}
+                  aria-expanded="false"
+                  aria-controls="myCollapse"
+                  class="sm-padding-right pointer"
+                ></ir-icon>
+              </div>
               {this.item?.My_DueDates && this.item?.My_DueDates.map(item => this._renderDueDate(item))}
             </div>
           </div>
           <div class="mt-2">
             <strong>Payments</strong>
-            <div class="fluid-container border-top-dark border-left-dark font-size-small">
+            <div class="fluid-container border-top-light border-2 border-left-light font-size-small">
               <div class="row m-0">
-                <div class="col-3 font-weight-bold border-right-dark border-bottom-dark p-0">
+                <div class="col-3 font-weight-bold border-right-light border-bottom-light border-2 p-0">
                   <span class="sm-padding-left">Date</span>
                 </div>
-                <div class="col-3 font-weight-bold border-right-dark border-bottom-dark p-0">
+                <div class="col-3 font-weight-bold border-right-light border-bottom-light border-2 p-0">
                   <span class="sm-padding-left">Amount</span>
                 </div>
-                <div class="col-3 font-weight-bold border-right-dark border-bottom-dark p-0 sm-padding-left">
+                <div class="col-3 font-weight-bold border-right-light border-bottom-light border-2 p-0 sm-padding-left">
                   <span class="sm-padding-left">Designation</span>
                 </div>
-                <div class="col-3 text-center border-right-dark p-0 border-bottom-dark">
+                <div class="col-3 text-center border-right-light p-0 border-bottom-light border-2">
                   <ir-icon
                     id="add-payment"
-                    icon="ft-plus font-weight-bold primary-blue pointer p-0"
+                    icon="ft-plus font-weight-bold color-ir-light-blue-hover pointer p-0"
                     onClick={() => {
                       this.newTableRow = true;
                     }}

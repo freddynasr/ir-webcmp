@@ -1,16 +1,8 @@
 .confirmed {
-  background-color: #28c76f;
+  /* background-color: #28c76f; */
   color: #fff;
   display: flex;
   align-items: center;
-}
-
-.primary-blue {
-  color: #2c4a91;
-  transition: all 0.3s ease-in-out;
-}
-.primary-blue:hover {
-  color: #406cd3;
 }
 
 ir-select#update-status {

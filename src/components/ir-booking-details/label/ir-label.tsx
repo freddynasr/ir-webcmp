@@ -4,7 +4,6 @@ import { Component, Prop, h, EventEmitter, Event } from '@stencil/core';
   tag: 'ir-label',
 })
 export class IrLabel {
-
   // Properties
   @Prop() label: string;
   @Prop() value: string;
@@ -26,9 +25,9 @@ export class IrLabel {
     return (
       <div class={this.iconShown ? 'sm-padding-right sm-padding-top' : 'sm-padding-top'}>
         <strong class="sm-padding-right">{this.label}</strong>
-       { this.imageSrc && <img src={this.imageSrc} class="sm-padding-right" />}
+        {this.imageSrc && <img src={this.imageSrc} class="sm-padding-right" />}
         {this.value}
-        {this.iconShown && <ir-icon icon="ft-edit primary-blue pointer" class="sm-padding-left" onClick={() => this.openEditSidebar()}></ir-icon>}
+        {this.iconShown && <ir-icon icon="ft-edit color-ir-dark-blue-hover pointer" class="sm-padding-left" onClick={() => this.openEditSidebar()}></ir-icon>}
       </div>
     );
   }
