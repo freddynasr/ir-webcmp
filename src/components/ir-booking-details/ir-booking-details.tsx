@@ -287,16 +287,23 @@ export class IrBookingDetails {
               )} nights)`}
               { this.hasRoomAdd && <ir-icon id='room-add' icon="ft-plus-square h3 primary-blue pointer"></ir-icon>}
             </div>
-            {this.bookingDetails.My_Bsa.map((bsa: any) => {
-              return <ir-room
+            <div class="card">
+            {this.bookingDetails.My_Bsa.map((bsa: any, index: number) => {
+              return [
+                
+               <ir-room
               currency={this.bookingDetails.My_Currency.REF}
                hasRoomEdit={this.hasRoomEdit}
                 hasRoomDelete={this.hasRoomDelete}
                 hasCheckIn={this.hasCheckIn}
                 hasCheckOut={this.hasCheckOut}
               mealCode={this.foodArrangeCats} 
-              item={bsa}></ir-room>;
+              item={bsa}/>,
+              // add separator if not last item with marginHorizontal and alignCenter
+              index !== this.bookingDetails.My_Bsa.length - 1 && <hr class="mr-2 ml-2 mt-1 mb-1" />
+              ]
             })}
+             </div>
           </div>
           <div class="col-5 pr-0">
             <ir-payment-details item={this.bookingDetails}></ir-payment-details>

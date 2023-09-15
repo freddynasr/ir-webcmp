@@ -56,13 +56,13 @@ export class IrRoom {
 
   render() {
     return (
-      <div class="card">
+      
         <div class="p-1 d-flex">
           <ir-icon
             id="drawer-icon"
             icon="ft-eye h2 primary-blue"
             data-toggle="collapse"
-            data-target="#myCollapse"
+            data-target={`#roomCollapse-${this.item.BSA_ID}`}
             aria-expanded="false"
             aria-controls="myCollapse"
             class="sm-padding-right pointer"
@@ -105,10 +105,10 @@ export class IrRoom {
              { this.hasCheckIn && <ir-button id="checkin" icon="" class="mr-1" btn_color="info" size="sm" text="Check in"></ir-button>}
              { this.hasCheckOut && <ir-button id='checkout' icon="" btn_color="info" size="sm" text="Check out"></ir-button>}
             </div>
-            <div class="collapse" id="myCollapse">
+            <div class="collapse" id={`roomCollapse-${this.item.BSA_ID}`}>
               <div class="d-flex">
                 <div class=" sm-padding-top">
-                  <strong class="sm-padding-right">Rate BreakDown:</strong>
+                  <strong class="sm-padding-right">Rate Breakdown:</strong>
                 </div>
                 <div class="sm-padding-top">
                   {this.item.My_Bsad.length > 0 &&
@@ -128,7 +128,7 @@ export class IrRoom {
             </div>
           </div>
         </div>
-      </div>
+     
     );
   }
 }
