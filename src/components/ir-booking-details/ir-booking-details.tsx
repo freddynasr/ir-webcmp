@@ -240,18 +240,18 @@ export class IrBookingDetails {
 
     let confirmationBG: string = '';
     console.log(this.bookingDetails.BOOK_STATUS_CODE);
-    switch (this.bookingDetails.BOOK_STATUS_CODE) {
-      case '001':
+    switch (this._getBookingStatus(this.bookingDetails.BOOK_STATUS_CODE)) {
+      case 'Pending':
         confirmationBG = 'bg-ir-orange';
         break;
-      case '002':
+      case 'Confirmed':
         confirmationBG = 'bg-ir-green';
         break;
-      case '003':
+      case 'Cancelled':
         confirmationBG = 'bg-ir-red';
         break;
-      case '004':
-        confirmationBG = 'bg-light';
+      case 'No show':
+        confirmationBG = 'bg-ir-red';
         break;
     }
 

@@ -17,6 +17,7 @@ export class IrPaymentDetails {
     PAYMENT_AMOUNT: '',
     DESIGNATION: '',
     REFERENCE: '',
+    PAYMENT_ID: '',
   };
 
   @State() toBeDeletedItem: any = {};
@@ -26,6 +27,7 @@ export class IrPaymentDetails {
     if (this.item.My_Payment == null) {
       this.item.My_Payment = [];
     }
+    this.itemToBeAdded.PAYMENT_ID = this.item.My_Payment[this.item.My_Payment.length - 1]?.PAYMENT_ID + 1 || 1;
     this.item.My_Payment = [...this.item.My_Payment, this.itemToBeAdded];
     console.log(this.item);
     this.handlePaymentItemChange.emit(this.item.My_Payment);
@@ -40,7 +42,7 @@ export class IrPaymentDetails {
   @Listen('confirmModal')
   handleConfirmModal(e) {
     // Remove the item from the array
-    const newPaymentArray = this.item.My_Payment.filter((item: any) => item.PAYMENT_DATE !== e.detail.PAYMENT_DATE);
+    const newPaymentArray = this.item.My_Payment.filter((item: any) => item.PAYMENT_ID !== e.detail.PAYMENT_ID);
     this.item.My_Payment = newPaymentArray;
     this.confirmModal = !this.confirmModal;
     this.handlePaymentItemChange.emit(this.item.My_Payment);
