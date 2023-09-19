@@ -11,61 +11,106 @@
   </head>
 
   <body>
-    <ir-booking-details></ir-booking-details>
-   
+    <ir-channel-manager></ir-channel-manager>
     <script>
-      const ticket = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTQxODE4MDgsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoiWnNHbms0dWJVUXJxZXprS2JsUFp5SEh3N1VIdmk4M2xleTJqUWRPTGZJOVpKd3V5ZmRGSEVBPT0ifQ.lELHoDRwTAhpBkvX4DU5XifYWXrKXiZLVzy-PpqVU2U`
-      const irBookingDetails = document.querySelector('ir-booking-details');
+      let NOSQL_ID = -1;
+      const irChannel = document.querySelector('ir-channel-manager');
+      function getData() {
+        const url =
+          'https://gateway.igloorooms.com/IR/Get_Nosql_By_ENTITY_NAME_ENTITY_KEY_ENTITY_FIELD?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM1NzA4MTYsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoidEx1dmxrYUxwWkovSE85N1RuWktuUHpxM1JSZmpJUUpmS0hmNno1bzEzST0ifQ.-O-RGt_-xmH-uayEspr57uz4zeBCJ4QdZoKEXCcdQxs';
 
-      var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
+        var myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
 
-var raw = JSON.stringify({
-  "BH_ID": 13509433,
-  "LANGUAGE_ABBREVIATION": "EN",
-  "EXCLUDE_AC": true,
-  "EXCLUDE_BH_POLICIES": false
-});
+        var raw = JSON.stringify({
+          ENTITY_NAME: 'TBL_AC',
+          ENTITY_KEY: '42',
+          ENTITY_FIELD: 'CHANNELS',
+        });
 
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow',
+        };
 
-fetch(`https://gateway.igloorooms.com/IR/Get_Bh_Full?Ticket=${ticket}`, requestOptions)
-  .then(response => response.json())
-  .then(result => {
-    irBookingDetails.bookingDetails = result.My_Result
-  } )
-  .catch(error => console.log('error', error));
+        fetch(url, requestOptions)
+          .then(response => response.json())
+          .then(result => {
+            console.log(result);
+            const res = JSON.parse(result.My_Result[0].DATA);
+            irChannel.listData = res;
+            if (res.length > 0) {
+              NOSQL_ID = result.My_Result[0].NOSQL_ID;
+            } else {
+              NOSQL_ID = -1;
+            }
+          })
+          .catch(error => console.log('error', error));
+      }
+      document.addEventListener('DOMContentLoaded', () => {
+        getData();
+      });
 
+      irChannel.addEventListener('fetchApi', e => {
+        console.log('Fetching to server', NOSQL_ID);
+        const url =
+          'https://gateway.igloorooms.com/IR/Edit_Nosql?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM1NzA4MTYsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoidEx1dmxrYUxwWkovSE85N1RuWktuUHpxM1JSZmpJUUpmS0hmNno1bzEzST0ifQ.-O-RGt_-xmH-uayEspr57uz4zeBCJ4QdZoKEXCcdQxs';
 
-//   fetch(`https://gateway.igloorooms.com/IR/Get_Setup_Entries_By_TBL_NAME`, {
-//   method: 'POST',
-//   headers: myHeaders,
-//   body: JSON.stringify({
-//     "TBL_NAME": "_BOOK_STATUS"
-//   })
-// })
-//   .then(response => response.json())
-//   .then(result => {
-//     irBookingDetails.bookingStatuses = result.My_Result
-//   })
+        var myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
 
-//   fetch(`https://gateway.igloorooms.com/IR/Get_Setup_Entries_By_TBL_NAME`, {
-//   method: 'POST',
-//   headers: myHeaders,
-//   body: JSON.stringify({
-//     "TBL_NAME": "_BOOK_STATUS"
-//   })
-// })
-//   .then(response => response.json())
-//   .then(result => {
-//     irBookingDetails.bookingStatuses = result.My_Result
-//   })
+        let d = JSON.stringify(e.detail);
+        console.log(d);
 
+        var raw = JSON.stringify({
+          NOSQL_ID: NOSQL_ID,
+          ENTITY_NAME: 'TBL_AC',
+          ENTITY_KEY: 42,
+          ENTITY_FIELD: 'CHANNELS',
+          DATA: d,
+        });
+
+        console.log(raw);
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow',
+        };
+
+        fetch(url, requestOptions)
+          .then(response => response.text())
+          .then(result => getData())
+          .catch(error => console.log('error', error));
+      });
+
+      irChannel.addEventListener('requestApiDelete', e => {
+        const url =
+          'https://gateway.igloorooms.com/IR/Delete_Nosql?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM1NzA4MTYsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoidEx1dmxrYUxwWkovSE85N1RuWktuUHpxM1JSZmpJUUpmS0hmNno1bzEzST0ifQ.-O-RGt_-xmH-uayEspr57uz4zeBCJ4QdZoKEXCcdQxs';
+        var myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+
+        var raw = JSON.stringify({
+          NOSQL_ID: e,
+          ENTITY_NAME: 'TBL_AC',
+          ENTITY_KEY: 42,
+          ENTITY_FIELD: 'CHANNELS',
+        });
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow',
+        };
+        fetch(url, requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+      });
     </script>
   </body>
 </html>

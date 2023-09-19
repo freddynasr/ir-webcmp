@@ -1,17 +1,21 @@
 import { Component, h, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
 import { ChannelManager } from '../../../sample/channel/data';
+import { selectOption } from '../../../common/models';
 @Component({
   tag: 'ir-general-settings',
 })
 export class IrGeneralSettings {
   @State() testLoader: boolean = false;
   @Prop() mode: string;
+  @Prop() allowed_channels   : selectOption[] = [];
+  @Prop() allowed_properties : selectOption[] = [];
+  @Prop() allowed_MinStayTypes : selectOption[] = [];
   @Prop({ reflect: true, mutable: true }) connectionStatus: string = 'Not connected';
   @Prop({ reflect: true, mutable: true }) data: ChannelManager = {
     id: '123456',
     channel: 'Channel Name',
     status: 'Active',
-    group: 'Group',
+    //group: 'Group',
     title: 'Title',
     property: 'Property',
     minimumStay: 'Arrival',
@@ -19,7 +23,6 @@ export class IrGeneralSettings {
     RoomsMapping: null,
   };
   @State() selectedChannel: string = '';
-
   @State() connected: boolean = false;
   @Event({ bubbles: true, composed: true }) sendToParent: EventEmitter;
   @Event({ bubbles: true, composed: true }) connectionOff: EventEmitter;
@@ -42,19 +45,9 @@ export class IrGeneralSettings {
     const channelSelect = document.querySelector('ir-select.channel-select');
     channelSelect.addEventListener('selectChange', (event: CustomEvent) => {
       this.connected = false;
-
       this.selectedChannel = event.detail;
-      this.data = {
-        ...this.data,
-        channel: event.detail,
-      };
-    });
-
-    const groupSelect = document.querySelector('ir-select#group-select');
-    groupSelect.addEventListener('selectChange', (event: CustomEvent) => {
-      this.connected = false;
-      this.connectionOff.emit();
-      this.data = { ...this.data, group: event.detail };
+      this.data = {...this.data,channel: event.detail};
+      this.sendToParent.emit(this.data);
     });
 
     const titleInput = document.querySelector('ir-input-text#title-input');
@@ -62,6 +55,7 @@ export class IrGeneralSettings {
       this.connected = false;
       this.connectionOff.emit();
       this.data = { ...this.data, title: event.detail };
+      this.sendToParent.emit(this.data);
     });
 
     const propertySelect = document.querySelector('ir-select#property-select');
@@ -69,30 +63,32 @@ export class IrGeneralSettings {
       this.connected = false;
       this.connectionOff.emit();
       this.data = { ...this.data, property: event.detail };
+      this.sendToParent.emit(this.data);
     });
+
   }
 
   componentDidUpdate() {
-    const hotelID = document.querySelector('ir-input-text#hotel-id');
-    hotelID.addEventListener('textChange', (event: CustomEvent) => {
-      this.connected = false;
-      this.connectionOff.emit();
-      this.connectionStatus = 'Not connected';
-      this.data = {
-        ...this.data,
-        hotelId: event.detail.trim(),
-      };
-    });
+    // const hotelID = document.querySelector('ir-input-text#hotel-id');
+    // hotelID.addEventListener('textChange', (event: CustomEvent) => {
+    //   this.connected = false;
+    //   this.connectionOff.emit();
+    //   this.connectionStatus = 'Not connected';
+    //   this.data = {
+    //     ...this.data,
+    //     hotelId: event.detail.trim(),
+    //   };
+    // });
 
-    const minimumStay = document.querySelector('ir-select#minimum-stay-select');
-    minimumStay.addEventListener('selectChange', (event: CustomEvent) => {
-      this.connected = false;
-      this.connectionOff.emit();
-      this.data = {
-        ...this.data,
-        minimumStay: event.detail.trim(),
-      };
-    });
+    // const minimumStay = document.querySelector('ir-select#minimum-stay-select');
+    // minimumStay.addEventListener('selectChange', (event: CustomEvent) => {
+    //   this.connected = false;
+    //   this.connectionOff.emit();
+    //   this.data = {
+    //     ...this.data,
+    //     minimumStay: event.detail.trim(),
+    //   };
+    // });
 
     const channelSelect = document.querySelector('ir-select.channel-select');
     channelSelect.addEventListener('selectChange', (event: CustomEvent) => {
@@ -103,20 +99,22 @@ export class IrGeneralSettings {
         ...this.data,
         channel: event.detail,
       };
+      this.sendToParent.emit(this.data);
     });
 
-    const groupSelect = document.querySelector('ir-select#group-select');
-    groupSelect.addEventListener('selectChange', (event: CustomEvent) => {
-      this.connected = false;
-      this.connectionOff.emit();
-      this.data = { ...this.data, group: event.detail };
-    });
+    // const groupSelect = document.querySelector('ir-select#group-select');
+    // groupSelect.addEventListener('selectChange', (event: CustomEvent) => {
+    //   this.connected = false;
+    //   this.connectionOff.emit();
+    //   this.data = { ...this.data, group: event.detail };
+    // });
 
     const titleInput = document.querySelector('ir-input-text#title-input');
     titleInput.addEventListener('textChange', (event: CustomEvent) => {
       this.connected = false;
       this.connectionOff.emit();
       this.data = { ...this.data, title: event.detail };
+      this.sendToParent.emit(this.data);
     });
 
     const propertySelect = document.querySelector('ir-select#property-select');
@@ -124,6 +122,7 @@ export class IrGeneralSettings {
       this.connected = false;
       this.connectionOff.emit();
       this.data = { ...this.data, property: event.detail };
+      this.sendToParent.emit(this.data);
     });
   }
 
@@ -157,10 +156,7 @@ export class IrGeneralSettings {
             <ir-select
               class="channel-select"
               label="Channel"
-              data={[
-                { value: 'expedia', text: 'Expedia' },
-                { value: 'zourouna', text: 'Zourouna' },
-              ]}
+              data={this.allowed_channels}
               label-background="white"
               label-position="right"
               label-border="none"
@@ -169,7 +165,7 @@ export class IrGeneralSettings {
               labelWidth={4}
               selectedValue={this.data !== null ? this.data.channel : null}
             />
-            <ir-select
+            {/* <ir-select
               id="group-select"
               label="Group"
               // placeholder="Group"
@@ -181,7 +177,7 @@ export class IrGeneralSettings {
               textSize="sm"
               labelWidth={4}
               selectedValue={this.data !== null ? this.data.group : null}
-            />
+            /> */}
             <ir-input-text
               id="title-input"
               label="Title"
@@ -197,7 +193,7 @@ export class IrGeneralSettings {
               id="property-select"
               label="Propery"
               // placeholder="Propery"
-              data={[{ value: 'Mist', text: 'Mist' }]}
+              data={this.allowed_properties}
               label-background="white"
               label-position="right"
               label-border="none"
@@ -208,7 +204,7 @@ export class IrGeneralSettings {
             />
           </div>
         </div>
-        {this.selectedChannel && (
+        {/* {this.selectedChannel && (
           <div class="container-fluid mt-1">
             <div class="text-light border-bottom-light mb-2">Connection Settings</div>
             <div class="row">
@@ -227,7 +223,7 @@ export class IrGeneralSettings {
               <ir-select
                 id="minimum-stay-select"
                 label="Minimum Stay Type"
-                data={[{ value: 'arrival', text: 'Arrival' }]}
+                data={this.allowed_MinStayTypes}
                 label-background="white"
                 label-position="right"
                 label-border="none"
@@ -261,7 +257,7 @@ export class IrGeneralSettings {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </div>,
       <ir-modal
         class="alertFields"

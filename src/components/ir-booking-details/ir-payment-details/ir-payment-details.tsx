@@ -193,7 +193,7 @@ export class IrPaymentDetails {
       <div class="card">
         <div class="p-1">
           <div class="mb-2 h4">
-            Due Balance: <span class="danger font-weight-bold">{_formatAmount(this.item.TOTAL_AMOUNT, this.item.My_Currency.REF)}</span>
+            Due Balance: <span class="danger font-weight-bold">{_formatAmount(this.item.DUE_AMOUNT, this.item.My_Currency.REF)}</span>
           </div>
 
           {this.item.IS_DIRECT && this.directPayment()}
@@ -201,7 +201,7 @@ export class IrPaymentDetails {
             <div>
               <div class="d-flex align-items-center">
                 <strong class="mr-1">Payment due dates</strong>
-                <ir-icon
+               {this.item.My_Bsa && this.item.My_Bsa.length > 1 && <ir-icon
                   id="drawer-icon"
                   icon="ft-eye h2 color-ir-light-blue-hover"
                   data-toggle="collapse"
@@ -209,7 +209,7 @@ export class IrPaymentDetails {
                   aria-expanded="false"
                   aria-controls="myCollapse"
                   class="sm-padding-right pointer"
-                ></ir-icon>
+                ></ir-icon>}
               </div>
               {this.item?.My_DueDates && this.item?.My_DueDates.map(item => this._renderDueDate(item))}
             </div>

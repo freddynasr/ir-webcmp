@@ -25,8 +25,7 @@
 
  - [ir-booking-details](../ir-booking-details)
  - [ir-dropdown](../ir-dropdown)
- - [ir-general-settings](../ir-channel/ir-general-settings)
- - [ir-label](../ir-booking-details/label)
+ - [ir-label](../ir-label)
  - [ir-list-item](../ir-channel/ir-listItems)
  - [ir-mapping](../ir-channel/ir-mapping)
  - [ir-modal](../ir-modal)
@@ -40,7 +39,6 @@
 graph TD;
   ir-booking-details --> ir-icon
   ir-dropdown --> ir-icon
-  ir-general-settings --> ir-icon
   ir-label --> ir-icon
   ir-list-item --> ir-icon
   ir-mapping --> ir-icon

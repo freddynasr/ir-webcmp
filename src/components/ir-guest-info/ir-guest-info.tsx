@@ -1,4 +1,4 @@
-import { Component, State, Event, EventEmitter, h, Prop, Watch, Listen } from '@stencil/core';
+import { Component, State, Event, EventEmitter, h, Prop, Listen } from '@stencil/core';
 import { selectOption, guestInfo, guestInfoValidation } from '../../common/models';
 import moment from 'moment';
 
@@ -18,11 +18,6 @@ export class GuestInfo {
 
   componentWillLoad() { 
     this.getSetupData.emit();
-  }
-
-  @Watch('data')
-  watchHandler() {
-    console.log('The new value of data is: ', this.data);
     this.submit = false;
     if (this.data !== null) {
       this.Model = { ...this.Model, ...this.data };
@@ -36,6 +31,7 @@ export class GuestInfo {
     }
   }
 
+ 
   @Listen('textChange')
   @Listen('checkboxChange')
   @Listen('selectChange')
