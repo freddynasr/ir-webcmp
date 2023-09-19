@@ -1,12 +1,14 @@
-import { Component, h, State, Event, EventEmitter, Method, Prop } from '@stencil/core';
-import { Map, MappingModal, RoomType, RatePlan } from '../../../sample/channel/data';
+import { Component, h, Event, EventEmitter, Method, Prop } from '@stencil/core';
+//import { Map, MappingModal, RoomType, RatePlan } from '../../../sample/channel/data';
+//import { Map, RoomType, RatePlan } from '../../../sample/channel/data';
+import { RoomType, RatePlan } from '../../../sample/channel/data';
 
 @Component({
   tag: 'ir-mapping',
 })
 export class IrMapping {
-  @State() mapReference: RoomType[] = Map;
-  @State() hostRoom: RoomType[] = MappingModal;
+  @Prop() mapReference: RoomType[];//Map;
+  @Prop() hostRoom: RoomType[] = [];//MappingModal;
 
   @Event() sendMappingToParent: EventEmitter;
   @Prop() map: RoomType[] = null;

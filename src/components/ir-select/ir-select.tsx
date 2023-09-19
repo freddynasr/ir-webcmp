@@ -21,6 +21,7 @@ export class IrSelect {
   @Prop() labelColor: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' = 'dark';
   @Prop() labelBorder: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'none' = 'none';
   @Prop() labelWidth: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 = 3;
+  @Prop() bootstrapColActive: boolean = true;
 
   @State() initial: boolean = true;
   @State() valid: boolean = false;
@@ -57,7 +58,7 @@ export class IrSelect {
   render() {
     let className = 'form-control';
     let label = (
-      <div class={`input-group-prepend col-${this.labelWidth} p-0 text-${this.labelColor} border-${this.labelBorder}`}>
+      <div class={`input-group-prepend col-${this.bootstrapColActive ? this.labelWidth : ''} p-0 text-${this.labelColor} border-${this.labelBorder}`}>
         <label
           class={`input-group-text ${this.labelPosition === 'right' ? 'justify-content-end' : this.labelPosition === 'center' ? 'justify-content-center' : ''} bg-${
             this.labelBackground
@@ -84,7 +85,7 @@ export class IrSelect {
         <div class="input-group row m-0">
           {label}
           <select
-            class={`${className} form-control-${this.size} text-${this.textSize} col-${this.LabelAvailable ? 12 - this.labelWidth : 12}`}
+            class={`${className} form-control-${this.size} text-${this.textSize} ${this.bootstrapColActive ? `col-${this.LabelAvailable ? 12 - this.labelWidth : 12}` : ''}`}
             onInput={this.handleSelectChange.bind(this)}
             required={this.required}
           >

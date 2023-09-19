@@ -174,8 +174,8 @@ export class IrPaymentDetails {
     return (
       <div class="fluid-container">
         <div class="row mb-1">
-          <div class="col-xl-3 col-lg-4 col-md-3 col-sm-3 col-4 pr-0">{_formatDate(item.Date)}</div>
-          <div class="col-2 d-flex pl-0 justify-content-end">{_formatAmount(item.Amount, this.item.My_Currency.REF)}</div>
+          <div class="col-xl-3 col-lg-4 col-md-2 col-sm-3 col-4 pr-0">{_formatDate(item.Date)}</div>
+          <div class="col-1 d-flex px-0 justify-content-end">{_formatAmount(item.Amount, this.item.My_Currency.REF)}</div>
           <div class="col-xl-3 col-lg-4 col-md-3 col-sm-3 col-4">{item.Description}</div>
 
           <span class="ml-1 col-12 font-size-small collapse roomName">{item.Room}</span>

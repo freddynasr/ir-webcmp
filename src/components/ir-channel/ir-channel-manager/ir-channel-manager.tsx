@@ -1,12 +1,18 @@
-import { Component, h, Listen, Prop, State, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Listen, State, Prop,  Event, EventEmitter } from '@stencil/core';
 import { v4 as uuidv4 } from 'uuid';
-import { ChannelManager } from '../../../sample/channel/data';
+import { ChannelManager, RoomType } from '../../../sample/channel/data';
+import { selectOption } from '../../../common/models';
 
 @Component({
   tag: 'ir-channel-manager',
   styleUrl: 'ir-channel-manager.css',
 })
 export class IrChannelManager {
+  @Prop() hostRoom : RoomType[];
+  @Prop() mapReference : RoomType[];
+  @Prop() allowed_properties : selectOption[]= [];
+  @Prop() allowed_channels : selectOption[]= [];
+  @Prop() allowed_MinStayTypes: selectOption[] = [];
   @Prop({ reflect: true }) dropdownData: {
     name: string;
     icon: string;
@@ -45,6 +51,7 @@ export class IrChannelManager {
 
   @Event({ bubbles: true, composed: true }) fetchApi: EventEmitter<ChannelManager[]>;
   @Event({ bubbles: true, composed: true }) requestApiDelete: EventEmitter;
+  @Event({ bubbles: true, composed: true }) requestApiDestinationHierarchy: EventEmitter<string>;
 
   @Listen('connectionOff')
   connectionOffHandler() {
@@ -174,29 +181,35 @@ export class IrChannelManager {
   }
 
   goNext() {
+    const IrMapping = document.querySelector('ir-mapping');
     if (this.activeTab == 'General Settings') {
-      if (!this.item.title || !this.item.channel || !this.item.group || !this.item.property || !this.item.hotelId) {
-        const alertModal: any = document.querySelector('ir-modal.alertModal-manager');
-        if (this.mode === 'edit') {
-          return;
+      //if (!this.item.title || !this.item.channel || !this.item.property || !this.item.hotelId) {
+        if (!this.item.title || !this.item.channel || !this.item.property)
+        {
+          const alertModal: any = document.querySelector('ir-modal.alertModal-manager');
+          if (this.mode === 'edit') {
+            return;
+          }
+          alertModal.openModal();
         }
-        alertModal.openModal();
-      } else {
-        this.activeTab = 'Mapping';
-        this.loader = true;
-        setTimeout(() => {
-          this.loader = false;
-        }, 2000);
-      }
+        else
+        {
+          this.requestApiDestinationHierarchy.emit(this.item.property);
+          this.activeTab = 'Mapping';
+          this.loader = true;
+          setTimeout(() => {
+            this.loader = false;
+          }, 2000);
+       }
     } else if (this.activeTab == 'Mapping') {
-      const IrMapping = document.querySelector('ir-mapping');
       IrMapping._onSaveMapping();
     }
   }
 
   _onSwitchTab(tab) {
     if (this.activeTab == 'General Settings') {
-      if (!this.item.title || !this.item.channel || !this.item.group || !this.item.property || !this.item.hotelId) {
+      //if (!this.item.title || !this.item.channel || !this.item.property || !this.item.hotelId) {
+        if (!this.item.title || !this.item.channel || !this.item.property) {
         const alertModal: any = document.querySelector('ir-modal.alertModal-manager');
         if (this.mode == 'edit') {
           return;
@@ -217,13 +230,11 @@ export class IrChannelManager {
       }, 2000);
     }
   }
-
   render() {
     return [
       <div id="container">
         <div class="card">
           <ir-topbar></ir-topbar>
-
           <ir-list-item id="ir-list-item" listData={this.listData} dropdownData={this.dropdownData}></ir-list-item>
         </div>
       </div>,
@@ -252,8 +263,23 @@ export class IrChannelManager {
           </div>
         ) : (
           <span>
-            {this.activeTab == 'General Settings' && <ir-general-settings class="mb-3" data={this.selectedItem} mode={this.mode}></ir-general-settings>}
-            {this.activeTab == 'Mapping' && <ir-mapping class="mb-3" map={this.mode === 'edit' ? this.selectedItem.RoomsMapping : null}></ir-mapping>}
+            {
+              this.activeTab == 'General Settings' &&
+              <ir-general-settings
+                allowed_channels={this.allowed_channels}
+                allowed_MinStayTypes={this.allowed_MinStayTypes}
+                allowed_properties={this.allowed_properties}
+                data={this.selectedItem}
+                mode={this.mode}
+                class="mb-3"></ir-general-settings>
+            }
+            {
+              this.activeTab == 'Mapping' &&
+              <ir-mapping
+                hostRoom={this.hostRoom}
+                class="mb-3"
+                mapReference= {this.mapReference}
+                map={this.mode === 'edit' ? this.selectedItem.RoomsMapping : null}></ir-mapping>}
           </span>
         )}
 

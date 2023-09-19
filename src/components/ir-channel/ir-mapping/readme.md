@@ -7,9 +7,11 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type         | Default |
-| -------- | --------- | ----------- | ------------ | ------- |
-| `map`    | --        |             | `RoomType[]` | `null`  |
+| Property       | Attribute | Description | Type         | Default     |
+| -------------- | --------- | ----------- | ------------ | ----------- |
+| `hostRoom`     | --        |             | `RoomType[]` | `[]`        |
+| `map`          | --        |             | `RoomType[]` | `null`      |
+| `mapReference` | --        |             | `RoomType[]` | `undefined` |
 
 
 ## Events

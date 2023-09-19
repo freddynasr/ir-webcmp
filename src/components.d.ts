@@ -40,6 +40,9 @@ export namespace Components {
         "textSize": 'sm' | 'md' | 'lg';
     }
     interface IrChannelManager {
+        "allowed_MinStayTypes": selectOption[];
+        "allowed_channels": selectOption[];
+        "allowed_properties": selectOption[];
         "dropdownData": {
     name: string;
     icon: string;
@@ -48,7 +51,9 @@ export namespace Components {
       icon: string;
     }[];
   };
+        "hostRoom": RoomType[];
         "listData": ChannelManager[];
+        "mapReference": RoomType[];
     }
     interface IrCheckbox {
         "checked": boolean;
@@ -73,6 +78,9 @@ export namespace Components {
         "object": any;
     }
     interface IrGeneralSettings {
+        "allowed_MinStayTypes": selectOption[];
+        "allowed_channels": selectOption[];
+        "allowed_properties": selectOption[];
         "connectionStatus": string;
         "data": ChannelManager;
         "mode": string;
@@ -87,6 +95,7 @@ export namespace Components {
     }
     interface IrInputText {
         "LabelAvailable": boolean;
+        "bootstrapColActive": boolean;
         "inputStyle": boolean;
         "label": string;
         "labelBackground": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
@@ -133,7 +142,9 @@ export namespace Components {
     }
     interface IrMapping {
         "_onSaveMapping": () => Promise<void>;
+        "hostRoom": RoomType[];
         "map": RoomType[];
+        "mapReference": RoomType[];
     }
     interface IrModal {
         "btnPosition": 'left' | 'right' | 'center';
@@ -166,6 +177,7 @@ export namespace Components {
     }
     interface IrSelect {
         "LabelAvailable": boolean;
+        "bootstrapColActive": boolean;
         "data": selectOption[];
         "firstOption": string;
         "label": string;
@@ -529,6 +541,9 @@ declare namespace LocalJSX {
         "textSize"?: 'sm' | 'md' | 'lg';
     }
     interface IrChannelManager {
+        "allowed_MinStayTypes"?: selectOption[];
+        "allowed_channels"?: selectOption[];
+        "allowed_properties"?: selectOption[];
         "dropdownData"?: {
     name: string;
     icon: string;
@@ -537,9 +552,12 @@ declare namespace LocalJSX {
       icon: string;
     }[];
   };
+        "hostRoom"?: RoomType[];
         "listData"?: ChannelManager[];
+        "mapReference"?: RoomType[];
         "onFetchApi"?: (event: IrChannelManagerCustomEvent<ChannelManager[]>) => void;
         "onRequestApiDelete"?: (event: IrChannelManagerCustomEvent<any>) => void;
+        "onRequestApiDestinationHierarchy"?: (event: IrChannelManagerCustomEvent<string>) => void;
     }
     interface IrCheckbox {
         "checked"?: boolean;
@@ -567,6 +585,9 @@ declare namespace LocalJSX {
         "onDropdownItemCLicked"?: (event: IrDropdownCustomEvent<{ name: string; object: any }>) => void;
     }
     interface IrGeneralSettings {
+        "allowed_MinStayTypes"?: selectOption[];
+        "allowed_channels"?: selectOption[];
+        "allowed_properties"?: selectOption[];
         "connectionStatus"?: string;
         "data"?: ChannelManager;
         "mode"?: string;
@@ -586,6 +607,7 @@ declare namespace LocalJSX {
     }
     interface IrInputText {
         "LabelAvailable"?: boolean;
+        "bootstrapColActive"?: boolean;
         "inputStyle"?: boolean;
         "label"?: string;
         "labelBackground"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
@@ -637,7 +659,9 @@ declare namespace LocalJSX {
         "size"?: string;
     }
     interface IrMapping {
+        "hostRoom"?: RoomType[];
         "map"?: RoomType[];
+        "mapReference"?: RoomType[];
         "onSendMappingToParent"?: (event: IrMappingCustomEvent<any>) => void;
     }
     interface IrModal {
@@ -674,6 +698,7 @@ declare namespace LocalJSX {
     }
     interface IrSelect {
         "LabelAvailable"?: boolean;
+        "bootstrapColActive"?: boolean;
         "data"?: selectOption[];
         "firstOption"?: string;
         "label"?: string;

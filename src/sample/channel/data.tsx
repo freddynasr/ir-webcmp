@@ -153,7 +153,7 @@ export const Map: RoomType[] = [
 
 export class ChannelManager {
   id: string = '';
-  group: string = '';
+  //group: string = '';
   title: string = '';
   channel: string = '';
   property: string = '';

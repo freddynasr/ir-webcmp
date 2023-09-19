@@ -20,6 +20,7 @@ export class IrInputText {
   @Prop() labelColor: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' = 'dark';
   @Prop() labelBorder: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'none' = 'none';
   @Prop() labelWidth: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 = 3;
+  @Prop() bootstrapColActive: boolean = true;
 
   @State() valid: boolean;
   @State() initial: boolean = true;
@@ -54,7 +55,7 @@ export class IrInputText {
   render() {
     let className = 'form-control';
     let label = (
-      <div class={`input-group-prepend col-${this.labelWidth} p-0 text-${this.labelColor} border-${this.labelBorder}`}>
+      <div class={`input-group-prepend col-${this.bootstrapColActive ? this.labelWidth : ''} p-0 text-${this.labelColor} border-${this.labelBorder}`}>
         <label
           class={`input-group-text ${this.labelPosition === 'right' ? 'justify-content-end' : this.labelPosition === 'center' ? 'justify-content-center' : ''} bg-${
             this.labelBackground
@@ -81,7 +82,7 @@ export class IrInputText {
           {label}
           <input
             type={this.type}
-            class={`${className} form-control-${this.size} text-${this.textSize} col-${this.LabelAvailable ? 12 - this.labelWidth : 12}`}
+            class={`${className} form-control-${this.size} text-${this.textSize} ${this.bootstrapColActive ? `col-${this.LabelAvailable ? 12 - this.labelWidth : 12}` : ''}`}
             placeholder={this.placeholder}
             value={this.value}
             onInput={this.handleInputChange.bind(this)}
