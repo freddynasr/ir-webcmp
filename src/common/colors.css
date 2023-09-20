@@ -1,3 +1,11 @@
+:root {
+  --ir-green: #629a4c;
+  --ir-orange: #ff9149;
+  --ir-red: #ff4961;
+  --ir-dark-blue: #2c4a91;
+  --ir-dark-blue-2: #406cd3;
+}
+
 .bg-ir-green {
   background-color: var(--ir-green);
 }

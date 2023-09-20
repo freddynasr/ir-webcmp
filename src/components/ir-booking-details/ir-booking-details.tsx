@@ -2,10 +2,10 @@ import { Component, Listen, h, Prop, Watch, State, Event, EventEmitter } from '@
 import moment from 'moment';
 import { guestInfo, selectOption } from '../../common/models';
 import { _formatDate, _formatTime } from './functions';
-import '../../common/colors.css';
+
 @Component({
   tag: 'ir-booking-details',
-  styleUrls: ['ir-booking-details.css', '../../common/colors.css'],
+  styleUrl: 'ir-booking-details.css',
 })
 export class IrBookingDetails {
   // Booking Details
@@ -176,6 +176,7 @@ export class IrBookingDetails {
       currency: newValue.My_Guest.My_User.CURRENCY,
       language: newValue.My_Guest.My_User.LANGUAGE,
     };
+
     this.guestData = _data;
     this.rerenderFlag = !this.rerenderFlag;
   }
