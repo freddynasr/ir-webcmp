@@ -8,6 +8,8 @@ export class IrPaymentDetails {
   @Prop({ mutable: true, reflect: true }) item: any;
   @State() newTableRow: boolean = false;
 
+  @State() collapsed: boolean = false;
+
   @State() confirmModal: boolean = false;
 
   @Event({ bubbles: true }) handlePaymentItemChange: EventEmitter<any>;
@@ -201,15 +203,20 @@ export class IrPaymentDetails {
             <div>
               <div class="d-flex align-items-center">
                 <strong class="mr-1">Payment due dates</strong>
-               {this.item.My_Bsa && this.item.My_Bsa.length > 1 && <ir-icon
-                  id="drawer-icon"
-                  icon="ft-eye h2 color-ir-light-blue-hover"
-                  data-toggle="collapse"
-                  data-target={`.roomName`}
-                  aria-expanded="false"
-                  aria-controls="myCollapse"
-                  class="sm-padding-right pointer"
-                ></ir-icon>}
+                {this.item.My_Bsa && this.item.My_Bsa.length > 1 && (
+                  <ir-icon
+                    id="drawer-icon"
+                    icon={`${this.collapsed ? 'ft-eye-off' : 'ft-eye'} h2 color-ir-light-blue-hover`}
+                    data-toggle="collapse"
+                    data-target={`.roomName`}
+                    aria-expanded="false"
+                    aria-controls="myCollapse"
+                    class="sm-padding-right pointer"
+                    onClick={() => {
+                      this.collapsed = !this.collapsed;
+                    }}
+                  ></ir-icon>
+                )}
               </div>
               {this.item?.My_DueDates && this.item?.My_DueDates.map(item => this._renderDueDate(item))}
             </div>

@@ -1,4 +1,4 @@
-import { Component, State, Event, EventEmitter, h, Prop, Listen } from '@stencil/core';
+import { Component, State, Event, EventEmitter, h, Prop, Watch, Listen } from '@stencil/core';
 import { selectOption, guestInfo, guestInfoValidation } from '../../common/models';
 import moment from 'moment';
 
@@ -14,10 +14,15 @@ export class GuestInfo {
   @Event() getSetupData: EventEmitter;
   @Prop({ mutable: true, reflect: true }) setupDataCountries: selectOption[] = null;
   @Prop({ mutable: true, reflect: true }) setupDataCountriesCode: selectOption[] = null;
-  @Prop({ reflect: true, mutable: true }) data: guestInfo = null;
+  @Prop({ reflect: true, mutable: true }) data: guestInfo = null
 
-  componentWillLoad() {
+  componentWillLoad() { 
     this.getSetupData.emit();
+  }
+
+  @Watch('data')
+  watchHandler() {
+    console.log('The new value of data is: ', this.data);
     this.submit = false;
     if (this.data !== null) {
       this.Model = { ...this.Model, ...this.data };
@@ -31,7 +36,6 @@ export class GuestInfo {
     }
   }
 
- 
   @Listen('textChange')
   @Listen('checkboxChange')
   @Listen('selectChange')
@@ -71,7 +75,6 @@ export class GuestInfo {
           name="country"
           submited={this.submit}
           label={'Country'}
-          bootstrapColActive={false}
           selectedValue={this.Model.country.toString()}
           data={this.setupDataCountries.map(item => {
             return {
@@ -88,7 +91,6 @@ export class GuestInfo {
           name="prefix"
           label={'Mobile'}
           submited={this.submit}
-          bootstrapColActive={false}
           selectedValue={this.Model.prefix}
           data={this.setupDataCountriesCode.map(item => {
             return {
@@ -115,42 +117,16 @@ export class GuestInfo {
         </div>
         <div class="card-content collapse show">
           <div class="card-body pt-0">
-            <ir-input-text
-              placeholder=""
-              label="First Name"
-              bootstrapColActive={false}
-              name="firstName"
-              submited={this.submit}
-              value={this.Model.firstName}
-              required
-            ></ir-input-text>
-            <ir-input-text placeholder="" label="Last Name" bootstrapColActive={false} name="lastName" submited={this.submit} value={this.Model.lastName} required></ir-input-text>
-            <ir-input-text placeholder="" label="Email" bootstrapColActive={false} name="email" submited={this.submit} value={this.Model.email} required></ir-input-text>
-            <ir-input-text placeholder="" label="Alternative email" bootstrapColActive={false} name="altEmail" value={this.Model.altEmail}></ir-input-text>
-            <ir-input-text
-              label="Password"
-              placeholder=""
-              name="password"
-              bootstrapColActive={false}
-              submited={this.submit}
-              type="password"
-              value={this.Model.password}
-              required
-            ></ir-input-text>
+            <ir-input-text placeholder="" label="First Name" name="firstName" submited={this.submit} value={this.Model.firstName} required></ir-input-text>
+            <ir-input-text placeholder="" label="Last Name" name="lastName" submited={this.submit} value={this.Model.lastName} required></ir-input-text>
+            <ir-input-text placeholder="" label="Email" name="email" submited={this.submit} value={this.Model.email} required></ir-input-text>
+            <ir-input-text placeholder="" label="Alternative email" name="altEmail" value={this.Model.altEmail}></ir-input-text>
+            <ir-input-text label="Password" placeholder="" name="password" submited={this.submit} type="password" value={this.Model.password} required></ir-input-text>
             {countries}
-            <ir-input-text placeholder="" label="City" name="city" bootstrapColActive={false} value={this.Model.city}></ir-input-text>
-            <ir-input-text placeholder="" label="Address" name="address" bootstrapColActive={false} value={this.Model.address}></ir-input-text>
+            <ir-input-text placeholder="" label="City" name="city" value={this.Model.city}></ir-input-text>
+            <ir-input-text placeholder="" label="Address" name="address" value={this.Model.address}></ir-input-text>
             {countryPrefix}
-            <ir-input-text
-              put-text
-              LabelAvailable={false}
-              name="mobile"
-              bootstrapColActive={false}
-              placeholder=""
-              submited={this.submit}
-              value={this.Model.mobile}
-              required
-            ></ir-input-text>
+            <ir-input-text put-text LabelAvailable={false} name="mobile" placeholder="" submited={this.submit} value={this.Model.mobile} required></ir-input-text>
             <ir-checkbox label="NewsLetter" name="newsletter" checked={this.Model.newsletter}></ir-checkbox>
             <p>
               <strong>Last used:</strong> Language:

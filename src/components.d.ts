@@ -95,7 +95,6 @@ export namespace Components {
     }
     interface IrInputText {
         "LabelAvailable": boolean;
-        "bootstrapColActive": boolean;
         "inputStyle": boolean;
         "label": string;
         "labelBackground": 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
@@ -177,7 +176,6 @@ export namespace Components {
     }
     interface IrSelect {
         "LabelAvailable": boolean;
-        "bootstrapColActive": boolean;
         "data": selectOption[];
         "firstOption": string;
         "label": string;
@@ -607,7 +605,6 @@ declare namespace LocalJSX {
     }
     interface IrInputText {
         "LabelAvailable"?: boolean;
-        "bootstrapColActive"?: boolean;
         "inputStyle"?: boolean;
         "label"?: string;
         "labelBackground"?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
@@ -698,7 +695,6 @@ declare namespace LocalJSX {
     }
     interface IrSelect {
         "LabelAvailable"?: boolean;
-        "bootstrapColActive"?: boolean;
         "data"?: selectOption[];
         "firstOption"?: string;
         "label"?: string;
