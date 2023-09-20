@@ -2,10 +2,10 @@ import { Component, Listen, h, Prop, Watch, State, Event, EventEmitter } from '@
 import moment from 'moment';
 import { guestInfo, selectOption } from '../../common/models';
 import { _formatDate, _formatTime } from './functions';
-
+import '../../common/colors.css';
 @Component({
   tag: 'ir-booking-details',
-  styleUrl: 'ir-booking-details.css',
+  styleUrls: ['ir-booking-details.css', '../../common/colors.css'],
 })
 export class IrBookingDetails {
   // Booking Details
@@ -194,7 +194,7 @@ export class IrBookingDetails {
     this.statusData = _newValue;
     this.rerenderFlag = !this.rerenderFlag;
   }
-  
+
   openEditSidebar() {
     const sidebar: any = document.querySelector('ir-sidebar#editGuestInfo');
     sidebar.open = true;
@@ -234,9 +234,6 @@ export class IrBookingDetails {
       return null;
     }
 
-    
-    
-   
     let confirmationBG: string = '';
     console.log(this.bookingDetails.BOOK_STATUS_CODE);
     switch (this._getBookingStatus(this.bookingDetails.BOOK_STATUS_CODE)) {
