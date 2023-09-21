@@ -8,7 +8,8 @@ export class IrPaymentDetails {
   @Prop({ mutable: true, reflect: true }) item: any;
   @State() newTableRow: boolean = false;
 
-  @State() collapsed: boolean = false;
+  @State() collapsedPayment: boolean = false;
+  @State() collapsedGuarantee: boolean = false;
 
   @State() confirmModal: boolean = false;
 
@@ -157,20 +158,40 @@ export class IrPaymentDetails {
   directPayment() {
     return (
       <div>
-        <strong>Booking Guarantee</strong>
-        {this.item.IS_DIRECT ? 
-        [
-        <div>
-          {this.item?.My_Guest?.CCN && 'Card:'} <span>{this.item?.My_Guest?.CCN || ''}</span> {this.item?.My_Guest?.CC_EXP_MONTH && 'Expiry: '}
-          <span>
-            {' '}
-            {this.item?.My_Guest?.CC_EXP_MONTH || ''} {this.item?.My_Guest?.CC_EXP_YEAR && '/' + this.item?.My_Guest?.CC_EXP_YEAR}
-          </span>
-        </div>,
-        <div>
-          {this.item?.My_Guest?.CHN && 'Name:'} <span>{this.item?.My_Guest?.CHN || ''}</span> {this.item?.My_Guest?.CVC && '- CVC:'} <span> {this.item.My_Guest?.CVC || ''}</span>
+        <div class="d-flex align-items-center">
+          <strong class="mr-1">Booking Guarantee</strong>
+          <ir-icon
+            id="drawer-icon"
+            icon={`${this.collapsedGuarantee ? 'ft-eye-off' : 'ft-eye'} h2 color-ir-light-blue-hover`}
+            data-toggle="collapse"
+            data-target={`.guarrantee`}
+            aria-expanded="false"
+            aria-controls="myCollapse"
+            class="sm-padding-right pointer"
+            onClick={() => {
+              this.collapsedGuarantee = !this.collapsedGuarantee;
+            }}
+          ></ir-icon>
         </div>
-          ] : <iframe/>}
+        <div class="collapse guarrantee">
+          {this.item.IS_DIRECT ? (
+            [
+              <div>
+                {this.item?.My_Guest?.CCN && 'Card:'} <span>{this.item?.My_Guest?.CCN || ''}</span> {this.item?.My_Guest?.CC_EXP_MONTH && 'Expiry: '}
+                <span>
+                  {' '}
+                  {this.item?.My_Guest?.CC_EXP_MONTH || ''} {this.item?.My_Guest?.CC_EXP_YEAR && '/' + this.item?.My_Guest?.CC_EXP_YEAR}
+                </span>
+              </div>,
+              <div>
+                {this.item?.My_Guest?.CHN && 'Name:'} <span>{this.item?.My_Guest?.CHN || ''}</span> {this.item?.My_Guest?.CVC && '- CVC:'}{' '}
+                <span> {this.item.My_Guest?.CVC || ''}</span>
+              </div>,
+            ]
+          ) : (
+            <iframe />
+          )}
+        </div>
       </div>
     );
   }
@@ -201,9 +222,8 @@ export class IrPaymentDetails {
             Due Balance: <span class="danger font-weight-bold">{_formatAmount(this.item.DUE_AMOUNT, this.item.My_Currency.REF)}</span>
           </div>
 
-          {(this.item.My_Ac.AC_PAYMENT_OPTION_CODE == '001' || this.item.My_Ac.AC_PAYMENT_OPTION_CODE == '004' || this.item.IS_CHM_SOURCE || this.item.IS_DIRECT)
-          &&
-          this.directPayment()}
+          {(this.item.My_Ac.AC_PAYMENT_OPTION_CODE == '001' || this.item.My_Ac.AC_PAYMENT_OPTION_CODE == '004' || this.item.IS_CHM_SOURCE || this.item.IS_DIRECT) &&
+            this.directPayment()}
           <div class="mt-2">
             <div>
               <div class="d-flex align-items-center">
@@ -211,14 +231,14 @@ export class IrPaymentDetails {
                 {this.item.My_Bsa && this.item.My_Bsa.length > 1 && (
                   <ir-icon
                     id="drawer-icon"
-                    icon={`${this.collapsed ? 'ft-eye-off' : 'ft-eye'} h2 color-ir-light-blue-hover`}
+                    icon={`${this.collapsedPayment ? 'ft-eye-off' : 'ft-eye'} h2 color-ir-light-blue-hover`}
                     data-toggle="collapse"
                     data-target={`.roomName`}
                     aria-expanded="false"
                     aria-controls="myCollapse"
                     class="sm-padding-right pointer"
                     onClick={() => {
-                      this.collapsed = !this.collapsed;
+                      this.collapsedPayment = !this.collapsedPayment;
                     }}
                   ></ir-icon>
                 )}
