@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type  | Default     |
-| -------- | --------- | ----------- | ----- | ----------- |
-| `item`   | `item`    |             | `any` | `undefined` |
+| Property            | Attribute             | Description | Type     | Default     |
+| ------------------- | --------------------- | ----------- | -------- | ----------- |
+| `item`              | `item`                |             | `any`    | `undefined` |
+| `paymentDetailsUrl` | `payment-details-url` |             | `string` | `''`        |
 
 
 ## Events

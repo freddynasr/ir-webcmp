@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Event, EventEmitter, Listen } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Listen, Watch } from '@stencil/core';
 import { _formatAmount, _formatDate } from '../functions';
 
 @Component({
@@ -11,9 +11,15 @@ export class IrPaymentDetails {
   @State() collapsedPayment: boolean = false;
   @State() collapsedGuarantee: boolean = false;
 
+  @State() flag: boolean = false;
+
   @State() confirmModal: boolean = false;
+  @State() toBeDeletedItem: any = {};
+  @Prop() paymentDetailsUrl: string = '';
 
   @Event({ bubbles: true }) handlePaymentItemChange: EventEmitter<any>;
+
+
 
   itemToBeAdded: any = {
     PAYMENT_DATE: '',
@@ -23,7 +29,7 @@ export class IrPaymentDetails {
     PAYMENT_ID: '',
   };
 
-  @State() toBeDeletedItem: any = {};
+ 
 
   _handleSave() {
     // emit the item to be added
@@ -51,6 +57,13 @@ export class IrPaymentDetails {
     this.handlePaymentItemChange.emit(this.item.My_Payment);
     this.toBeDeletedItem = {};
   }
+
+  @Watch('paymentDetailsUrl')
+  wandler() {
+    this.flag = !this.flag;
+  }
+
+
 
   _renderTableRow(item: any, rowMode: 'add' | 'normal' = 'normal') {
     return (
@@ -155,7 +168,7 @@ export class IrPaymentDetails {
     );
   }
 
-  directPayment() {
+  bookingGuarantee() {
     return (
       <div>
         <div class="d-flex align-items-center">
@@ -189,7 +202,7 @@ export class IrPaymentDetails {
               </div>,
             ]
           ) : (
-            <iframe />
+            <iframe src={this.paymentDetailsUrl} width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
           )}
         </div>
       </div>
@@ -223,7 +236,7 @@ export class IrPaymentDetails {
           </div>
 
           {(this.item.My_Ac.AC_PAYMENT_OPTION_CODE == '001' || this.item.My_Ac.AC_PAYMENT_OPTION_CODE == '004' || this.item.IS_CHM_SOURCE || this.item.IS_DIRECT) &&
-            this.directPayment()}
+            this.bookingGuarantee()}
           <div class="mt-2">
             <div>
               <div class="d-flex align-items-center">
