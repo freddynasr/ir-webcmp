@@ -158,16 +158,19 @@ export class IrPaymentDetails {
     return (
       <div>
         <strong>Booking Guarantee</strong>
+        {this.item.IS_DIRECT ? 
+        [
         <div>
           {this.item?.My_Guest?.CCN && 'Card:'} <span>{this.item?.My_Guest?.CCN || ''}</span> {this.item?.My_Guest?.CC_EXP_MONTH && 'Expiry: '}
           <span>
             {' '}
             {this.item?.My_Guest?.CC_EXP_MONTH || ''} {this.item?.My_Guest?.CC_EXP_YEAR && '/' + this.item?.My_Guest?.CC_EXP_YEAR}
           </span>
-        </div>
+        </div>,
         <div>
           {this.item?.My_Guest?.CHN && 'Name:'} <span>{this.item?.My_Guest?.CHN || ''}</span> {this.item?.My_Guest?.CVC && '- CVC:'} <span> {this.item.My_Guest?.CVC || ''}</span>
         </div>
+          ] : <iframe/>}
       </div>
     );
   }
