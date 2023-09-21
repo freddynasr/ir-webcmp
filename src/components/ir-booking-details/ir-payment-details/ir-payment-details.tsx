@@ -198,7 +198,9 @@ export class IrPaymentDetails {
             Due Balance: <span class="danger font-weight-bold">{_formatAmount(this.item.DUE_AMOUNT, this.item.My_Currency.REF)}</span>
           </div>
 
-          {this.item.IS_DIRECT && this.directPayment()}
+          {(this.item.My_Ac.AC_PAYMENT_OPTION_CODE == '001' || this.item.My_Ac.AC_PAYMENT_OPTION_CODE == '004' || this.IS_CHM_SOURCE || this.IS_DIRECT)
+          &&
+          this.directPayment()}
           <div class="mt-2">
             <div>
               <div class="d-flex align-items-center">
