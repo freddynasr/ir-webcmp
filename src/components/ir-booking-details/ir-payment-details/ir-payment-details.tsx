@@ -31,7 +31,7 @@ export class IrPaymentDetails {
     PAYMENT_ID: '',
   };
 
- 
+
 
   _handleSave() {
     // emit the item to be added
@@ -209,7 +209,7 @@ export class IrPaymentDetails {
               </div>,
             ]
           ) : (
-            <iframe src={this.paymentDetailsUrl} width="100%" height="100%" frameborder="0"></iframe>
+            <iframe src={this.paymentDetailsUrl} width="100%" class='iframeHeight' frameborder="0"></iframe>
           )}
         </div>
       </div>
