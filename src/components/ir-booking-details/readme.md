@@ -9,11 +9,8 @@
 
 | Property                 | Attribute              | Description | Type             | Default |
 | ------------------------ | ---------------------- | ----------- | ---------------- | ------- |
-| `arrivalTimes`           | `arrival-times`        |             | `any`            | `[]`    |
 | `bookingDetails`         | `booking-details`      |             | `any`            | `null`  |
-| `bookingStatuses`        | `booking-statuses`     |             | `any`            | `[]`    |
 | `dropdownStatuses`       | `dropdown-statuses`    |             | `any`            | `[]`    |
-| `foodArrangeCats`        | `food-arrange-cats`    |             | `any`            | `[]`    |
 | `hasCheckIn`             | `has-check-in`         |             | `boolean`        | `false` |
 | `hasCheckOut`            | `has-check-out`        |             | `boolean`        | `false` |
 | `hasDelete`              | `has-delete`           |             | `boolean`        | `false` |

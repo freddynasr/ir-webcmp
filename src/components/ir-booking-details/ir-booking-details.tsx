@@ -20,9 +20,6 @@ export class IrBookingDetails {
   @Prop() paymentDetailsUrl: string = '';
 
   // Statuses and Codes
-  @Prop() bookingStatuses: any = [];
-  @Prop() foodArrangeCats: any = [];
-  @Prop() arrivalTimes: any = [];
   @Prop() statusCodes: any = [];
 
   // Booleans Conditions
@@ -299,14 +296,18 @@ export class IrBookingDetails {
             </div>
             <div class="card">
               {this.bookingDetails.My_Bsa.map((bsa: any, index: number) => {
+                const mealCodeName = this._getBookingStatus(bsa.FOOD_ARRANGE_CAT_CODE, '_FOOD_ARRANGE_CAT');
+                const myRoomTypeFoodCat = this._getBookingStatus(bsa.My_Room_type.FOOD_ARRANGE_CAT_CODE, '_FOOD_ARRANGE_CAT')
+              
                 return [
                   <ir-room
+                  myRoomTypeFoodCat={myRoomTypeFoodCat}
+                    mealCodeName={mealCodeName}
                     currency={this.bookingDetails.My_Currency.REF}
                     hasRoomEdit={this.hasRoomEdit}
                     hasRoomDelete={this.hasRoomDelete}
                     hasCheckIn={this.hasCheckIn}
                     hasCheckOut={this.hasCheckOut}
-                    mealCode={this.foodArrangeCats}
                     item={bsa}
                   />,
                   // add separator if not last item with marginHorizontal and alignCenter
