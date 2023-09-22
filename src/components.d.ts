@@ -25,9 +25,11 @@ export namespace Components {
         "hasRoomAdd": boolean;
         "hasRoomDelete": boolean;
         "hasRoomEdit": boolean;
+        "languageAbreviation": string;
         "paymentDetailsUrl": string;
         "setupDataCountries": selectOption[];
         "setupDataCountriesCode": selectOption[];
+        "statusCodes": any;
     }
     interface IrButton {
         "btn_block": boolean;
@@ -516,6 +518,7 @@ declare namespace LocalJSX {
         "hasRoomAdd"?: boolean;
         "hasRoomDelete"?: boolean;
         "hasRoomEdit"?: boolean;
+        "languageAbreviation"?: string;
         "onHandleAddPayment"?: (event: IrBookingDetailsCustomEvent<any>) => void;
         "onHandleDeleteClick"?: (event: IrBookingDetailsCustomEvent<any>) => void;
         "onHandleMenuClick"?: (event: IrBookingDetailsCustomEvent<any>) => void;
@@ -528,6 +531,7 @@ declare namespace LocalJSX {
         "paymentDetailsUrl"?: string;
         "setupDataCountries"?: selectOption[];
         "setupDataCountriesCode"?: selectOption[];
+        "statusCodes"?: any;
     }
     interface IrButton {
         "btn_block"?: boolean;

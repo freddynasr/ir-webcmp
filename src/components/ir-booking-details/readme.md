@@ -7,25 +7,27 @@
 
 ## Properties
 
-| Property                 | Attribute             | Description | Type             | Default |
-| ------------------------ | --------------------- | ----------- | ---------------- | ------- |
-| `arrivalTimes`           | `arrival-times`       |             | `any`            | `[]`    |
-| `bookingDetails`         | `booking-details`     |             | `any`            | `null`  |
-| `bookingStatuses`        | `booking-statuses`    |             | `any`            | `[]`    |
-| `dropdownStatuses`       | `dropdown-statuses`   |             | `any`            | `[]`    |
-| `foodArrangeCats`        | `food-arrange-cats`   |             | `any`            | `[]`    |
-| `hasCheckIn`             | `has-check-in`        |             | `boolean`        | `false` |
-| `hasCheckOut`            | `has-check-out`       |             | `boolean`        | `false` |
-| `hasDelete`              | `has-delete`          |             | `boolean`        | `false` |
-| `hasMenu`                | `has-menu`            |             | `boolean`        | `false` |
-| `hasPrint`               | `has-print`           |             | `boolean`        | `false` |
-| `hasReceipt`             | `has-receipt`         |             | `boolean`        | `false` |
-| `hasRoomAdd`             | `has-room-add`        |             | `boolean`        | `false` |
-| `hasRoomDelete`          | `has-room-delete`     |             | `boolean`        | `false` |
-| `hasRoomEdit`            | `has-room-edit`       |             | `boolean`        | `false` |
-| `paymentDetailsUrl`      | `payment-details-url` |             | `string`         | `''`    |
-| `setupDataCountries`     | --                    |             | `selectOption[]` | `null`  |
-| `setupDataCountriesCode` | --                    |             | `selectOption[]` | `null`  |
+| Property                 | Attribute              | Description | Type             | Default |
+| ------------------------ | ---------------------- | ----------- | ---------------- | ------- |
+| `arrivalTimes`           | `arrival-times`        |             | `any`            | `[]`    |
+| `bookingDetails`         | `booking-details`      |             | `any`            | `null`  |
+| `bookingStatuses`        | `booking-statuses`     |             | `any`            | `[]`    |
+| `dropdownStatuses`       | `dropdown-statuses`    |             | `any`            | `[]`    |
+| `foodArrangeCats`        | `food-arrange-cats`    |             | `any`            | `[]`    |
+| `hasCheckIn`             | `has-check-in`         |             | `boolean`        | `false` |
+| `hasCheckOut`            | `has-check-out`        |             | `boolean`        | `false` |
+| `hasDelete`              | `has-delete`           |             | `boolean`        | `false` |
+| `hasMenu`                | `has-menu`             |             | `boolean`        | `false` |
+| `hasPrint`               | `has-print`            |             | `boolean`        | `false` |
+| `hasReceipt`             | `has-receipt`          |             | `boolean`        | `false` |
+| `hasRoomAdd`             | `has-room-add`         |             | `boolean`        | `false` |
+| `hasRoomDelete`          | `has-room-delete`      |             | `boolean`        | `false` |
+| `hasRoomEdit`            | `has-room-edit`        |             | `boolean`        | `false` |
+| `languageAbreviation`    | `language-abreviation` |             | `string`         | `''`    |
+| `paymentDetailsUrl`      | `payment-details-url`  |             | `string`         | `''`    |
+| `setupDataCountries`     | --                     |             | `selectOption[]` | `null`  |
+| `setupDataCountriesCode` | --                     |             | `selectOption[]` | `null`  |
+| `statusCodes`            | `status-codes`         |             | `any`            | `[]`    |
 
 
 ## Events
