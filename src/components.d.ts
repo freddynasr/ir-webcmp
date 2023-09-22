@@ -24,6 +24,7 @@ export namespace Components {
         "hasRoomEdit": boolean;
         "languageAbreviation": string;
         "paymentDetailsUrl": string;
+        "paymentExceptionMessage": string;
         "setupDataCountries": selectOption[];
         "setupDataCountriesCode": selectOption[];
         "statusCodes": any;
@@ -164,6 +165,7 @@ export namespace Components {
     interface IrPaymentDetails {
         "item": any;
         "paymentDetailsUrl": string;
+        "paymentExceptionMessage": string;
     }
     interface IrRoom {
         "currency": string;
@@ -524,6 +526,7 @@ declare namespace LocalJSX {
         "onHandleRoomEdit"?: (event: IrBookingDetailsCustomEvent<any>) => void;
         "onSendDataToServer"?: (event: IrBookingDetailsCustomEvent<guestInfo>) => void;
         "paymentDetailsUrl"?: string;
+        "paymentExceptionMessage"?: string;
         "setupDataCountries"?: selectOption[];
         "setupDataCountriesCode"?: selectOption[];
         "statusCodes"?: any;
@@ -684,6 +687,7 @@ declare namespace LocalJSX {
         "onCreditCardPressHandler"?: (event: IrPaymentDetailsCustomEvent<any>) => void;
         "onHandlePaymentItemChange"?: (event: IrPaymentDetailsCustomEvent<any>) => void;
         "paymentDetailsUrl"?: string;
+        "paymentExceptionMessage"?: string;
     }
     interface IrRoom {
         "currency"?: string;

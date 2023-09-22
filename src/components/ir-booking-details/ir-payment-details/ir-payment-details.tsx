@@ -17,6 +17,7 @@ export class IrPaymentDetails {
   @State() toBeDeletedItem: any = {};
 
   @Prop() paymentDetailsUrl: string = "";
+  @Prop() paymentExceptionMessage: string = "";
 
 
   @Event({ bubbles: true }) handlePaymentItemChange: EventEmitter<any>;
@@ -185,16 +186,15 @@ export class IrPaymentDetails {
             aria-controls="myCollapse"
             class="sm-padding-right pointer"
             onClick={() => {
-              this.collapsedGuarantee = !this.collapsedGuarantee;
-              if (this.item.IS_DIRECT) {
+              if (!this.item.IS_DIRECT) {
              this.creditCardPressHandler.emit(this.item.BOOK_NBR);
-
               }
+              this.collapsedGuarantee = !this.collapsedGuarantee;
             }}
           ></ir-icon>
         </div>
         <div class="collapse guarrantee">
-          {!this.item.IS_DIRECT ? (
+          {this.item.IS_DIRECT ? (
             [
               <div>
                 {this.item?.My_Guest?.CCN && 'Card:'} <span>{this.item?.My_Guest?.CCN || ''}</span> {this.item?.My_Guest?.CC_EXP_MONTH && 'Expiry: '}
@@ -208,8 +208,10 @@ export class IrPaymentDetails {
                 <span> {this.item.My_Guest?.CVC || ''}</span>
               </div>,
             ]
-          ) : (
+          ) : this.paymentDetailsUrl ? (
             <iframe src={this.paymentDetailsUrl} width="100%" class='iframeHeight' frameborder="0"></iframe>
+          ) : (
+            <div class="text-center">{this.paymentExceptionMessage}</div>
           )}
         </div>
       </div>
