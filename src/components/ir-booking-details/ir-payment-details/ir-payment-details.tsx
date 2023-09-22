@@ -178,7 +178,7 @@ export class IrPaymentDetails {
           <strong class="mr-1">Booking Guarantee</strong>
           <ir-icon
             id="drawer-icon"
-            icon={`${this.collapsedGuarantee ? 'ft-eye-off' : 'ft-eye'} h2 color-ir-light-blue-hover`}
+            icon={`${this.collapsedGuarantee ? 'ft-credit-card' : 'ft-credit-card'} h2 color-ir-light-blue-hover`}
             data-toggle="collapse"
             data-target={`.guarrantee`}
             aria-expanded="false"
@@ -209,7 +209,7 @@ export class IrPaymentDetails {
               </div>,
             ]
           ) : (
-            <iframe src={this.paymentDetailsUrl} width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+            <iframe src={this.paymentDetailsUrl} width="100%" height="100%" frameborder="0" ></iframe>
           )}
         </div>
       </div>
