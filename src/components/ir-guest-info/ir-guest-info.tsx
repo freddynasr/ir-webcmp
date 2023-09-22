@@ -18,6 +18,17 @@ export class GuestInfo {
 
   componentWillLoad() { 
     this.getSetupData.emit();
+    this.submit = false;
+    if (this.data !== null) {
+      this.Model = { ...this.Model, ...this.data };
+      this.Model.firstNameValid = this.data.firstName.trim() !== '' && this.data.firstName !== null ? true : false;
+      this.Model.lastNameValid = this.data.lastName.trim() !== '' && this.data.lastName !== null ? true : false;
+      this.Model.emailValid = this.data.email.trim() !== '' && this.data.email !== null ? true : false;
+      this.Model.countryValid = this.data.country !== null ? true : false;
+      this.Model.passwordValid = this.data.password.trim() !== '' && this.data.password !== null ? true : false;
+    } else {
+      this.Model = new guestInfoValidation();
+    }
   }
 
   @Watch('data')
