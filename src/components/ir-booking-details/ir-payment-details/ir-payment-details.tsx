@@ -178,7 +178,7 @@ export class IrPaymentDetails {
           <strong class="mr-1">Booking Guarantee</strong>
           <ir-icon
             id="drawer-icon"
-            icon={`'ft-credit-card' h2 color-ir-light-blue-hover`}
+            icon={`${this.collapsedGuarantee ? 'ft-credit-card' : 'ft-credit-card'} h2 color-ir-light-blue-hover`}
             data-toggle="collapse"
             data-target={`.guarrantee`}
             aria-expanded="false"
