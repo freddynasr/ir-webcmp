@@ -15,10 +15,12 @@ export class IrPaymentDetails {
 
   @State() confirmModal: boolean = false;
   @State() toBeDeletedItem: any = {};
+
   @Prop() paymentDetailsUrl: string = '';
 
-  @Event({ bubbles: true }) handlePaymentItemChange: EventEmitter<any>;
 
+  @Event({ bubbles: true }) handlePaymentItemChange: EventEmitter<any>;
+  @Event({bubbles: true}) eyePressHandler: EventEmitter<any>;
 
 
   itemToBeAdded: any = {
@@ -60,6 +62,7 @@ export class IrPaymentDetails {
 
   @Watch('paymentDetailsUrl')
   wandler() {
+    console.log("Changed")
     this.flag = !this.flag;
   }
 
@@ -183,6 +186,10 @@ export class IrPaymentDetails {
             class="sm-padding-right pointer"
             onClick={() => {
               this.collapsedGuarantee = !this.collapsedGuarantee;
+              if (this.item.IS_DIRECT) {
+             this.eyePressHandler.emit(this.item.BOOK_NBR);
+
+              }
             }}
           ></ir-icon>
         </div>

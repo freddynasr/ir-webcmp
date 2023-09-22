@@ -17,6 +17,7 @@
 
 | Event                     | Description | Type               |
 | ------------------------- | ----------- | ------------------ |
+| `eyePressHandler`         |             | `CustomEvent<any>` |
 | `handlePaymentItemChange` |             | `CustomEvent<any>` |
 
 

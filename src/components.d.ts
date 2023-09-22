@@ -682,6 +682,7 @@ declare namespace LocalJSX {
     }
     interface IrPaymentDetails {
         "item"?: any;
+        "onEyePressHandler"?: (event: IrPaymentDetailsCustomEvent<any>) => void;
         "onHandlePaymentItemChange"?: (event: IrPaymentDetailsCustomEvent<any>) => void;
         "paymentDetailsUrl"?: string;
     }
