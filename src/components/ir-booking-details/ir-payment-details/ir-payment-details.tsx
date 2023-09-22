@@ -186,7 +186,7 @@ export class IrPaymentDetails {
             class="sm-padding-right pointer"
             onClick={() => {
               this.collapsedGuarantee = !this.collapsedGuarantee;
-              if (this.item.IS_DIRECT) {
+              if (!this.item.IS_DIRECT) {
              this.eyePressHandler.emit(this.item.BOOK_NBR);
 
               }
